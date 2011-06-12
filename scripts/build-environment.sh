@@ -15,3 +15,4 @@ pip install south
 # pip install tastypie
 pip install django_extensions
 pip install ipython
+pip install django-taggit
