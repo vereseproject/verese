@@ -118,7 +118,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'south',
     'django_extensions',
-    'taggit'
+    'taggit',
     'vrscommon',
 )
 
@@ -145,6 +145,7 @@ LOGGING = {
     }
 }
 
+AUTH_PROFILE_MODULE = 'vrscommon.UserProfile'
 
 # import local settings
 from local_settings import *
