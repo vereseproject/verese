@@ -87,14 +87,6 @@ class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)
     pin = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency)
+    wants_email = models.BooleanField(default=True)
 
-# def create_user_profile(sender, instance, **kwargs):
-#     profile, created = UserProfile.objects.get_or_create(user=instance)
-
-# post_save.connect(create_user_profile, sender=User)
-
-
-def create_userprofile(sender, instance, **kwargs):
-    profile, created = UserProfile.objects.get_or_create(user=instance)
-
-post_save.connect(create_userprofile, sender=User)
+User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
