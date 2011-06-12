@@ -4,6 +4,7 @@ from django.db.models.signals import post_save
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db.models import Sum
+from django.db import transaction
 
 from taggit.managers import TaggableManager
 
@@ -12,23 +13,42 @@ class Relation(models.Model):
     user1 = models.ForeignKey(User, related_name="user1")
     user2 = models.ForeignKey(User, related_name="user2")
     balance = models.DecimalField(max_digits=7, decimal_places=2,
-                                  validators=[MinValueValidator(0.01)])
+                                  default=0)
     user1_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
-                                            validators=[MinValueValidator(0)])
+                                            validators=[MinValueValidator(0)],
+                                            default=0)
     user2_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
-                                            validators=[MinValueValidator(0)])
+                                            validators=[MinValueValidator(0)],
+                                            default=0)
+    # currency = models.ForeignKey("Currency")
 
     class Meta:
         unique_together = ( ('user1', 'user2') )
 
-    def save(self):
-        # user1 is always the user with the smallest user.id
-        if user1.id > user2.id:
-            tmp = user1
-            user1 = user2
-            user2 = tmp
+    def __unicode__(self):
+        return "%s %d %s" % (self.user1, self.balance, self.user2)
 
-        return super(Relation, self).save()
+    @transaction.commit_on_success
+    def save(self, *args, **kwargs):
+        # user1 is always the user with the smallest user.id
+        if self.user1.id > self.user2.id:
+            tmp = user1
+            self.user1 = self.user2
+            self.user2 = tmp
+
+        return super(Relation, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_or_create(self, user1, user2, **kwargs):
+        # we user our own get_or_create, instead of
+        # self.objects.get_or_create to solve user1, user2 position
+        # problem
+        if user1.id > user2.id:
+            return self.objects.get_or_create(user1=user2,
+                                              user2=user1, **kwargs)
+        else:
+            return self.objects.get_or_create(user1=user1,
+                                              user2=user2, **kwargs)
 
 class GroupVeresedaki(models.Model):
     payer = models.ForeignKey(User)
@@ -36,7 +56,7 @@ class GroupVeresedaki(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     currency = models.ForeignKey("Currency")
     tags = TaggableManager(blank=True)
-    #geolocation
+    # geolocation
 
     class Meta:
         verbose_name_plural = "Group Veresedakia"
@@ -62,11 +82,22 @@ class Veresedaki(models.Model):
                                  )
     group = models.ForeignKey(GroupVeresedaki)
 
+    @transaction.commit_on_success
+    def save(self, *args, **kwargs):
+        super(Veresedaki, self).save(args, kwargs)
+        relation, created = Relation.get_or_create(user1=self.group.payer,
+                                                   user2=self.ower)
+        relation.balance += self.amount
+        # if created:
+        #     # set currency
+        #     relation.currency = group.currency
+        relation.save(args, kwargs)
+
     def clean(self):
         if self.ower == self.group.payer:
             raise ValidationError("Ower cannot be the same person as payer")
 
-        return self.ower
+        return super(Veresedaki, self).clean()
 
     def __unicode__(self):
         return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
@@ -82,6 +113,19 @@ class Currency(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class UserBalance(models.Model):
+    user = models.ForeignKey(User)
+    currency = models.ForeignKey(Currency)
+    amount = models.DecimalField(max_digits=7, decimal_places=2,
+                                 validators=[MinValueValidator(0.01)])
+
+    class Meta:
+        unique_together = (("user", "currency"))
+
+    @transaction.commit_on_success
+    def save(self, *args, **kwargs):
+        super(UserBalance, self).save(*args, **kwargs)
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, unique=True)

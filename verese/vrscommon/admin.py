@@ -5,10 +5,9 @@ from django.contrib.auth.admin import UserAdmin
 from models import Relation, GroupVeresedaki, Veresedaki, Currency, UserProfile
 
 # register the models for the admin
-admin.site.register(Relation)
 admin.site.register(Currency)
 
-class VeresedakiInline(admin.StackedInline):
+class VeresedakiInline(admin.TabularInline):
     model = Veresedaki
 
 class GroupVeresadakiAdmin(admin.ModelAdmin):
@@ -28,3 +27,10 @@ class UserProfileAdmin(UserAdmin):
 
 admin.site.unregister(User)
 admin.site.register(User, UserProfileAdmin)
+
+class RelationAdmin(admin.ModelAdmin):
+    list_display = ("user1", "user2", "balance")
+    list_display_links = ("user1", "user2")
+    search_fields = ("user1__username",)
+
+admin.site.register(Relation, RelationAdmin)
