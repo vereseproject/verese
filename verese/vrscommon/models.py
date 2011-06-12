@@ -4,7 +4,6 @@ from django.db.models.signals import post_save
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db.models import Sum
-from django.db import transaction
 
 from taggit.managers import TaggableManager
 
@@ -28,7 +27,6 @@ class Relation(models.Model):
     def __unicode__(self):
         return "%s %d %s" % (self.user1, self.balance, self.user2)
 
-    @transaction.commit_on_success
     def save(self, *args, **kwargs):
         # user1 is always the user with the smallest user.id
         if self.user1.id > self.user2.id:
@@ -82,7 +80,6 @@ class Veresedaki(models.Model):
                                  )
     group = models.ForeignKey(GroupVeresedaki)
 
-    @transaction.commit_on_success
     def save(self, *args, **kwargs):
         super(Veresedaki, self).save(args, kwargs)
         relation, created = Relation.get_or_create(user1=self.group.payer,
@@ -123,7 +120,6 @@ class UserBalance(models.Model):
     class Meta:
         unique_together = (("user", "currency"))
 
-    @transaction.commit_on_success
     def save(self, *args, **kwargs):
         super(UserBalance, self).save(*args, **kwargs)
 
