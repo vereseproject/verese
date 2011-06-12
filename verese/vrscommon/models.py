@@ -18,6 +18,18 @@ class Relation(models.Model):
     user2_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MinValueValidator(0)])
 
+    class Meta:
+        unique_together = ( ('user1', 'user2') )
+
+    def save(self):
+        # user1 is always the user with the smallest user.id
+        if user1.id > user2.id:
+            tmp = user1
+            user1 = user2
+            user2 = tmp
+
+        return super(Relation, self).save()
+
 class GroupVeresedaki(models.Model):
     payer = models.ForeignKey(User)
     comment = models.TextField(blank=True, null=True)
@@ -72,12 +84,20 @@ class Currency(models.Model):
         return self.name
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User)
-    pin = models.IntegerField()
+    user = models.ForeignKey(User, unique=True)
+    pin = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency)
 
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-       profile, created = UserProfile.objects.get_or_create(user=instance)
+# def create_user_profile(sender, instance, **kwargs):
+#     profile, created = UserProfile.objects.get_or_create(user=instance)
 
-post_save.connect(create_user_profile, sender=User)
+# post_save.connect(create_user_profile, sender=User)
+
+
+def create_userprofile(sender, **kw):
+    user = kw["instance"]
+    if kw["created"]:
+        profile = UserProfile(user=user)
+        profile.save()
+
+post_save.connect(create_userprofile, sender=User, dispatch_uid="users-profilecreation-signal")
