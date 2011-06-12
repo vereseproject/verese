@@ -94,10 +94,7 @@ class UserProfile(models.Model):
 # post_save.connect(create_user_profile, sender=User)
 
 
-def create_userprofile(sender, **kw):
-    user = kw["instance"]
-    if kw["created"]:
-        profile = UserProfile(user=user)
-        profile.save()
+def create_userprofile(sender, instance, **kwargs):
+    profile, created = UserProfile.objects.get_or_create(user=instance)
 
-post_save.connect(create_userprofile, sender=User, dispatch_uid="users-profilecreation-signal")
+post_save.connect(create_userprofile, sender=User)
