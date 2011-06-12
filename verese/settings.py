@@ -117,6 +117,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'south',
+    'django_extensions',
+    'vlscommon',
 )
 
 # A sample logging configuration. The only tangible logging
