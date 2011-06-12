@@ -16,3 +16,4 @@ pip install south
 pip install django_extensions
 pip install ipython
 pip install django-taggit
+pip install werkzeug
