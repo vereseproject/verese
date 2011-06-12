@@ -13,3 +13,5 @@ source env/bin/activate
 pip install south
 # pip install piston
 # pip install tastypie
+pip install django_extensions
+pip install ipython
