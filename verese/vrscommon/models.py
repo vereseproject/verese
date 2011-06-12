@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 # Create your models here.
 class Relation(models.Model):
@@ -14,6 +15,7 @@ class GroupVeresedaki(models.Model):
     comment = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     currency = models.ForeignKey(Currency)
+    tags = TaggableManager()
     #geolocation
 
 class Veresedaki(models.Model):
