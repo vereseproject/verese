@@ -19,7 +19,9 @@ class Relation(models.Model):
     user2_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MinValueValidator(0)],
                                             default=0)
-    # currency = models.ForeignKey("Currency")
+    currency = models.ForeignKey("Currency")
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ( ('user1', 'user2') )
