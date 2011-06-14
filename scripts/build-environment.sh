@@ -17,3 +17,6 @@ pip install django_extensions
 pip install ipython
 pip install django-taggit
 pip install werkzeug
+
+
+pip -E env install -e git://github.com/mozilla/django-piston.git
