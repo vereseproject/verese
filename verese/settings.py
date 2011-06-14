@@ -146,7 +146,7 @@ LOGGING = {
     }
 }
 
-# AUTH_PROFILE_MODULE = 'vrscommon.UserProfile'
+AUTH_PROFILE_MODULE = 'vrscommon.UserProfile'
 
 # import local settings
 from local_settings import *
