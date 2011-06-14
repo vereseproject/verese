@@ -21,6 +21,7 @@ admin.site.register(GroupVeresedaki, GroupVeresadakiAdmin)
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
+    fk_name = 'user'
 
 class UserProfileAdmin(UserAdmin):
     inlines = [UserProfileInline]

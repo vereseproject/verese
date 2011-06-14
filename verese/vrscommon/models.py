@@ -15,10 +15,12 @@ class Relation(models.Model):
                                   default=0)
     user1_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MinValueValidator(0)],
-                                            default=0)
+                                            default=0,
+                                            blank=True)
     user2_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
                                             validators=[MinValueValidator(0)],
-                                            default=0)
+                                            default=0,
+                                            blank=True)
     currency = models.ForeignKey("Currency")
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -28,6 +30,12 @@ class Relation(models.Model):
 
     def __unicode__(self):
         return "%s %d %s" % (self.user1, self.balance, self.user2)
+
+    def clean(self):
+        if self.user1 == self.user2:
+            raise ValidationError("User1 cannot be the same as User2")
+
+        return super(Relation, self).clean()
 
     def save(self, *args, **kwargs):
         # user1 is always the user with the smallest user.id
@@ -65,6 +73,10 @@ class GroupVeresedaki(models.Model):
     def total_amount(self):
         return self.veresedaki_set.aggregate(Sum('amount'))['amount__sum']
 
+    @property
+    def veresedakia(self):
+        return self.veresedaki_set.all()
+
     def __unicode__(self):
         # total amount can be cached
         return "[%s:%s]" % (self.payer, self.total_amount)
@@ -72,13 +84,15 @@ class GroupVeresedaki(models.Model):
 class Veresedaki(models.Model):
     ower = models.ForeignKey(User)
     amount = models.DecimalField(max_digits=7, decimal_places=2,
-                                 validators=[MinValueValidator(0.01)])
+                                 validators=[MinValueValidator(0.01)],
+                                 blank=True)
     comment = models.TextField(blank=True, null=True)
     status = models.IntegerField(choices = ((1, 'Waiting'),
                                             (2, 'Verified'),
                                             (3, 'Denied'),
                                             (4, 'Canceled')),
-                                 default = 1
+                                 default = 1,
+                                 blank=True,
                                  )
     group = models.ForeignKey(GroupVeresedaki)
 
@@ -87,16 +101,10 @@ class Veresedaki(models.Model):
         relation, created = Relation.get_or_create(user1=self.group.payer,
                                                    user2=self.ower)
         relation.balance += self.amount
-        # if created:
-        #     # set currency
-        #     relation.currency = group.currency
+        if created:
+            # set currency
+            relation.currency = group.currency
         relation.save(args, kwargs)
-
-    def clean(self):
-        if self.ower == self.group.payer:
-            raise ValidationError("Ower cannot be the same person as payer")
-
-        return super(Veresedaki, self).clean()
 
     def __unicode__(self):
         return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
@@ -131,4 +139,10 @@ class UserProfile(models.Model):
     currency = models.ForeignKey(Currency)
     wants_email = models.BooleanField(default=True)
 
-User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
+def user_post_save(sender, instance, **kwargs):
+    """Create the user profile when the user is created."""
+    profile, created = UserProfile.objects.get_or_create(user=instance)
+    if created:
+        profile.save()
+
+models.signals.post_save.connect(user_post_save, sender=User)
