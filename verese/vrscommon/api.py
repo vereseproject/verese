@@ -171,7 +171,7 @@ class VeresedakiHandler(BaseHandler):
     """
     Veresedaki
 
-    only create a veresedaki as part of a part veresedaki
+    only create a veresedaki as part of a group veresedaki
     """
     model = Veresedaki
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
