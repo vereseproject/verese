@@ -7,6 +7,12 @@ from django.db.models import Sum, Q
 
 from taggit.managers import TaggableManager
 
+status_choices = ((40, 'Verified'),
+                  (30, 'Waiting'),
+                  (20, 'Denied'),
+                  (10, 'Canceled')
+                  )
+
 # Create your models here.
 class Relation(models.Model):
     user1 = models.ForeignKey(User, related_name="user1")
@@ -71,10 +77,32 @@ class GroupVeresedaki(models.Model):
 
     @property
     def total_amount(self):
-        return self.veresedaki_set.aggregate(amount=Sum('amount'))['amount']
+        return self.veresedakia.aggregate(amount=Sum('amount'))['amount']
+
+    @property
+    def status(self):
+        """
+        Return the status of GroupVeresedaki based on the status of Veresedakia.
+
+        The lowest value of Veresedakia is returned as status.
+
+        e.g.
+        If you have 3 Veresedakia with the following status values
+        (30, Waiting), (40, Verified) and (20, Denied)
+
+        the status of GroupVeresedaki will be (20, Denied)
+        """
+        print self.veresedakia.values_list('status__status', flat=True)
+        status_value = min(self.veresedakia.values_list('status__status', flat=True) or [1])
+        for status in status_choices:
+            if status[0] == status_value:
+                return status[1]
 
     @property
     def veresedakia(self):
+        """
+        Shortcut to self.veresedaki_set
+        """
         return self.veresedaki_set.all()
 
     def __unicode__(self):
@@ -133,11 +161,8 @@ class VeresedakiStatus(models.Model):
     """
     user = models.ForeignKey(User)
     created = models.DateTimeField(auto_now_add=True)
-    status = models.IntegerField(choices = ((1, 'Waiting'),
-                                            (2, 'Verified'),
-                                            (3, 'Denied'),
-                                            (4, 'Canceled')),
-                                 default = 1,
+    status = models.IntegerField(choices = status_choices,
+                                 default = 30,
                                  blank=True,
                                  )
 
