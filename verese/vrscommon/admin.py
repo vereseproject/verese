@@ -13,7 +13,7 @@ class VeresedakiInline(admin.TabularInline):
 
 class GroupVeresadakiAdmin(admin.ModelAdmin):
     inlines = [VeresedakiInline]
-    list_display = ("payer", "total_amount", "currency", "created")
+    list_display = ("payer", "total_amount", "currency", "status", "created")
     ordering = ("-created",)
     search_fields = ("payer__username", "payer__last_name")
     save_on_top = True
