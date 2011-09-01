@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
-from django.db.models import Sum
+from django.db.models import Sum, Q
 
 from taggit.managers import TaggableManager
 
@@ -71,7 +71,7 @@ class GroupVeresedaki(models.Model):
 
     @property
     def total_amount(self):
-        return self.veresedaki_set.aggregate(Sum('amount'))['amount__sum']
+        return self.veresedaki_set.aggregate(amount=Sum('amount'))['amount']
 
     @property
     def veresedakia(self):
@@ -86,7 +86,53 @@ class Veresedaki(models.Model):
     amount = models.DecimalField(max_digits=7, decimal_places=2,
                                  validators=[MinValueValidator(0.01)],
                                  blank=True)
+    local_amount = models.DecimalField(help_text="Amount converted to relation currency",
+                                       max_digits=7, decimal_places=2,
+                                       validators=[MinValueValidator(0.01)],
+                                       blank=True)
     comment = models.TextField(blank=True, null=True)
+    status = models.ForeignKey("VeresedakiStatus", blank=True)
+    group = models.ForeignKey(GroupVeresedaki)
+    # currency = models.ForeignKey("Currency")
+
+    def save(self, *args, **kwargs):
+        # create or get relation
+        relation, created = Relation.get_or_create(user1=self.group.payer,
+                                                   user2=self.ower)
+        if created:
+            # set currency
+            relation.currency = self.group.currency
+
+        # calculate amount in relation currency
+        self.local_amount = self.amount / self.group.currency.rate * relation.currency.rate
+
+        # add balance
+        relation.balance += self.amount
+        relation.save(args, kwargs)
+
+        # add status
+        if self.status == None:
+            self.status = VeresedakiStatus(user=self.group.payer, status=1)
+            self.status.save()
+
+        super(Veresedaki, self).save(args, kwargs)
+
+    def __unicode__(self):
+        return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
+
+    class Meta:
+        verbose_name_plural = "veresedakia"
+
+
+class VeresedakiStatus(models.Model):
+    """
+    Log the status changes of a Veresadaki.
+
+    When you want to change the status of a Veresedaki you create a
+    new VeresedakiStatus. Do not change already existing statuses
+    """
+    user = models.ForeignKey(User)
+    created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices = ((1, 'Waiting'),
                                             (2, 'Verified'),
                                             (3, 'Denied'),
@@ -94,25 +140,23 @@ class Veresedaki(models.Model):
                                  default = 1,
                                  blank=True,
                                  )
-    group = models.ForeignKey(GroupVeresedaki)
-
-    def save(self, *args, **kwargs):
-        super(Veresedaki, self).save(args, kwargs)
-        relation, created = Relation.get_or_create(user1=self.group.payer,
-                                                   user2=self.ower)
-        relation.balance += self.amount
-        if created:
-            # set currency
-            relation.currency = group.currency
-        relation.save(args, kwargs)
 
     def __unicode__(self):
-        return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
+        return self.get_status_display()
+
+    class Meta:
+        verbose_name_plural = "veresedakia statuses"
 
 class Currency(models.Model):
+    """
+    Currency Rate Database.
+    Rates use Euro as reference
+    """
     name = models.CharField(max_length=100)
+    symbol = models.CharField(max_length=1, null=True, blank=True)
+    code = models.CharField(max_length=3, null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
-    rate = models.DecimalField(max_digits=8, decimal_places=4,
+    rate = models.DecimalField(max_digits=9, decimal_places=5,
                                validators=[MinValueValidator(0.0001)])
 
     class Meta:
@@ -139,10 +183,54 @@ class UserProfile(models.Model):
     currency = models.ForeignKey(Currency)
     wants_email = models.BooleanField(default=True)
 
+    def __unicode__(self):
+        return unicode(self.user)
+
+    @property
+    def balance(self):
+        """
+        Calculates overall balance.
+
+        Note that the balance is calculated in user's currency. User's
+        relations that have difference base currency are converted on
+        the fly. Hence balance calculation is and approximation
+        """
+        total_amount = 0
+
+        # find the currencies user uses
+        currencies = Relation.objects.\
+                     filter(Q(user1=self.user)|Q(user2=self.user)).\
+                     values_list('currency', flat=True).distinct()
+
+        # now calculate Sums per currency and convert to local currency
+        for currency_id in currencies:
+            currency = Currency.objects.get(pk=currency_id)
+            amount = Relation.objects.\
+                     filter(Q(user1=self.user)|Q(user2=self.user)).\
+                     filter(currency=currency).\
+                     aggregate(balance=Sum('balance'))['balance']
+            total_amount += amount / currency.rate * self.currency.rate
+
+        return total_amount
+
+    @property
+    def balance_detailed(self):
+        """
+        Calculates overall balance per currency used by user
+        """
+        total_amounts = Relation.objects.\
+                        filter(Q(user1=self.user)|Q(user2=self.user)).\
+                        values('currency').\
+                        annotate(balance=Sum('balance'))
+
+        for amount in total_amounts:
+            amount['currency'] = Currency.objects.get(pk=amount['currency'])
+
+        return total_amounts
+
+
 def user_post_save(sender, instance, **kwargs):
     """Create the user profile when the user is created."""
     profile, created = UserProfile.objects.get_or_create(user=instance)
-    if created:
-        profile.save()
 
 models.signals.post_save.connect(user_post_save, sender=User)
