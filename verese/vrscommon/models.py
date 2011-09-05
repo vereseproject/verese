@@ -14,6 +14,12 @@ status_choices = (
     (10, 'Canceled')
     )
 
+def _min_validator(data, **kwargs):
+    if data > 0:
+        return data
+    else:
+        raise ValidationError("Value must be greater than zero")
+
 # Create your models here.
 class Relation(models.Model):
     user1 = models.ForeignKey(User, related_name="user1")
@@ -21,11 +27,11 @@ class Relation(models.Model):
     balance = models.DecimalField(max_digits=7, decimal_places=2,
                                   default=0)
     user1_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
-                                            validators=[MinValueValidator(0)],
+                                            validators=[_min_validator],
                                             default=0,
                                             blank=True)
     user2_trust_limit = models.DecimalField(max_digits=5, decimal_places=2,
-                                            validators=[MinValueValidator(0)],
+                                            validators=[_min_validator],
                                             default=0,
                                             blank=True)
     currency = models.ForeignKey("Currency")
@@ -131,11 +137,11 @@ class Transaction(models.Model):
 class Veresedaki(models.Model):
     ower = models.ForeignKey(User)
     amount = models.DecimalField(max_digits=7, decimal_places=2,
-                                 validators=[MinValueValidator(0.01)],
+                                 validators=[_min_validator],
                                  blank=True)
     local_amount = models.DecimalField(help_text="Amount converted to relation currency",
                                        max_digits=7, decimal_places=2,
-                                       validators=[MinValueValidator(0.01)],
+                                       validators=[_min_validator],
                                        blank=True)
     comment = models.TextField(blank=True, null=True)
     status = models.OneToOneField("VeresedakiStatus", blank=True, null=True)
@@ -216,7 +222,7 @@ class Currency(models.Model):
     code = models.CharField(max_length=3, null=True, blank=True)
     updated = models.DateTimeField(auto_now=True)
     rate = models.DecimalField(max_digits=9, decimal_places=5,
-                               validators=[MinValueValidator(0.0001)])
+                               validators=[_min_validator])
 
     class Meta:
         verbose_name_plural = "currencies"
@@ -228,7 +234,7 @@ class UserBalance(models.Model):
     user = models.ForeignKey(User)
     currency = models.ForeignKey(Currency)
     amount = models.DecimalField(max_digits=7, decimal_places=2,
-                                 validators=[MinValueValidator(0.01)])
+                                 validators=[_min_validator])
 
     class Meta:
         unique_together = (("user", "currency"))
