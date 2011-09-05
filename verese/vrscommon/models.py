@@ -117,7 +117,7 @@ class Veresedaki(models.Model):
                                        blank=True)
     comment = models.TextField(blank=True, null=True)
     status = models.OneToOneField("VeresedakiStatus", blank=True, null=True)
-    group = models.ForeignKey(Transaction)
+    transaction = models.ForeignKey(Transaction)
     # currency = models.ForeignKey("Currency")
 
     def clean_status(self):
@@ -125,14 +125,14 @@ class Veresedaki(models.Model):
 
     def save(self, *args, **kwargs):
         # create or get relation
-        relation, created = Relation.get_or_create(user1=self.group.payer,
+        relation, created = Relation.get_or_create(user1=self.transaction.payer,
                                                    user2=self.ower)
         if created:
             # set currency
-            relation.currency = self.group.currency
+            relation.currency = self.transaction.currency
 
         # calculate amount in relation currency
-        self.local_amount = self.amount / self.group.currency.rate * relation.currency.rate
+        self.local_amount = self.amount / self.transaction.currency.rate * relation.currency.rate
 
         # add balance
         relation.balance += self.amount
@@ -140,14 +140,14 @@ class Veresedaki(models.Model):
 
         # add status
         if not self.status:
-            vs = VeresedakiStatus(user=self.group.payer)
+            vs = VeresedakiStatus(user=self.transaction.payer)
             vs.save()
             self.status = vs
 
         super(Veresedaki, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
+        return "[%s owes %s: %s]" % (self.ower, self.transaction.payer, self.amount)
 
     class Meta:
         verbose_name_plural = "veresedakia"
