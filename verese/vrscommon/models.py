@@ -61,9 +61,28 @@ class Relation(models.Model):
         if user1.id > user2.id:
             return self.objects.get_or_create(user1=user2,
                                               user2=user1, **kwargs)
+
         else:
             return self.objects.get_or_create(user1=user1,
                                               user2=user2, **kwargs)
+
+    @classmethod
+    def get(self, user1, user2, **kwargs):
+        if user1.id > user2.id:
+            return self.objects.get(user1=user2,
+                                    user2=user1, **kwargs)
+
+        else:
+            return self.objects.get(user1=user1,
+                                    user2=user2, **kwargs)
+
+
+    def get_veresedakia(self):
+        return Veresedaki.objects.filter(
+            (Q(ower=self.user1)&Q(transaction__payer=self.user2))|\
+            (Q(ower=self.user2)&Q(transaction__payer=self.user1))
+            )
+
 
 class Transaction(models.Model):
     payer = models.ForeignKey(User)
@@ -72,6 +91,9 @@ class Transaction(models.Model):
     currency = models.ForeignKey("Currency")
     tags = TaggableManager(blank=True)
     # geolocation
+
+    class Meta:
+        ordering = ['-created']
 
     @property
     def total_amount(self):
@@ -118,18 +140,24 @@ class Veresedaki(models.Model):
     comment = models.TextField(blank=True, null=True)
     status = models.OneToOneField("VeresedakiStatus", blank=True, null=True)
     transaction = models.ForeignKey(Transaction)
-    # currency = models.ForeignKey("Currency")
+
+    class Meta:
+        ordering = ['-created']
 
     def clean_status(self):
         return VeresedakiStatus.objects.all()[0]
 
     def save(self, *args, **kwargs):
         # create or get relation
-        relation, created = Relation.get_or_create(user1=self.transaction.payer,
-                                                   user2=self.ower)
-        if created:
-            # set currency
-            relation.currency = self.transaction.currency
+        try:
+            relation = Relation.get(user1=self.transaction.payer,
+                                    user2=self.ower)
+
+        except Relation.DoesNotExist:
+            relation = Relation(user1=self.transaction.payer,
+                                user2=self.ower,
+                                currency = self.transaction.currency)
+            relation.save()
 
         # calculate amount in relation currency
         self.local_amount = self.amount / self.transaction.currency.rate * relation.currency.rate
@@ -142,7 +170,11 @@ class Veresedaki(models.Model):
 
         # add balance if veresedaki is accepted
         if self.status.status == 40:
-            relation.balance += self.amount
+            if self.ower == relation.user2:
+                relation.balance += self.amount
+            else:
+                relation.balance -= self.amount
+
             relation.save(args, kwargs)
 
         super(Veresedaki, self).save(*args, **kwargs)
@@ -252,12 +284,14 @@ class UserProfile(models.Model):
 
         for amount in total_amounts:
             amount['currency'] = Currency.objects.get(pk=amount['currency'])
-        else:
-            total_amounts = {}
-            total_amounts[self.currency.name] = 0
+
+        if not total_amounts:
+            total_amounts = [{'currency':self.currency,
+                              'balance':0
+                              }
+                             ]
 
         return total_amounts
-
 
 def user_post_save(sender, instance, created, **kwargs):
     """Create the user profile when the user is created."""

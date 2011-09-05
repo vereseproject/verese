@@ -3,10 +3,10 @@ from vrscommon.resource import Resource
 from piston.authentication import HttpBasicAuthentication
 
 from authentication import DjangoAuthentication
-
+from utils import api_url
 from handlers import VeresedakiHandler, TransactionHandler, \
      RelationHandler, LoginHandler, LogoutHandler, \
-     BalanceHandler
+     BalanceHandler, CurrencyHandler, UserHandler
 
 django_auth = DjangoAuthentication(login_url='/api/login/')
 basic_auth = HttpBasicAuthentication(realm='verese')
@@ -15,30 +15,26 @@ transaction_handler = Resource(TransactionHandler, basic_auth)
 relation_handler = Resource(RelationHandler, basic_auth)
 login_handler = Resource(LoginHandler)
 logout_handler = Resource(LogoutHandler)
-balance_handler = Resource(BalanceHandler, django_auth)
+balance_handler = Resource(BalanceHandler, basic_auth)
+currency_handler = Resource(CurrencyHandler)
+user_handler = Resource(UserHandler, basic_auth)
 
 urlpatterns = patterns(
     '',
-    url(r'^relation/(?P<relation_id>\d+)/$', relation_handler),
-    url(r'^transaction/(?P<group_veresedaki_id>\d+)/$', transaction_handler),
-    url(r'^transaction/(?P<group_veresedaki_id>\d+)/add/$', veresedaki_handler),
-    url(r'^transaction/$', transaction_handler),
-    url(r'^veresedaki/(?P<veresedaki_id>\d+)/$', veresedaki_handler),
-    url(r'^login/$', login_handler),
-    url(r'^logout/$', logout_handler),
-    url(r'^balance/overall/$', balance_handler, {'type':'overall'}),
-    url(r'^balance/overall/detailed/$', balance_handler,
-        {'type':'overall', 'detailed':True}),
 
-    url(r'^balance/relation/list/$', balance_handler,
-        {'type':'relation_list'}),
-    url(r'^balance/relation/(?P<relation_id>\d+)/$', balance_handler,
-        {'type': 'relation', 'detailed':False}),
-    url(r'^balance/relation/(?P<relation_id>\d+)/detailed/$', balance_handler,
-        {'type': 'relation', 'detailed':True}),
-    url(r'^balance/currency/(?P<currency_code>\w+)/$', balance_handler,
-        {'type':'currency', 'detailed':True}),
-    url(r'^balance/currency/(?P<currency_code>\w+)/detailed/$', balance_handler,
-        {'type':'currency', 'detailed':True}),
+    api_url(r'^balance/$', balance_handler),
 
+    api_url(r'^relation/(?P<relation_id>\d+)/details/$',
+            relation_handler, {'details':True}
+            ),
+    api_url(r'^relation/(?P<relation_id>\d+)/$', relation_handler),
+    api_url(r'^relation/list/$', relation_handler),
+
+    api_url(r'^transaction/(?P<transaction_id>\d+)/$', transaction_handler),
+    api_url(r'^transaction/list/$', transaction_handler),
+    api_url(r'^transaction/$', transaction_handler),
+
+    api_url(r'^currency/list/$', currency_handler),
+
+    api_url(r'^profile/$', user_handler)
     )
