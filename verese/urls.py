@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.conf import settings
 import vrscommon
 
 # Uncomment the next two lines to enable the admin:
@@ -24,5 +25,6 @@ urlpatterns = patterns(
 
 if settings.LOCAL_DEVELOPMENT:
     urlpatterns += patterns("django.views",
-        url(r"%s(?P<path>.*)$" % settings.MEDIA_URL[1:], "static.serve", {"document_root": settings.MEDIA_ROOT,})
+        url(r"%s(?P<path>.*)$" % settings.MEDIA_URL[1:],
+            "static.serve", {"document_root": settings.MEDIA_ROOT,})
     )
