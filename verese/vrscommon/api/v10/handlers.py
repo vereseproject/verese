@@ -9,7 +9,7 @@ from piston.decorator import decorator
 from piston.utils import rc
 
 from vrscommon.models import *
-from exceptions import *
+from vrscommon.exceptions import *
 from forms import *
 from views import *
 

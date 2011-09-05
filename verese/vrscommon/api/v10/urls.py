@@ -1,9 +1,9 @@
 from django.conf.urls.defaults import patterns, include, url
-from vrscommon.resource import Resource
+# from vrscommon.resource import Resource
 from piston.authentication import HttpBasicAuthentication
 
 from authentication import DjangoAuthentication
-from utils import api_url
+from utils import api_url, Resource
 from handlers import VeresedakiHandler, TransactionHandler, \
      RelationHandler, LoginHandler, LogoutHandler, \
      BalanceHandler, CurrencyHandler, UserHandler
