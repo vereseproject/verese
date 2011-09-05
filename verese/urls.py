@@ -26,5 +26,6 @@ urlpatterns = patterns(
 if settings.LOCAL_DEVELOPMENT:
     urlpatterns += patterns("django.views",
         url(r"%s(?P<path>.*)$" % settings.MEDIA_URL[1:],
-            "static.serve", {"document_root": settings.MEDIA_ROOT,})
+            "static.serve", {"document_root": settings.MEDIA_ROOT,}),
+	url(r'^dev/(?P<path>.*)$', "static.serve", {"document_root":"vrscommon/templates"})
     )
