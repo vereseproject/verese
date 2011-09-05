@@ -2,22 +2,30 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from models import Relation, GroupVeresedaki, Veresedaki, Currency, UserProfile
+from models import Relation, Transaction, Veresedaki, Currency,\
+     UserProfile, VeresedakiStatus
 
 # register the models for the admin
-admin.site.register(Currency)
+
+class VeresedakiStatusAdmin(admin.ModelAdmin):
+    models = VeresedakiStatus
+    list_display = ("id", "user", "veresedaki", "status")
+
+admin.site.register(VeresedakiStatus, VeresedakiStatusAdmin)
 
 class VeresedakiInline(admin.TabularInline):
     model = Veresedaki
 
-class GroupVeresadakiAdmin(admin.ModelAdmin):
+class TransactionAdmin(admin.ModelAdmin):
     inlines = [VeresedakiInline]
-    list_display = ("payer", "total_amount", "created")
+    list_display = ("id", "payer", "total_amount",
+                    "currency", "status", "created"
+                    )
     ordering = ("-created",)
     search_fields = ("payer__username", "payer__last_name")
     save_on_top = True
 
-admin.site.register(GroupVeresedaki, GroupVeresadakiAdmin)
+admin.site.register(Transaction, TransactionAdmin)
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
@@ -30,8 +38,15 @@ admin.site.unregister(User)
 admin.site.register(User, UserProfileAdmin)
 
 class RelationAdmin(admin.ModelAdmin):
-    list_display = ("user1", "user2", "balance")
+    list_display = ("user1", "user2", "currency", "balance")
     list_display_links = ("user1", "user2")
     search_fields = ("user1__username",)
 
 admin.site.register(Relation, RelationAdmin)
+
+
+class CurrencyAdmin(admin.ModelAdmin):
+    list_display = ("name", "code", "symbol", "updated", "rate")
+    search_fields = ("name", "code")
+
+admin.site.register(Currency, CurrencyAdmin)

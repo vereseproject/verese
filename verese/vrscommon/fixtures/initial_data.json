@@ -1,0 +1,32 @@
+[
+  {
+    "model": "vrscommon.currency",
+    "pk": 1,
+    "fields": {
+      "name": "Euro",
+      "symbol": "€",
+      "code": "EUR",
+      "rate": 1
+    }
+  },
+  {
+    "model": "vrscommon.currency",
+    "pk": 2,
+    "fields": {
+      "name": "US Dollar",
+      "symbol": "$",
+      "code": "USD",
+      "rate": "1.42881"
+    }
+  },
+  {
+    "model": "vrscommon.currency",
+    "pk": 3,
+    "fields": {
+      "name": "British Pound",
+      "symbol": "£",
+      "code": "GBP",
+      "rate": "0.88020"
+    }
+  }
+]
