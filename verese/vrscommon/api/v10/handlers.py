@@ -10,7 +10,7 @@ from piston.utils import rc
 
 from vrscommon.models import *
 from exceptions import *
-from apiforms import *
+from forms import *
 
 def validate(v_form, operations):
     # We don't use piston.utils.validate function
