@@ -178,9 +178,9 @@ class TransactionHandler(BaseHandler):
     # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
 
     @check_read_permission
-    def read(self, request, group_veresedaki_id):
-        # fetch group_veresedaki and related veresedakia
-         return get_object_or_404(Transaction, pk=group_veresedaki_id)
+    def read(self, request, transaction_id):
+        # fetch transaction and related veresedakia
+        return get_object_or_404(Transaction, pk=transaction_id)
 
     @check_write_permission
     @transaction.commit_on_success()
@@ -204,9 +204,9 @@ class TransactionHandler(BaseHandler):
 
     @check_write_permission
     @transaction.commit_on_success()
-    def delete(self, request, group_veresedaki_id):
-        # delete group veresedaki and veresedaki (auto)
-        obj = get_object_or_404(Transaction, pk=group_veresedaki_id)
+    def delete(self, request, transaction_id):
+        # delete transaction and veresedaki (auto)
+        obj = get_object_or_404(Transaction, pk=transaction_id)
         obj.delete()
         return rc.DELETED
 
@@ -215,7 +215,7 @@ class VeresedakiHandler(BaseHandler):
     """
     Veresedaki
 
-    only create a veresedaki as part of a group veresedaki
+    only create a veresedaki as part of a transaction
     """
     model = Veresedaki
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
@@ -226,14 +226,14 @@ class VeresedakiHandler(BaseHandler):
 
     @check_write_permission
     @transaction.commit_on_success()
-    def create(self, request, group_veresedaki_id):
-        group_veresedaki = get_object_or_404(Transaction,
-                                             pk=group_veresedaki_id)
+    def create(self, request, transaction_id):
+        transaction = get_object_or_404(Transaction,
+                                        pk=transaction_id)
 
         data = request.POST
-        data['group'] = group_veresedaki_id
+        data['transaction'] = transaction_id
         form = VeresedakiCreateForm(data,
-                                    instance=Veresedaki(group=group_veresedaki)
+                                    instance=Veresedaki(transaction=transaction)
                                     )
 
         if not form.is_valid():

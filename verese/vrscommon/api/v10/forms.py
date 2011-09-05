@@ -53,7 +53,7 @@ class VeresedakiUpdateForm(forms.ModelForm):
 class VeresedakiCreateForm(forms.ModelForm):
     class Meta:
         model = Veresedaki
-        fields = ('ower', 'group', 'amount', 'comment')
+        fields = ('ower', 'transaction', 'amount', 'comment')
 
 
 class TransactionCreateForm(forms.ModelForm):
