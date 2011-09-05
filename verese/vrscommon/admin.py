@@ -2,23 +2,30 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from models import Relation, GroupVeresedaki, Veresedaki, Currency,\
+from models import Relation, Transaction, Veresedaki, Currency,\
      UserProfile, VeresedakiStatus
 
 # register the models for the admin
-admin.site.register(VeresedakiStatus)
+
+class VeresedakiStatusAdmin(admin.ModelAdmin):
+    models = VeresedakiStatus
+    list_display = ("id", "user", "veresedaki", "status")
+
+admin.site.register(VeresedakiStatus, VeresedakiStatusAdmin)
 
 class VeresedakiInline(admin.TabularInline):
     model = Veresedaki
 
-class GroupVeresadakiAdmin(admin.ModelAdmin):
+class TransactionAdmin(admin.ModelAdmin):
     inlines = [VeresedakiInline]
-    list_display = ("payer", "total_amount", "currency", "status", "created")
+    list_display = ("id", "payer", "total_amount",
+                    "currency", "status", "created"
+                    )
     ordering = ("-created",)
     search_fields = ("payer__username", "payer__last_name")
     save_on_top = True
 
-admin.site.register(GroupVeresedaki, GroupVeresadakiAdmin)
+admin.site.register(Transaction, TransactionAdmin)
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile

@@ -7,11 +7,12 @@ from django.db.models import Sum, Q
 
 from taggit.managers import TaggableManager
 
-status_choices = ((40, 'Verified'),
-                  (30, 'Waiting'),
-                  (20, 'Denied'),
-                  (10, 'Canceled')
-                  )
+status_choices = (
+    (40, 'Verified'),
+    (30, 'Waiting'),
+    (20, 'Denied'),
+    (10, 'Canceled')
+    )
 
 # Create your models here.
 class Relation(models.Model):
@@ -64,16 +65,13 @@ class Relation(models.Model):
             return self.objects.get_or_create(user1=user1,
                                               user2=user2, **kwargs)
 
-class GroupVeresedaki(models.Model):
+class Transaction(models.Model):
     payer = models.ForeignKey(User)
     comment = models.TextField(blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
     currency = models.ForeignKey("Currency")
     tags = TaggableManager(blank=True)
     # geolocation
-
-    class Meta:
-        verbose_name_plural = "Group Veresedakia"
 
     @property
     def total_amount(self):
@@ -82,7 +80,7 @@ class GroupVeresedaki(models.Model):
     @property
     def status(self):
         """
-        Return the status of GroupVeresedaki based on the status of Veresedakia.
+        Return the status of Transaction based on the status of Veresedakia.
 
         The lowest value of Veresedakia is returned as status.
 
@@ -90,9 +88,8 @@ class GroupVeresedaki(models.Model):
         If you have 3 Veresedakia with the following status values
         (30, Waiting), (40, Verified) and (20, Denied)
 
-        the status of GroupVeresedaki will be (20, Denied)
+        the status of Transaction will be (20, Denied)
         """
-        print self.veresedakia.values_list('status__status', flat=True)
         status_value = min(self.veresedakia.values_list('status__status', flat=True) or [1])
         for status in status_choices:
             if status[0] == status_value:
@@ -119,9 +116,12 @@ class Veresedaki(models.Model):
                                        validators=[MinValueValidator(0.01)],
                                        blank=True)
     comment = models.TextField(blank=True, null=True)
-    status = models.ForeignKey("VeresedakiStatus", blank=True)
-    group = models.ForeignKey(GroupVeresedaki)
+    status = models.OneToOneField("VeresedakiStatus", blank=True, null=True)
+    group = models.ForeignKey(Transaction)
     # currency = models.ForeignKey("Currency")
+
+    def clean_status(self):
+        return VeresedakiStatus.objects.all()[0]
 
     def save(self, *args, **kwargs):
         # create or get relation
@@ -139,11 +139,12 @@ class Veresedaki(models.Model):
         relation.save(args, kwargs)
 
         # add status
-        if self.status == None:
-            self.status = VeresedakiStatus(user=self.group.payer, status=1)
-            self.status.save()
+        if not self.status:
+            vs = VeresedakiStatus(user=self.group.payer)
+            vs.save()
+            self.status = vs
 
-        super(Veresedaki, self).save(args, kwargs)
+        super(Veresedaki, self).save(*args, **kwargs)
 
     def __unicode__(self):
         return "[%s owes %s: %s]" % (self.ower, self.group.payer, self.amount)
@@ -203,7 +204,7 @@ class UserBalance(models.Model):
         super(UserBalance, self).save(*args, **kwargs)
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     pin = models.IntegerField(null=True, blank=True)
     currency = models.ForeignKey(Currency)
     wants_email = models.BooleanField(default=True)
@@ -250,12 +251,18 @@ class UserProfile(models.Model):
 
         for amount in total_amounts:
             amount['currency'] = Currency.objects.get(pk=amount['currency'])
+        else:
+            total_amounts = {}
+            total_amounts[self.currency.name] = 0
 
         return total_amounts
 
 
-def user_post_save(sender, instance, **kwargs):
+def user_post_save(sender, instance, created, **kwargs):
     """Create the user profile when the user is created."""
-    profile, created = UserProfile.objects.get_or_create(user=instance)
+    if created:
+        UserProfile.objects.create(user=instance,
+                                   currency = Currency.objects.all()[0]
+                                   )
 
 models.signals.post_save.connect(user_post_save, sender=User)

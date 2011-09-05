@@ -16,5 +16,13 @@ urlpatterns = patterns(
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^api/', include('verese.vrscommon.apiurls')),
+    url(r'^api/v1.0/', include('verese.vrscommon.api.v10.apiurls')),
+    url(r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
+
 )
+
+if settings.LOCAL_DEVELOPMENT:
+    urlpatterns += patterns("django.views",
+        url(r"%s(?P<path>.*)$" % settings.MEDIA_URL[1:], "static.serve", {"document_root": settings.MEDIA_ROOT,})
+    )
