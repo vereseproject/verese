@@ -19,4 +19,4 @@ pip install django-taggit
 pip install werkzeug
 
 
-pip -E env install -e git://github.com/mozilla/django-piston.git#egg=django-piston
+# pip -E env install -e git://github.com/mozilla/django-piston.git#egg=django-piston
