@@ -8,7 +8,7 @@ from django.db.models import Sum, Q
 from taggit.managers import TaggableManager
 
 status_choices = (
-    (40, 'Verified'),
+    (40, 'Accepted'),
     (30, 'Waiting'),
     (20, 'Denied'),
     (10, 'Canceled')
@@ -134,15 +134,16 @@ class Veresedaki(models.Model):
         # calculate amount in relation currency
         self.local_amount = self.amount / self.transaction.currency.rate * relation.currency.rate
 
-        # add balance
-        relation.balance += self.amount
-        relation.save(args, kwargs)
-
         # add status
         if not self.status:
             vs = VeresedakiStatus(user=self.transaction.payer)
             vs.save()
             self.status = vs
+
+        # add balance if veresedaki is accepted
+        if self.status.status == 40:
+            relation.balance += self.amount
+            relation.save(args, kwargs)
 
         super(Veresedaki, self).save(*args, **kwargs)
 
