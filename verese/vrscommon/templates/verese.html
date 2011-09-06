@@ -1,142 +1,227 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
+<html>
 <!-- Verese App page -->
 
 <head>
-	<title>verese</title>
-	
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" />
-	<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
-	
-	<link rel="stylesheet" href="media/main.css" />
+  <meta name="generator" content=
+  "HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
 
-	</head>
+  <title>verese</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
+  <script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="media/main.css" type="text/css">
+
+
+</head>
+
 <body>
+  <!-- Dashboard page -->
 
-<!-- Dashboard page -->
 <div data-role="page" id="dashboard">
-	<div data-role="header" data-position="fixed">
-		<h1>verese</h1>
-		<a href="index.html" data-icon="gear" class="ui-btn-right">Options</a>
-	</div><!-- /header -->
-	
-	<div data-role="content" style="text-align:center;">	
-		<div class="ui-grid-a">
-			<div style="width:46%;margin:2%;text-align:left;" class="ui-block-a"><h2>Makis<br>Veresedakis</h2></div>
-			<div style="width:46%;margin:2%;" class="ui-block-b">
-				<a href="" id="gridcurrencies" data-role="button" data-icon="grid" data-iconpos="bottom"><h2>~ 30 €</h2></a> 
-			</div>
-		</div>
+ <script type="text/javascript">
+  $(document).ready(function () {
 
-		<script>
-			$(document).ready(function () {
-				$('#currency-aggregations').hide();
-				$('#gridcurrencies').click(function () {
-					$('#currency-aggregations').slideToggle('fast');
-				});
-				$('#eur-transactions').click(function () {
-					$('.usd-transaction').slideOut('slow');
-					$('.eur-transaction').slideIn('slow');
-				});
-				$('#usd-transactions').click(function () {
-					$('.usd-transaction').slideIn('slow');
-					$('.eur-transaction').slideOut('slow');
-				});
-				
-			});
-		</script>
+    $('#currency-aggregations').hide();
+    $('#gridcurrencies').click(function () {
+       $('#currency-aggregations').slideToggle('fast');
+    });
 
-		<div id="currency-aggregations" data-role="controlgroup" style="height:auto; width:auto; text-align:center;">
-			<a id="usd-transactions" data-role="button"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/22px-Flag_of_the_United_States.svg.png"></img><h2>- 30 USD</h2></a>
-			<a id="eur-transactions" data-role="button"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/22px-Flag_of_Europe.svg.png"></img><h2>40 EUR</h2></a>
-		</div>
+    $('#usd-transactions').click(function () {
+       $('.usd-transaction').slideToggle('fast');
+    });
+
+    $('#eur-transactions').click(function () {
+       $('.eur-transaction').slideToggle('fast');
+    });
+
+    $.getJSON("/api/v1.0/profile/", function(json) {
+      $('#myname').html(json.data.first_name + ' ' + json.data.last_name);
+    });
+  });
+ </script>
 
 
-	<div style="padding:5%;">
-		<ul data-role="listview">
-			<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
-			<li class="usd-transaction"><a href="index.html">
-				
-				<h3>Stephen Weber</h3>
 
-				<p><strong>You've been invited to a meeting at Filament Group in Boston, MA</strong></p>
-				<p>Hey Stephen, if you're available at 10am tomorrow, we've got a</p>
-				<p class="ui-li-aside"><strong>6:24</strong>PM</p>
-				
-			</a></li>
-			<li class="usd-transaction"><a href="">
-				
-				<h3>jQuery Team</h3>
+  <div data-role="header" data-position="fixed">
+      <h1>verese</h1>
+      <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
+    </div><!-- /header -->
 
-				<p><strong>Boston Conference Planning</strong></p>
-				<p>In preparation for the upcoming conference in Boston, we need to start</p>
-				<p class="ui-li-aside"><strong>9:18</strong>AM</p>
-				
-			</a></li>
-			<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
-			<li class="eur-transaction"><a href="index.html">
+    <div data-role="content" style="text-align:center;">
+      <div class="ui-grid-a">
+        <div style="width:46%;margin:2%;text-align:left;" class="ui-block-a">
+          <h2 id="myname"></h2>
+        </div>
 
-				<h3>Avery Walker</h3>
-				<p><strong>Re: Dinner Tonight</strong></p>
-				<p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait! </p>
-				<p class="ui-li-aside"><strong>4:48</strong>PM</p>
-			</a></li>
-			<li data-role="list-divider">Wednesday, October 6, 2010 <span class="ui-li-count">3</span></li>
+        <div style="width:46%;margin:2%;" class="ui-block-b">
+          <h2><a href="" id="gridcurrencies" data-role="button" data-icon="grid" data-iconpos="bottom" name="gridcurrencies">~ 30 €</a></h2>
+        </div>
+      </div>
 
-			<li class="usd-transaction"><a href="index.html">
-				<h3>Amazon.com</h3>
-				<p><strong>4-for-3 Books for Kids</strong></p>
-				<p>As someone who has purchased children's books from our 4-for-3 Store.</p>
-				<p class="ui-li-aside"><strong>12:47</strong>PM</p>
-			</a></li>
+      <div id="currency-aggregations" data-role="controlgroup" style="height:auto; width:auto; text-align:center;">
+        <a id="usd-transactions" data-role="button" name="usd-transactions">
+	  <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Flag_of_the_United_States.svg/22px-Flag_of_the_United_States.svg.png">
+	</a>
 
-			<li class="eur-transaction"><a href="index.html">
-				<h3>Mike Taylor</h3>
-				<p><strong>Re: This weekend in Maine</strong></p>
-				<p>Hey little buddy, sorry but I can't make it up to vacationland this weekend.</p>
-				<p class="ui-li-aside"><strong>6:24</strong>AM</p>
-			</a></li>
+	<h2>- 30 USD</h2>
 
-			<li class="eur-transaction"><a href="index.html">
-				<h3>Redfin</h3>
-				<p><strong>Redfin listing updates for today</strong></p>
-				<p>There are 3 updates for the home on your watchlist: 1 updated MLS.</p>
-				<p class="ui-li-aside"><strong>5:52</strong>AM</p>
-			</a></li>
+	<a id="eur-transactions" data-role="button" name="eur-transactions">
+	  <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Flag_of_Europe.svg/22px-Flag_of_Europe.svg.png">
+	</a>
 
-			<li data-role="list-divider">Tuesday, October 5, 2010 <span class="ui-li-count">3</span></li>
-			<li class="eur-transaction"><a href="index.html">
-				<h3>Angela Smith</h3>
-				<p><strong>Link Request</strong></p>
-				<p>My name is Angela Smith, SEO Consultant.</p>
-				<p class="ui-li-aside"><strong>6:24</strong>AM</p>
+        <h2>40 EUR</h2>
+      </div>
 
-			</a></li>
-			<li class="usd-transaction"><a href="index.html">
-				<h3>Mike Taylor</h3>
-				<p><strong>This weekend in Maine</strong></p>
-				<p>Sounds good, let me check into our plans.</p>
-				<p class="ui-li-aside"><strong>6:24</strong>AM</p>
+      <div style="padding:5%;">
+        <ul data-role="listview">
+          <li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
 
-			</a></li>
-		</ul>
-		</div>
-	</div><!-- /content -->
+          <li class="usd-transaction">
+            <a href="index.html"></a>
 
-	<div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b">
-		<div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-		<ul>
-			<li><a href="#" id="veresedaki" data-icon="custom">Add</a></li>
-			<li><a href="#" id="planet" data-icon="custom">Overview</a></li>
-			<li><a href="#" id="group" data-icon="custom">People</a></li>
-			<li><a href="#" id="analitics" data-icon="custom">Analysis</a></li>
-		</ul>
-		</div>
-	</div><!-- /footer -->
+            <h3><a href="index.html">Stephen Weber</a></h3>
 
+            <p><a href="index.html"><strong>You've been invited to a meeting at
+            Filament Group in Boston, MA</strong></a></p>
+
+            <p><a href="index.html">Hey Stephen, if you're available at 10am
+            tomorrow, we've got a</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>6:24</strong>PM</a></p>
+          </li>
+
+          <li class="usd-transaction">
+            <a href=""></a>
+
+            <h3><a href="">jQuery Team</a></h3>
+
+            <p><a href=""><strong>Boston Conference Planning</strong></a></p>
+
+            <p><a href="">In preparation for the upcoming conference in Boston,
+            we need to start</a></p>
+
+            <p class="ui-li-aside"><a href=""><strong>9:18</strong>AM</a></p>
+          </li>
+
+          <li data-role="list-divider">Thursday, October 7, 2010 <span class=
+          "ui-li-count">1</span></li>
+
+          <li class="eur-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Avery Walker</a></h3>
+
+            <p><a href="index.html"><strong>Re: Dinner Tonight</strong></a></p>
+
+            <p><a href="index.html">Sure, let's plan on meeting at Highland
+            Kitchen at 8:00 tonight. Can't wait!</a></p><a href=
+            "index.html"></a>
+
+            <p class="ui-li-aside"><strong>4:48</strong>PM</p>
+          </li>
+
+          <li data-role="list-divider">Wednesday, October 6, 2010 <span class=
+          "ui-li-count">3</span></li>
+
+          <li class="usd-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Amazon.com</a></h3>
+
+            <p><a href="index.html"><strong>4-for-3 Books for
+            Kids</strong></a></p>
+
+            <p><a href="index.html">As someone who has purchased children's
+            books from our 4-for-3 Store.</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>12:47</strong>PM</a></p>
+          </li>
+
+          <li class="eur-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Mike Taylor</a></h3>
+
+            <p><a href="index.html"><strong>Re: This weekend in
+            Maine</strong></a></p>
+
+            <p><a href="index.html">Hey little buddy, sorry but I can't make it
+            up to vacationland this weekend.</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>6:24</strong>AM</a></p>
+          </li>
+
+          <li class="eur-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Redfin</a></h3>
+
+            <p><a href="index.html"><strong>Redfin listing updates for
+            today</strong></a></p>
+
+            <p><a href="index.html">There are 3 updates for the home on your
+            watchlist: 1 updated MLS.</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>5:52</strong>AM</a></p>
+          </li>
+
+          <li data-role="list-divider">Tuesday, October 5, 2010 <span class=
+          "ui-li-count">3</span></li>
+
+          <li class="eur-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Angela Smith</a></h3>
+
+            <p><a href="index.html"><strong>Link Request</strong></a></p>
+
+            <p><a href="index.html">My name is Angela Smith, SEO
+            Consultant.</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>6:24</strong>AM</a></p>
+          </li>
+
+          <li class="usd-transaction">
+            <a href="index.html"></a>
+
+            <h3><a href="index.html">Mike Taylor</a></h3>
+
+            <p><a href="index.html"><strong>This weekend in
+            Maine</strong></a></p>
+
+            <p><a href="index.html">Sounds good, let me check into our
+            plans.</a></p>
+
+            <p class="ui-li-aside"><a href=
+            "index.html"><strong>6:24</strong>AM</a></p>
+          </li>
+        </ul>
+      </div>
+    </div><!-- /content -->
+
+    <div data-role="footer" class="nav-glyphish-example" data-position="fixed"
+    data-theme="b">
+      <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+        <ul>
+          <li><a href="#" id="veresedaki" data-icon="custom" name="veresedaki">Add</a></li>
+
+          <li><a href="#" id="planet" data-icon="custom" name="planet">Overview</a></li>
+
+          <li><a href="#" id="group" data-icon="custom" name="group">People</a></li>
+
+          <li><a href="#" id="analitics" data-icon="custom" name="analitics">Analysis</a></li>
+        </ul>
+      </div>
+    </div><!-- /footer -->
+  </div>
 </body>
-
 </html>
