@@ -14,3 +14,6 @@ DATABASES = {
 # locally installed apps
 INSTALLED_APPS = INSTALLED_APPS + (
     )
+
+DEBUG=True
+LOCAL_DEVELOPMENT=True

@@ -1,16 +1,17 @@
-from piston.handler import BaseHandler, AnonymousBaseHandler
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
 from django.forms.models import inlineformset_factory
 from django.db import transaction
 
+from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.decorator import decorator
 from piston.utils import rc
 
 from vrscommon.models import *
 from exceptions import *
-from apiforms import *
+from forms import *
+from views import *
 
 def validate(v_form, operations):
     # We don't use piston.utils.validate function
@@ -32,13 +33,15 @@ def validate(v_form, operations):
 
     return wrap
 
-@decorator
-def check_read_permission(function, self, request, *args, **kwargs):
-    return function(self, request, *args, **kwargs)
+class CurrencyHandler(BaseHandler):
+    """
+    Return list of supported currencies
+    """
+    allowed_methods = ('GET', )
+    model = Currency
 
-@decorator
-def check_write_permission(function, self, request, *args, **kwargs):
-    return function(self, request, *args, **kwargs)
+    def read(self, request):
+        return CurrencyListView(Currency.objects.all())
 
 class BalanceHandler(BaseHandler):
     """
@@ -46,24 +49,9 @@ class BalanceHandler(BaseHandler):
     """
     allowed_methods = ('GET', )
 
-    def read(self, request, type, *args, **kwargs):
+    def read(self, request):
         user_profile = request.user.get_profile()
-
-        if type == 'overall':
-            if kwargs.get('detailed', False):
-                return user_profile.balance
-
-            else:
-                return user_profile.balance_detailed
-
-        elif type == 'relation_list':
-            return 'relation_list'
-
-        elif type == 'relation':
-            return 'relation'
-
-        elif type == 'currency':
-            pass
+        return BalanceView(user_profile)
 
 
 class LoginHandler(BaseHandler):
@@ -117,19 +105,21 @@ class UserHandler(BaseHandler):
     """
     model = User
     allowed_methods = ('GET', 'PUT', 'DELETE')
+    fields = ('first_name',
+              'last_name',
+              'username',
+              'email',
+              )
 
-    @check_read_permission
     def read(self, request):
-        return request.user.id
+        return request.user
 
-    @check_write_permission
     @transaction.commit_on_success()
     def update(self, request):
         # user_id from request.user.id
         # user and userprofile updatesx
         pass
 
-    @check_write_permission
     @transaction.commit_on_success()
     def delete(self, request):
         # user_id from request.user.id
@@ -144,11 +134,29 @@ class RelationHandler(BaseHandler):
     model = Relation
     allowed_methods = ('GET', 'PUT', 'DELETE')
 
-    @check_read_permission
-    def read(self, request, relation_id):
-        return get_object_or_404(Relation, pk=relation_id)
+    def read(self, request, relation_id=None, details=False):
+        if relation_id:
+            try:
+                relation = Relation.objects.\
+                           get((Q(user1=request.user)|Q(user2=request.user)),
+                               pk=relation_id
+                               )
 
-    @check_write_permission
+            except Relation.DoesNotExist:
+                return rc.FORBIDDEN
+
+            if details:
+                return RelationDetailedView(relation)
+
+            else:
+                return RelationView(relation)
+
+        else:
+            relations = Relation.objects.\
+                        filter(Q(user1=request.user)|Q(user2=request.user))
+
+            return RelationListView(relations)
+
     @transaction.commit_on_success()
     def update(self, request, relation_id):
         relation = get_object_or_404(Relation, pk=relation_id)
@@ -160,7 +168,6 @@ class RelationHandler(BaseHandler):
         form.save()
         return rc.ALL_OK
 
-    @check_write_permission
     @transaction.commit_on_success()
     def delete(self, request, relation_id):
         obj = get_object_or_404(Relation, pk=relation_id)
@@ -177,12 +184,30 @@ class TransactionHandler(BaseHandler):
     # use formsets
     # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
 
-    @check_read_permission
-    def read(self, request, group_veresedaki_id):
-        # fetch group_veresedaki and related veresedakia
-         return get_object_or_404(Transaction, pk=group_veresedaki_id)
+    def read(self, request, transaction_id=None):
+        # fetch transaction and related veresedakia
+        if transaction_id:
+            try:
+                transaction = Transaction.objects.\
+                              get(Q(payer=request.user) |\
+                                  Q(veresedaki__ower__in=[request.user]),
+                                  id=transaction_id,
+                                  )
 
-    @check_write_permission
+            except Transaction.DoesNotExist:
+                return rc.FORBIDDEN
+
+            return TransactionView(transaction)
+
+        else:
+            transactions = Transaction.objects.\
+                           filter(Q(payer=request.user)|\
+                                  Q(veresedaki__ower__in = [request.user]
+                                    )
+                                  )
+
+            return TransactionListView(transactions)
+
     @transaction.commit_on_success()
     def create(self, request):
         form = TransactionCreateForm(request.POST,
@@ -202,11 +227,10 @@ class TransactionHandler(BaseHandler):
 
         return rc.CREATED
 
-    @check_write_permission
     @transaction.commit_on_success()
-    def delete(self, request, group_veresedaki_id):
-        # delete group veresedaki and veresedaki (auto)
-        obj = get_object_or_404(Transaction, pk=group_veresedaki_id)
+    def delete(self, request, transaction_id):
+        # delete transaction and veresedaki (auto)
+        obj = get_object_or_404(Transaction, pk=transaction_id)
         obj.delete()
         return rc.DELETED
 
@@ -215,25 +239,27 @@ class VeresedakiHandler(BaseHandler):
     """
     Veresedaki
 
-    only create a veresedaki as part of a group veresedaki
+    only create a veresedaki as part of a transaction
     """
     model = Veresedaki
     allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
+    fields = ('ower', 'amount', 'local_amount', 'comment',
+              ('status', ('status', 'user', 'created')),
+              ('transaction', ('id', 'payer'))
+              )
 
-    @check_read_permission
     def read(self, request, veresedaki_id):
         return get_object_or_404(Veresedaki, pk=veresedaki_id)
 
-    @check_write_permission
     @transaction.commit_on_success()
-    def create(self, request, group_veresedaki_id):
-        group_veresedaki = get_object_or_404(Transaction,
-                                             pk=group_veresedaki_id)
+    def create(self, request, transaction_id):
+        transaction = get_object_or_404(Transaction,
+                                        pk=transaction_id)
 
         data = request.POST
-        data['group'] = group_veresedaki_id
+        data['transaction'] = transaction_id
         form = VeresedakiCreateForm(data,
-                                    instance=Veresedaki(group=group_veresedaki)
+                                    instance=Veresedaki(transaction=transaction)
                                     )
 
         if not form.is_valid():
@@ -242,7 +268,6 @@ class VeresedakiHandler(BaseHandler):
         form.save()
         return rc.CREATED
 
-    @check_write_permission
     @transaction.commit_on_success()
     def update(self, request, veresedaki_id):
         # can update value
@@ -259,7 +284,6 @@ class VeresedakiHandler(BaseHandler):
         form.save()
         return rc.ALL_OK
 
-    @check_write_permission
     @transaction.commit_on_success()
     def delete(self, request, veresedaki_id):
         obj = get_object_or_404(Veresedak, pk=veresedaki_id)
