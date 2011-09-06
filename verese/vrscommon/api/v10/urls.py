@@ -10,14 +10,14 @@ from handlers import VeresedakiHandler, TransactionHandler, \
 
 django_auth = DjangoAuthentication(login_url='/api/login/')
 basic_auth = HttpBasicAuthentication(realm='verese')
-veresedaki_handler = Resource(VeresedakiHandler, basic_auth)
-transaction_handler = Resource(TransactionHandler, basic_auth)
-relation_handler = Resource(RelationHandler, basic_auth)
+veresedaki_handler = Resource(VeresedakiHandler, django_auth)
+transaction_handler = Resource(TransactionHandler, django_auth)
+relation_handler = Resource(RelationHandler, django_auth)
 login_handler = Resource(LoginHandler)
 logout_handler = Resource(LogoutHandler)
-balance_handler = Resource(BalanceHandler, basic_auth)
+balance_handler = Resource(BalanceHandler, django_auth)
 currency_handler = Resource(CurrencyHandler)
-user_handler = Resource(UserHandler, basic_auth)
+user_handler = Resource(UserHandler, django_auth)
 
 urlpatterns = patterns(
     '',
