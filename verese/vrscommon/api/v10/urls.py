@@ -25,7 +25,7 @@ urlpatterns = patterns(
     api_url(r'^balance/$', balance_handler),
 
     api_url(r'^relation/(?P<relation_id>\d+)/details/$',
-            relation_handler, {'details':True}
+            relation_handler, { 'details':True }
             ),
     api_url(r'^relation/(?P<relation_id>\d+)/$', relation_handler),
     api_url(r'^relation/list/$', relation_handler),
@@ -36,5 +36,8 @@ urlpatterns = patterns(
 
     api_url(r'^currency/list/$', currency_handler),
 
-    api_url(r'^profile/$', user_handler)
+    api_url(r'^profile/$', user_handler),
+
+    api_url(r'login/$', login_handler),
+    api_url(r'logout/$', logout_handler),
     )
