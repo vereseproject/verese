@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<!-- Login and basic info page -->
+
+<head>
+  <meta name="generator" content="HTML Tidy for Linux (vers 25 March 2009), see www.w3.org">
+
+  <title>verese</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" type="text/css">
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
+  <script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="media/main.css" type="text/css">
+</head>
+
+<script>
+$(document).bind('pagecreate', (function() {
+  $('#loginform').submit(function(event) {
+     $.mobile.showPageLoadingMsg();
+
+     var success_cb = function(dataReceived, textStatus) {
+       $.mobile.changePage("/verese/", { 'transition':'pop' });
+     }
+
+     var error_cb = function(dataReceived, textStatus, errorThrown) {
+       alert('login error, try again');
+       // make this a jqm popup or something
+     }
+
+     $.ajax({
+        type: 'POST',
+        url: '/api/v1.0/login/',
+        dataType: 'text',
+        data: $(this).serialize(),
+        success: success_cb,
+        error: error_cb
+        })
+  });
+
+  // focus on username
+  $('#username').focus();
+
+  })
+);
+</script>
+<body>
+  <!-- Login Page -->
+
+  <div data-role="page" id="login" style="text-align:center;">
+    <div data-role="header" data-position="fixed">
+      <h1>verese</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+      <p>Verese - Owe me now!</p>
+
+      <div data-role="fieldcontain">
+        <form id="loginform" method="post" action="/api/v1.0/login/">
+          {% csrf_token %}
+	  <label for="username">Username:</label>
+	  <input type="text" name="username" id="username" value="">
+	  <label for="password">Password:</label>
+	  <input type="password" name="password" id="password" value="">
+	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
+	  <input type="hidden" name="next" value="/verese/"/>
+
+        </form>
+      </div>
+
+      <a href="#faq" data-role="button" data-transition="slide" data-inline="true" data-icon="info">Frequently Asked Questions</a>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+      <h4><sub>copyleft verese project 2011</sub></h4>
+    </div><!-- /footer -->
+  </div><!-- /login page -->
+  <!-- FAQ Page -->
+
+  <div data-role="page" id="faq" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+      <h1>verese</h1>
+
+      <h2>What is verese?</h2>
+
+      <h2>How to use it?</h2>
+
+      <h2>Is is free?</h2>
+    </div><!-- /header -->
+
+    <div data-role="footer" data-theme="d">
+      <h4><sub>copyleft verese project 2011</sub></h4>
+    </div><!-- /footer -->
+  </div><!-- /FAQ page -->
+</body>
+</html>
