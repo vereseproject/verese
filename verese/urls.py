@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import patterns, include, url
+from django.views.generic.simple import redirect_to
 from django.conf import settings
+
 import vrscommon
 
 # Uncomment the next two lines to enable the admin:
@@ -24,6 +26,7 @@ urlpatterns = patterns(
         ),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
     url(r'^verese/', include('verese.vrscommon.urls')),
+    url(r'^$', redirect_to, {'url':'/verese/'}),
 
 )
 
