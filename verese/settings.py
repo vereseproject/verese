@@ -120,6 +120,7 @@ INSTALLED_APPS = (
     'south',
     'django_extensions',
     'taggit',
+    'django_browserid',
     'vrscommon',
 )
 
@@ -147,6 +148,25 @@ LOGGING = {
 }
 
 AUTH_PROFILE_MODULE = 'vrscommon.UserProfile'
+
+AUTHENTICATION_BACKENDS = (
+    'django_browserid.auth.BrowserIDBackend',
+    )
+
+# URL of a BrowserID verification service.
+BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
+
+# CA cert file for validating SSL certificate
+BROWSERID_CACERT_FILE = ''
+
+# Create user accounts automatically if no user is found.
+BROWSERID_CREATE_USER = True
+
+# Path to redirect to on successful login.
+LOGIN_REDIRECT_URL = '/verese/'
+
+# Path to redirect to on unsuccessful login attempt.
+LOGIN_REDIRECT_URL_FAILURE = '/'
 
 # import local settings
 from local_settings import *
