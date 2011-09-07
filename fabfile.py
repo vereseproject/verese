@@ -41,14 +41,8 @@ def backup(files=True, database=True):
 
     if files:
         with cd(os.path.join(env.remote_app_dir, '..')):
-            # tar
-            run("tar cf %s/%s/verese-%s-%s.tar "
+            run("tar czf %s/%s/verese-%s-%s.tar "
                 "verese" % (env.backup_dir, env.branch, env.branch, date)
-                )
-
-            # compress
-            run("gzip %s/%s/verese-%s-%s.tar" %\
-                (env.backup_dir, env.branch, env.branch, date)
                 )
 
     if database:
@@ -57,14 +51,14 @@ def backup(files=True, database=True):
                 (env.database, env.backup_dir, env.branch, env.branch, date)
                 )
 
-def deploy(do_backup=True, update_code=True):
+def deploy(do_backup=True, do_update=True):
     require('branch', provided_by=[beta])
     require('remote_app_dir', provided_by=[beta])
 
     if do_backup:
         backup()
 
-    if update_code:
+    if do_update:
         update_code()
 
     with cd(env.remote_app_dir):
