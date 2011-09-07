@@ -238,7 +238,7 @@ class VeresedakiStatus(models.Model):
     class Meta:
         ordering = ['-created']
         verbose_name_plural = "veresedakia statuses"
-        unique_together = ('veresadaki', 'status', 'user')
+        unique_together = ('veresedaki', 'status', 'user')
 
 class Currency(models.Model):
     """
