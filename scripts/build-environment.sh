@@ -6,16 +6,23 @@
 # use enviroment variable PIP to set the path to pip python package
 # manager.
 #
+ENV="env"
 
 if [ "$PIP" == "" ];
 then
   PIP="pip"
 fi
 
-$PIP -E env install -r scripts/dependencies.txt
+# if env exists activate it
+if [ -d $ENV ];
+then
+  source $ENV/bin/activate || exit;
+fi
+
+$PIP -E $ENV install -r scripts/dependencies.txt
 
 # activate environment
-source env/bin/activate
+source $ENV/bin/activate
 
 cd verese
 
