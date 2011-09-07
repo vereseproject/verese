@@ -10,7 +10,8 @@ status_choices = (
     (40, 'Accepted'),
     (30, 'Waiting'),
     (20, 'Denied'),
-    (10, 'Canceled')
+    (10, 'Canceled'),
+    (00, 'Unknown')
     )
 
 def _min_validator(data, **kwargs):
@@ -117,7 +118,12 @@ class Transaction(models.Model):
 
         the status of Transaction will be (20, Denied)
         """
-        status_value = min(self.veresedakia.values_list('status__status', flat=True) or [1])
+        status_value = min(
+            map(lambda x: x.veresedakistatus_set.latest('created').status,
+                self.veresedakia
+                ) or [0]
+            )
+
         for status in status_choices:
             if status[0] == status_value:
                 return status[1]
@@ -131,7 +137,7 @@ class Transaction(models.Model):
 
     def __unicode__(self):
         # total amount can be cached
-        return "[%s:%s]" % (self.payer, self.total_amount)
+        return "[%03d] %s:%s" % (self.id, self.payer, self.total_amount)
 
 class Veresedaki(models.Model):
     ower = models.ForeignKey(User)
@@ -143,7 +149,6 @@ class Veresedaki(models.Model):
                                        validators=[_min_validator],
                                        blank=True)
     comment = models.TextField(blank=True, null=True)
-    status = models.OneToOneField("VeresedakiStatus", blank=True, null=True)
     transaction = models.ForeignKey(Transaction)
 
     class Meta:
@@ -151,6 +156,16 @@ class Veresedaki(models.Model):
 
     def clean_status(self):
         return VeresedakiStatus.objects.all()[0]
+
+    @property
+    def status(self):
+        """
+        Wrapper to fetch the latest status for veresedaki
+        """
+        try:
+            return self.veresedakistatus_set.order_by('-created')[0]
+        except IndexError:
+            return None
 
     def save(self, *args, **kwargs):
         # create or get relation
@@ -162,30 +177,25 @@ class Veresedaki(models.Model):
             relation = Relation(user1=self.transaction.payer,
                                 user2=self.ower,
                                 currency = self.transaction.currency)
-            relation.save()
+            relation.save(*args, **kwargs)
 
         # calculate amount in relation currency
         self.local_amount = self.amount / self.transaction.currency.rate * relation.currency.rate
 
-        # add status
-        if not self.status:
-            vs = VeresedakiStatus(user=self.transaction.payer)
-            vs.save()
-            self.status = vs
-
-        # add balance if veresedaki is accepted
-        if self.status.status == 40:
-            if self.ower == relation.user2:
-                relation.balance += self.amount
-            else:
-                relation.balance -= self.amount
-
-            relation.save(args, kwargs)
-
         super(Veresedaki, self).save(*args, **kwargs)
 
+        # add status
+        if not self.status:
+            vs = VeresedakiStatus(user=self.transaction.payer,
+                                  veresedaki=self)
+            vs.save(*args, **kwargs)
+
     def __unicode__(self):
-        return "[%s owes %s: %s]" % (self.ower, self.transaction.payer, self.amount)
+        return "[%03d] [%03d] %s owes %s: %s" % (self.id, self.transaction.id,
+                                                 self.ower,
+                                                 self.transaction.payer,
+                                                 self.amount
+                                                 )
 
     class Meta:
         verbose_name_plural = "veresedakia"
@@ -199,17 +209,36 @@ class VeresedakiStatus(models.Model):
     new VeresedakiStatus. Do not change already existing statuses
     """
     user = models.ForeignKey(User)
+    veresedaki = models.ForeignKey(Veresedaki)
     created = models.DateTimeField(auto_now_add=True)
     status = models.IntegerField(choices = status_choices,
                                  default = 30,
                                  blank=True,
                                  )
 
+    def save(self, *args, **kwargs):
+        # add balance if veresedaki is accepted
+        if self.status == 40:
+            relation = Relation.get(user1=self.veresedaki.transaction.payer,
+                                    user2=self.veresedaki.ower)
+
+            if self.veresedaki.ower == relation.user2:
+                relation.balance += self.veresedaki.amount
+
+            else:
+                relation.balance -= self.veresedaki.amount
+
+            relation.save(args, kwargs)
+
+        super(VeresedakiStatus, self).save(*args, **kwargs)
+
     def __unicode__(self):
         return self.get_status_display()
 
     class Meta:
+        ordering = ['-created']
         verbose_name_plural = "veresedakia statuses"
+        unique_together = ('veresadaki', 'status', 'user')
 
 class Currency(models.Model):
     """
@@ -301,8 +330,7 @@ class UserProfile(models.Model):
 def user_post_save(sender, instance, created, **kwargs):
     """Create the user profile when the user is created."""
     if created:
-        UserProfile.objects.create(user=instance,
-                                   currency = Currency.objects.all()[0]
-                                   )
+        profile = UserProfile.objects.create(user=instance,
+                                             currency = Currency.objects.all()[0])
 
 models.signals.post_save.connect(user_post_save, sender=User)
