@@ -1,0 +1,29 @@
+* Verese Project
+
+** About
+They this is an über cool project
+
+** Install
+To install verese you need installed python and pip, the python
+package manager. A sane linux distribution should have python
+preinstalled and pip in its repositories.
+
+ 1. git clone git://github.com/vereseproject/verese.git
+ 2. cd verese
+ 3. (optional, if you want the dev version) git checkout dev
+ 4. bash ./scripts/build-environment.sh
+    - Note Fedora Users: Note that fedora renames 'pip' command to
+      'python-pip'. Try the following command instead.
+
+      export PIP='python-pip' && bash ./scripts/build-environment.sh
+
+ 5. follow the on-screen instructions
+ 6. enjoy!
+
+** Community
+ - [[http://www.verese.net/][Verese Project Website]]
+ - [[http://blog.verese.org][Verese Blog]]
+ - Verese [[http://www.twitter.com/vereseproject][at Twitter]]
+
+** Contribute
+Fork and contribute ppl!
