@@ -33,6 +33,13 @@ class UserProfileInline(admin.StackedInline):
 
 class UserProfileAdmin(UserAdmin):
     inlines = [UserProfileInline]
+    list_display = ("username", "email", "first_name", "last_name",
+                    "currency", "is_active")
+
+    def currency(self, obj):
+        profile = obj.get_profile()
+        return profile.currency
+    currency.short_description = "currency"
 
 admin.site.unregister(User)
 admin.site.register(User, UserProfileAdmin)
