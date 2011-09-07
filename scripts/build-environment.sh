@@ -2,21 +2,44 @@
 #
 # invoke as
 # ~$ bash ./scripts/build-environment.sh
+#
+# use enviroment variable PIP to set the path to pip python package
+# manager.
+#
 
-# install django
-pip -E env install django
+if [ "$PIP" == "" ]; then
+  PIP="pip"
+
+$PIP -E env install -r scripts/dependencies.txt
 
 # activate environment
 source env/bin/activate
 
-# install the rest
-pip install south
-# pip install piston
-# pip install tastypie
-pip install django_extensions
-pip install ipython
-pip install django-taggit
-pip install werkzeug
+cd verese
 
+# if no local_settings, create them
+if [ ! -e local_settings.py ];
+then
+    cp local_settings.example.py local_settings.py
+    echo "Demo local_settings.py installed, maybe you want to change them"
+fi
 
-# pip -E env install -e git://github.com/mozilla/django-piston.git#egg=django-piston
+# syncdb
+echo "Syncing db"
+python manage.py syncdb --noinput
+
+echo "Migrating db"
+python manage.py migrate
+
+echo ""
+echo "Installation complete"
+echo ""
+echo "Activate your environment with"
+echo "~$ env/bin/activate"
+echo ""
+echo "Run your server with"
+echo "(env)~verese$ python manage.py runserver"
+echo ""
+echo "Load demo data with"
+echo "(env)~verese$ python manage.py loaddata demo"
+echo ""
