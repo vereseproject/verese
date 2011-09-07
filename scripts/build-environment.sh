@@ -7,8 +7,10 @@
 # manager.
 #
 
-if [ "$PIP" == "" ]; then
+if [ "$PIP" == "" ];
+then
   PIP="pip"
+fi
 
 $PIP -E env install -r scripts/dependencies.txt
 
@@ -35,7 +37,7 @@ echo ""
 echo "Installation complete"
 echo ""
 echo "Activate your environment with"
-echo "~$ env/bin/activate"
+echo "~$ source env/bin/activate"
 echo ""
 echo "Run your server with"
 echo "(env)~verese$ python manage.py runserver"
