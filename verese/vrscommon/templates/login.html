@@ -41,9 +41,9 @@
         </form>
 
 	<a id="browserid" href="#">Sign In</a>
-	<form method="POST" action="{% url browserid_verify %}">
+	<form method="POST" action="{% url browserid_verify %}" data-ajax="false">
 	{% csrf_token %}
-	<input type="hidden" name="assertion" />
+	<input type="hidden" name="assertion" id="id_assertion" />
 	</form>
 
       </div>
