@@ -55,16 +55,17 @@ def deploy(do_backup=True, do_update=True):
     require('branch', provided_by=[beta])
     require('remote_app_dir', provided_by=[beta])
 
-    if do_backup:
+    if do_backup == True:
         backup()
 
-    if do_update:
+    if do_update == True:
         update_code()
 
     with cd(env.remote_app_dir):
         run("bash ./scripts/build-environment.sh")
 
 def list_backups():
+    require('branch', provided_by=[beta])
     run("ls %s/%s" % (env.backup_dir, env.branch))
 
 def restart():
