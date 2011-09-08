@@ -18,6 +18,7 @@
 
   <link rel="stylesheet" href="/media/main.css" type="text/css">
   <link rel="apple-touch-icon-precomposed" href="/media/images/touch-icon.png"/>
+
 </head>
 
 <body>
@@ -29,7 +30,7 @@
     </div><!-- /header -->
 
     <div data-role="content">
-      <p>Verese - Owe me now!</p>
+      <p>beta deployment of verese</p>
 
       <div data-role="fieldcontain">
         <form id="loginform" method="post" action="/api/v1.0/login/">
@@ -43,7 +44,7 @@
 
         </form>
 
-	<a id="browserid" href="#">Sign In</a>
+	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
 	<form method="POST" action="{% url browserid_verify %}" data-ajax="false">
 	{% csrf_token %}
 	<input type="hidden" name="assertion" id="id_assertion" />
@@ -57,6 +58,35 @@
     <div data-role="footer" data-theme="d">
       <h4><sub>copyleft verese project 2011</sub></h4>
     </div><!-- /footer -->
+
+  <script>
+  (function() {
+  var fixgeometry = function() {
+  /* Some orientation changes leave the scroll position at something
+  * that isn't 0,0. This is annoying for user experience. */
+  scroll(0, 0);
+
+  /* Calculate the geometry that our content area should take */
+  var header = $("div[data-role='header']:visible");
+  var footer = $("div[data-role='footer']:visible");
+  var content = $("div[data-role='content']:visible:visible");
+  var viewport_height = $(window).height();
+ 
+  var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+  if((content.outerHeight() + header.outerHeight() + footer.outerHeight())<=viewport_height)
+  {
+  content_height -= (content.outerHeight() - content.height() + 1);
+content.height(content_height);
+  }
+  /* Trim margin/border/padding height */
+  }; /* fixgeometry */
+
+  $(document).ready(function() {
+  $(window).bind("orientationchange resize pageshow", fixgeometry);
+  });
+  })();
+  </script>
+
   </div><!-- /login page -->
   <!-- FAQ Page -->
 
