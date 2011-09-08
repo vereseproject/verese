@@ -15,6 +15,35 @@
   <script src="https://browserid.org/include.js" type="text/javascript"></script>
   <link rel="stylesheet" href="/media/main.css" type="text/css">
   <link rel="apple-touch-icon-precomposed" href="/media/images/touch-icon.png"/>
+
+  <script>
+  (function() {
+  var fixgeometry = function() {
+  /* Some orientation changes leave the scroll position at something
+  * that isn't 0,0. This is annoying for user experience. */
+  scroll(0, 0);
+
+  /* Calculate the geometry that our content area should take */
+  var header = JQ("div[data-role='header']:visible");
+  var footer = JQ("div[data-role='footer']:visible");
+  var content = JQ("div[data-role='content']:visible:visible");
+  var viewport_height = JQ(window).height();
+ 
+  var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+  if((content.outerHeight() header.outerHeight() footer.outerHeight())<=viewport_height)
+  {
+  content_height -= (content.outerHeight() - content.height() 1);
+content.height(content_height);
+  }
+  /* Trim margin/border/padding height */
+  }; /* fixgeometry */
+
+  JQ(document).ready(function() {
+  JQ(window).bind("orientationchange resize pageshow", fixgeometry);
+  });
+  })();
+  </script>
+
 </head>
 
 <body>
