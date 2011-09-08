@@ -166,7 +166,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
 
 # CA cert file for validating SSL certificate
-BROWSERID_CACERT_FILE = ''
+BROWSERID_CACERT_FILE = '/etc/ssl/certs/ca-certificates.crt'
 
 # Create user accounts automatically if no user is found.
 BROWSERID_CREATE_USER = True
@@ -175,7 +175,7 @@ BROWSERID_CREATE_USER = True
 LOGIN_REDIRECT_URL = '/verese/'
 
 # Path to redirect to on unsuccessful login attempt.
-LOGIN_REDIRECT_URL_FAILURE = '/'
+LOGIN_REDIRECT_URL_FAILURE = '/accounts/login/'
 
 # import local settings
 from local_settings import *
