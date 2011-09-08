@@ -25,6 +25,7 @@ urlpatterns = patterns(
         {'template_name': 'login.html'}
         ),
     url(r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
+    url(r'^browserid/', include('django_browserid.urls')),
     url(r'^verese/', include('verese.vrscommon.urls')),
     url(r'^$', redirect_to, {'url':'/verese/'}),
 
