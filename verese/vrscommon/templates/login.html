@@ -12,8 +12,68 @@
   <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.css" type="text/css">
   <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
   <script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js" type="text/javascript"></script>
+  <script src="https://browserid.org/include.js" type="text/javascript"></script>
+
   <link rel="stylesheet" href="media/main.css" type="text/css">
 </head>
+
+<body>
+  <!-- Login Page -->
+
+  <div data-role="page" id="login" style="text-align:center;">
+    <div data-role="header" data-position="fixed">
+      <h1>verese</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+      <p>Verese - Owe me now!</p>
+
+      <div data-role="fieldcontain">
+        <form id="loginform" method="post" action="/api/v1.0/login/">
+          {% csrf_token %}
+	  <label for="username">Username:</label>
+	  <input type="text" name="username" id="username" value="">
+	  <label for="password">Password:</label>
+	  <input type="password" name="password" id="password" value="">
+	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
+	  <input type="hidden" name="next" value="/verese/"/>
+
+        </form>
+
+	<a id="browserid" href="#">Sign In</a>
+	<form method="POST" action="{% url browserid_verify %}">
+	{% csrf_token %}
+	<input type="hidden" name="assertion" />
+	</form>
+
+      </div>
+
+      <a href="#faq" data-role="button" data-transition="slide" data-inline="true" data-icon="info">Frequently Asked Questions</a>
+    </div><!-- /content -->
+
+    <div data-role="footer" data-theme="d">
+      <h4><sub>copyleft verese project 2011</sub></h4>
+    </div><!-- /footer -->
+  </div><!-- /login page -->
+  <!-- FAQ Page -->
+
+  <div data-role="page" id="faq" data-add-back-btn="true">
+    <div data-role="header" data-position="fixed">
+      <h1>verese</h1>
+
+      <h2>What is verese?</h2>
+
+      <h2>How to use it?</h2>
+
+      <h2>Is is free?</h2>
+    </div><!-- /header -->
+
+    <div data-role="footer" data-theme="d">
+      <h4><sub>copyleft verese project 2011</sub></h4>
+    </div><!-- /footer -->
+  </div><!-- /FAQ page -->
+
+
 
 <script>
 $(document).bind('pagecreate', (function() {
@@ -42,56 +102,25 @@ $(document).bind('pagecreate', (function() {
   // focus on username
   $('#username').focus();
 
+  // browserid
+  $('#browserid').bind('click', function(e) {
+    e.preventDefault();
+    navigator.id.getVerifiedEmail(function(assertion) {
+        if (assertion) {
+            var $e = $('#id_assertion');
+            $e.val(assertion.toString());
+            $e.parent().submit();
+        }
+    });
+  });
+
+
   })
 );
+
+
 </script>
-<body>
-  <!-- Login Page -->
 
-  <div data-role="page" id="login" style="text-align:center;">
-    <div data-role="header" data-position="fixed">
-      <h1>verese</h1>
-    </div><!-- /header -->
 
-    <div data-role="content">
-      <p>Verese - Owe me now!</p>
-
-      <div data-role="fieldcontain">
-        <form id="loginform" method="post" action="/api/v1.0/login/">
-          {% csrf_token %}
-	  <label for="username">Username:</label>
-	  <input type="text" name="username" id="username" value="">
-	  <label for="password">Password:</label>
-	  <input type="password" name="password" id="password" value="">
-	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
-	  <input type="hidden" name="next" value="/verese/"/>
-
-        </form>
-      </div>
-
-      <a href="#faq" data-role="button" data-transition="slide" data-inline="true" data-icon="info">Frequently Asked Questions</a>
-    </div><!-- /content -->
-
-    <div data-role="footer" data-theme="d">
-      <h4><sub>copyleft verese project 2011</sub></h4>
-    </div><!-- /footer -->
-  </div><!-- /login page -->
-  <!-- FAQ Page -->
-
-  <div data-role="page" id="faq" data-add-back-btn="true">
-    <div data-role="header" data-position="fixed">
-      <h1>verese</h1>
-
-      <h2>What is verese?</h2>
-
-      <h2>How to use it?</h2>
-
-      <h2>Is is free?</h2>
-    </div><!-- /header -->
-
-    <div data-role="footer" data-theme="d">
-      <h4><sub>copyleft verese project 2011</sub></h4>
-    </div><!-- /footer -->
-  </div><!-- /FAQ page -->
-</body>
+  </body>
 </html>
