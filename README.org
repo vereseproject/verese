@@ -22,7 +22,7 @@ preinstalled and pip in its repositories.
 
 ** Community
  - [[http://www.verese.net/][Verese Project Website]]
- - [[http://blog.verese.org][Verese Blog]]
+ - [[http://blog.verese.org/][Verese Blog]]
  - Verese [[http://www.twitter.com/vereseproject][at Twitter]]
 
 ** Contribute
