@@ -21,7 +21,7 @@ class BalanceView(PistonView):
     fields = [
         Field('',
               lambda x: BalanceApproximationView(x),
-              destination='balance_approximation'
+              destination='balance_aggregation'
               ),
         Field('balance_detailed',
               lambda x: [y for y in x],
