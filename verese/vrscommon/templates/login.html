@@ -40,7 +40,7 @@
 
         </form>
 
-	<a id="browserid" href="#">Sign In</a>
+	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
 	<form method="POST" action="{% url browserid_verify %}" data-ajax="false">
 	{% csrf_token %}
 	<input type="hidden" name="assertion" id="id_assertion" />
