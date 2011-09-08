@@ -70,9 +70,9 @@
   var viewport_height = $(window).height();
  
   var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
-  if((content.outerHeight() header.outerHeight() footer.outerHeight())<=viewport_height)
+  if((content.outerHeight() + header.outerHeight() + footer.outerHeight())<=viewport_height)
   {
-  content_height -= (content.outerHeight() - content.height() 1);
+  content_height -= (content.outerHeight() - content.height() + 1);
 content.height(content_height);
   }
   /* Trim margin/border/padding height */
