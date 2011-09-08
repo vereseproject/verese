@@ -1,3 +1,6 @@
+import os
+here = lambda path: os.path.join(os.path.realpath(os.path.dirname(__file__)), path)
+
 # Django settings for verese project.
 
 DEBUG = True
@@ -45,7 +48,7 @@ USE_L10N = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = 'media/'
+MEDIA_ROOT = here('media/')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -56,7 +59,7 @@ MEDIA_URL = '/media/'
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = here('media/static/')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -150,8 +153,14 @@ LOGGING = {
 AUTH_PROFILE_MODULE = 'vrscommon.UserProfile'
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'django_browserid.auth.BrowserIDBackend',
     )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+     'django_browserid.context_processors.browserid_form',
+ )
 
 # URL of a BrowserID verification service.
 BROWSERID_VERIFICATION_URL = 'https://browserid.org/verify'
