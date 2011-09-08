@@ -251,6 +251,7 @@ class Currency(models.Model):
     updated = models.DateTimeField(auto_now=True)
     rate = models.DecimalField(max_digits=9, decimal_places=5,
                                validators=[_min_validator])
+    image = models.ImageField(upload_to="flags", null=True, blank=True)
 
     class Meta:
         verbose_name_plural = "currencies"
