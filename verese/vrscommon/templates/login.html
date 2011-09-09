@@ -16,7 +16,7 @@
   <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" type="text/css">
 
-  <link rel="stylesheet" href="/media/main.css" type="text/css">
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
   <link rel="apple-touch-icon-precomposed" href="/media/images/touch-icon.png"/>
 
 </head>
@@ -71,7 +71,7 @@
   var footer = $("div[data-role='footer']:visible");
   var content = $("div[data-role='content']:visible:visible");
   var viewport_height = $(window).height();
- 
+
   var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
   if((content.outerHeight() + header.outerHeight() + footer.outerHeight())<=viewport_height)
   {
