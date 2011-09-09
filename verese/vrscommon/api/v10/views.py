@@ -1,4 +1,5 @@
 from piston.handler import PistonView, Field
+import hashlib
 
 class CurrencyListView(PistonView):
     fields = [
@@ -34,21 +35,34 @@ class RelationDetailedView(PistonView):
         'id',
         'balance',
         'currency',
-        'user1',
-        'user2',
+        Field('user1', lambda x: UserView(x), destination='user1'),
+        Field('user2', lambda x: UserView(x), destination='user2'),
         Field('',
               lambda x: [VeresedakiRelationView(y) for y in x.get_veresedakia()],
               destination='veresedakia'
               )
         ]
 
+class UserView(PistonView):
+    fields = [
+        'first_name',
+        'last_name',
+        'username',
+        'email',
+        Field('email',
+              lambda x: hashlib.md5(x).hexdigest(),
+              destination="emailmd5"
+              ),
+        ]
+
+
 class RelationView(PistonView):
     fields = [
         'id',
         'balance',
         'currency',
-        'user1',
-        'user2',
+        Field('user1', lambda x: UserView(x), destination='user1'),
+        Field('user2', lambda x: UserView(x), destination='user2'),
         ]
 
 class RelationListView(PistonView):
@@ -70,30 +84,17 @@ class VeresedakiRelationView(PistonView):
 
 class VeresedakiView(PistonView):
     fields = [
-        'ower',
+        Field('ower', lambda x: UserView(x), destination='ower'),
         'amount',
         'local_amount',
         'comment',
         'status',
         ]
 
-class TransactionDetailedView(PistonView):
-    fields = [
-        'id',
-        'balance',
-        'currency',
-        'user1',
-        'user2',
-        Field('',
-              lambda x: [VeresedakiRelationView(y) for y in x.get_veresedakia()],
-              destination='veresedakia'
-              )
-        ]
-
 class TransactionView(PistonView):
     fields = [
         'id',
-        'payer',
+        Field('payer', lambda x: UserView(x), destination='payer'),
         Field('veresedakia', lambda x: [VeresedakiView(y) for y in x]),
         'currency',
         'created',
