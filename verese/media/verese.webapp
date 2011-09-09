@@ -12,7 +12,8 @@
     "url": "http://verese.net"
   },
   "installs_allowed_from": [
-    "https://beta.verese.net"
+    "http://beta.verese.net",
+    "http://www.verese.net"
   ],
   "locales": {
     "el": {
