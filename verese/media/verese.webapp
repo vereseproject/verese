@@ -7,11 +7,6 @@
     "72": "/media/images/app/apple-touch-icon-72.png",
     "114": "/media/images/app/apple-touch-icon-114.png"
   },
-  // "widget": {
-  //   "path": "/widget.html",
-  //   "width": 100,
-  //   "height": 200
-  // },
   "developer": {
     "name": "Verese Project",
     "url": "http://verese.net"
@@ -25,7 +20,7 @@
       "developer": {
         "url": "http://verese.net"
       }
-    },
+    }
   },
   "default_locale": "en"
 }
