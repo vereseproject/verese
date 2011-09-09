@@ -7,9 +7,9 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Changing field 'VeresedakiStatus.veresedaki'
-        db.alter_column('vrscommon_veresedakistatus', 'veresedaki_id', self.gf('django.db.models.fields.related.ForeignKey')(default=None, to=orm['vrscommon.Veresedaki']))
+        db.alter_column('vrscommon_veresedakistatus', 'veresedaki_id', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['vrscommon.Veresedaki']))
 
         # Adding unique constraint on 'VeresedakiStatus', fields ['status', 'veresedaki', 'user']
         db.create_unique('vrscommon_veresedakistatus', ['status', 'veresedaki_id', 'user_id'])
@@ -19,7 +19,7 @@ class Migration(SchemaMigration):
 
 
     def backwards(self, orm):
-        
+
         # Removing unique constraint on 'VeresedakiStatus', fields ['status', 'veresedaki', 'user']
         db.delete_unique('vrscommon_veresedakistatus', ['status', 'veresedaki_id', 'user_id'])
 
