@@ -20,6 +20,7 @@
   <link rel="apple-touch-icon" sizes="72x72" href="/media/images/app/apple-touch-icon-72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="/media/images/app/apple-touch-icon-114.png">
 
+  <link href="/verese.webapp" type="application/x-web-app-manifest+json"></script>
 </head>
 
 <body>
@@ -37,6 +38,7 @@
 
     $.getJSON("/api/v1.0/profile/", set_profile);
     $.getJSON("/api/v1.0/balance/", populate_currencies);
+    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
 
   });
  </script>
@@ -66,15 +68,19 @@
 
 
       <div>
-	<ul data-role="listview">
+
+	<ul data-role="listview" id="transaction_list">
+
 	  <li>
 	   <a href="index.html">
-	    <img src="images/album-bb.jpg" />
+	    <img src="http://www.gravatar.com/avatar/7b74caf316a6c6716977fe84b56774c1?s=80&d=mm" />
 	    <h3>Broken Bells</h3>
 	    <p>Broken Bells</p>
-	  </a>
+	   </a>
 	  </li>
+
 	</ul>
+
       </div>
     </div><!-- /content -->
 
