@@ -48,9 +48,9 @@
 
 
   <div data-role="header" data-position="fixed">
-      <h1>verese</h1>
+      <h1>Verese</h1>
       <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
-    </div><!-- /header -->
+  </div><!-- /header -->
 
     <div data-role="content" style="text-align:center;">
       <div class="ui-grid-a">
@@ -90,16 +90,44 @@
     data-theme="b">
       <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
         <ul>
-          <li><a href="#" id="veresedaki" data-icon="custom" name="veresedaki">Add</a></li>
+          <li><a href="#add" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a></li>
 
-          <li><a href="#" id="planet" data-icon="custom" name="planet">Overview</a></li>
+          <li><a href="#dashboard" id="planet" data-icon="custom" data-transition="slide" name="planet">Overview</a></li>
 
-          <li><a href="#" id="group" data-icon="custom" name="group">People</a></li>
+          <li><a href="#" id="group" data-icon="custom" data-transition="slide" name="group">People</a></li>
 
-          <li><a href="#" id="analitics" data-icon="custom" name="analitics">Analysis</a></li>
+          <li><a href="#" id="analitics" data-icon="custom" data-transition="slide" name="analitics">Analysis</a></li>
         </ul>
       </div>
     </div><!-- /footer -->
   </div>
+
+
+<!-- Add Veresedaki Page -->
+
+<div data-role="page" id="add">
+
+   <div data-role="header" data-position="fixed">
+       <h1>Verese</h1>
+       <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
+   </div><!-- /header -->
+
+
+    <div data-role="footer" class="nav-glyphish-example" data-position="fixed"
+    data-theme="b">
+      <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+        <ul>
+          <li><a href="#add" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a></li>
+
+          <li><a href="#dashboard" id="planet" data-icon="custom" data-transition="slide" name="planet">Overview</a></li>
+
+          <li><a href="#" id="group" data-icon="custom" data-transition="slide" name="group">People</a></li>
+
+          <li><a href="#" id="analitics" data-icon="custom" data-transition="slide" name="analitics">Analysis</a></li>
+        </ul>
+      </div>
+    </div><!-- /footer -->
+</div>
+
 </body>
 </html>
