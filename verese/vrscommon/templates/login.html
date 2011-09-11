@@ -32,7 +32,10 @@
     </div><!-- /header -->
 
     <div data-role="content">
-      <p>beta deployment of verese</p>
+      <div id="logo">
+        <img src="/media/verese.png"></img>
+      </div>
+      <p>beta deployment</p>
 
       <div data-role="fieldcontain">
         <form id="loginform" method="post" action="/api/v1.0/login/">
@@ -43,7 +46,6 @@
 	  <input type="password" name="password" id="password" value="">
 	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
 	  <input type="hidden" name="next" value="/verese/"/>
-
         </form>
 
 	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
