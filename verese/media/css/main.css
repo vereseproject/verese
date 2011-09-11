@@ -7,6 +7,12 @@ body {
 	margin-top: 20px;
 	}
 
+#header-logo {
+	text-align:center; 
+	padding-bottom: 3px; 
+	padding-top: 5px;
+	}
+
 .nav-glyphish-example .ui-btn .ui-btn-inner {
 	padding-top: 40px !important;
 	}
