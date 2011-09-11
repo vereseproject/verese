@@ -3,9 +3,6 @@ body {
 	}
 
 #logo {
-	margin-bottom: 20px;
-	margin-top: 20px;
-	}
 
 .nav-glyphish-example .ui-btn .ui-btn-inner {
 	padding-top: 40px !important;
