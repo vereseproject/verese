@@ -100,6 +100,7 @@ class TransactionView(PistonView):
         'created',
         'comment',
         'status',
+        Field('total_amount', destination='amount'),
         ]
 
 class TransactionListView(PistonView):
