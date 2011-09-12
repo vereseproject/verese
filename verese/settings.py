@@ -179,7 +179,8 @@ LOGIN_REDIRECT_URL = '/verese/'
 # Path to redirect to on unsuccessful login attempt.
 LOGIN_REDIRECT_URL_FAILURE = '/login/'
 
-LOGIN_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login'
+LOGIN_REDIRECT_URL = '/verese/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
 # import local settings
