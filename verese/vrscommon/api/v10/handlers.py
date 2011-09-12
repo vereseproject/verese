@@ -204,7 +204,7 @@ class TransactionHandler(BaseHandler):
                            filter(Q(payer=request.user)|\
                                   Q(veresedaki__ower__in = [request.user]
                                     )
-                                  )
+                                  ).distinct()
 
             return TransactionListView(transactions)
 
