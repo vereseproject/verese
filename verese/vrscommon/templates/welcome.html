@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" />
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Welcome</title>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.css" />
+  <script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.min.js"></script>
+
+  <meta content="width=device-width, minimum-scale=1, maximum-scale=1" name="viewport" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <link rel="apple-touch-startup-image" href="/media/verese.png" />
+  <link rel="shortcut icon" href="/media/images/verese.ico" />
+
+  <link rel="apple-touch-icon" href="/media/images/app/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/media/images/app/apple-touch-icon-72.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/media/images/app/apple-touch-icon-114.png" />
+</head>
+
+
+<body>
+
+  <!-- start page -->
+  <div data-role="page">
+
+    <!-- start header -->
+    <div data-role="header" data-position="fixed" data-id="vereseheader">
+      <div id="header-logo">
+	<img src="/media/verese-top.png"></img>
+      </div>
+    </div>
+    <!-- end header -->
+
+
+    <!-- start content -->
+    <div data-role="content">
+
+      <h2>Hello and welcome to Verese!</h2>
+
+      <p>Please fill in some details to complete your registration:</p>
+
+      <form action="form.php" method="post">
+	<label for="first_name">First Name:</label>
+	<input type="text" name="first_name" id="first_name" />
+	<label for="first_name">Last Name:</label>
+	<input type="text" name="last_name" id="last_name" />
+
+	<div data-role="fieldcontain">
+	  <label for="currency" class="select">Currency:</label>
+	  <select name="currency" id="currency">
+	    <option value="{{ currency.id }}">Choose one... </option>
+	    {% for currency in currencies %}
+	    <option value="{{ currency.id }}">{{ currency.symbol }} - {{ currency.name }} </option>
+	    {% endfor %}
+	  </select>
+	</div>
+      </form>
+    </div>
+    <!-- end content -->
+
+    <!-- start footer -->
+    <div data-role="footer" data-theme="d">
+      <h4><sub>copyleft verese project 2011</sub></h4>
+    </div><!-- /footer -->
+
+    <!-- end footer -->
+
+  </div>
+  <!-- end page -->
+
+</body>
+</html>
