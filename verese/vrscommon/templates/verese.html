@@ -41,8 +41,8 @@
     });
 
 
-    $.getJSON("/api/v1.0/profile/", set_profile);
-    $.getJSON("/api/v1.0/balance/", populate_currencies);
+    $.getJSON("/api/v1.0/profile/", populate_profile);
+    $.getJSON("/api/v1.0/balance/", populate_balance);
     $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
 
   });
@@ -50,89 +50,115 @@
 
 
 
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-      <div id="header-logo">
-          <img src="/media/verese-top.png"></img>
-      </div>
-      <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
-  </div><!-- /header -->
+ <div data-role="header" data-position="fixed" data-id="vereseheader">
+   <div id="header-logo">
+     <img src="/media/verese-top.png"></img>
+   </div>
+   <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
+ </div><!-- /header -->
 
-    <div data-role="content" style="text-align:center;">
-      <div class="ui-grid-a">
-        <div style="width:46%;margin:2%;text-align:left;" class="ui-block-a">
-          <h2 id="myname"></h2>
-        </div>
+ <!-- content starts -->
+ <div data-role="content" style="text-align:center;">
 
-        <div style="width:46%;margin:2%;" class="ui-block-b">
-          <h2><a href="#" id="balance_aggregation" data-role="button" data-icon="grid" data-iconpos="bottom" name="balance_aggregation"></a></h2>
-        </div>
-      </div>
+   <!-- grid 'a' starts -->
+   <div class="ui-grid-a">
 
-      <div id="currency_aggregations" data-role="controlgroup" data-type="horizontal" style="width:auto; text-align:center;">
+     <!-- populated by populate_profile -->
+     <div style="width:46%;margin:2%;text-align:left;" class="ui-block-a">
+       <div style="float:left;" id="my_avatar"></div>
+       <h2 id="my_name"></h2>
+     </div>
 
-      </div>
+     <!-- populated by populate_balance -->
+     <div style="width:46%;margin:2%;" class="ui-block-b">
+       <h2><a href="#" id="balance_aggregation"></a></h2>
+     </div>
 
+   </div>
+   <!-- grid 'a' ends -->
 
+   <!-- populated by populate_balance -->
+   <div> <!-- extra div needed to avoid re'create()'ing all page -->
+     <div id="currency_aggregations" data-role="controlgroup" data-type="horizontal" style="width:auto; text-align:center;">
+     </div>
+   </div>
 
-      <div>
+   <div>
+     <ul data-role="listview" id="transaction_list">
+     </ul>
 
-	<ul data-role="listview" id="transaction_list">
+   </div>
 
-	  <li>
-	   <a href="index.html">
-	    <img src="http://www.gravatar.com/avatar/7b74caf316a6c6716977fe84b56774c1?s=80&d=mm" />
-	    <h3>Broken Bells</h3>
-	    <p>Broken Bells</p>
-	   </a>
-	  </li>
+ </div>
+ <!-- content ends -->
 
-	</ul>
+ <!-- footer starts -->
+ <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
+   <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+     <ul>
+       <li>
+       <a href="#add" id="veresedaki" class="ui-state-persist" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
+       </li>
 
-      </div>
-    </div><!-- /content -->
+       <li>
+	 <a href="#dashboard" class="ui-btn-active" class="ui-state-persist" id="planet" data-icon="custom" data-transition="slide" name="planet">Overview</a>
+       </li>
 
-    <div data-role="footer" class="nav-glyphish-example" data-position="fixed"
-    data-theme="b" data-id="navbar">
-      <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-        <ul>
-          <li><a href="#add" id="veresedaki" class="ui-state-persist" data-icon="custom" data-transition="slide" name="veresedaki">Add</a></li>
+       <li>
+       <a href="#" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">People</a>
+       </li>
 
-          <li><a href="#dashboard" class="ui-btn-active" class="ui-state-persist" id="planet" data-icon="custom" data-transition="slide" name="planet">Overview</a></li>
+       <li>
+       <a href="#" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
+       </li>
+     </ul>
+   </div>
+ </div>
+ <!-- footer ends-->
 
-          <li><a href="#" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">People</a></li>
+</div>
 
-          <li><a href="#" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a></li>
-        </ul>
-      </div>
-    </div><!-- /footer -->
-  </div>
 
 
 <!-- Add Veresedaki Page -->
 
 <div data-role="page" id="add">
 
-   <div data-role="header" data-position="fixed" data-id="vereseheader">
-      <div id="header-logo">
-          <img src="/media/verese-top.png"></img>
-      </div>
-      <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
-   </div><!-- /header -->
+  <!-- header starts -->
+  <div data-role="header" data-position="fixed" data-id="vereseheader">
+    <div id="header-logo">
+      <img src="/media/verese-top.png"></img>
+    </div>
+    <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
+  </div>
+  <!-- header ends -->
 
 
-    <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
-      <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-        <ul>
-          <li><a href="#add" class="ui-btn-active" class="ui-state-persist" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a></li>
+  <!-- footer starts -->
+  <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
+    <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
+      <ul>
+	<li>
+	<a href="#add" class="ui-btn-active" class="ui-state-persist" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
+	</li>
 
-          <li><a href="#dashboard" id="planet" class="ui-state-persist" data-icon="custom" data-transition="slide" name="planet">Overview</a></li>
+	<li>
+	<a href="#dashboard" id="planet" class="ui-state-persist" data-icon="custom" data-transition="slide" name="planet">Overview</a>
+	</li>
 
-          <li><a href="#" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">People</a></li>
+	<li>
+	<a href="#" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">People</a>
+	</li>
 
-          <li><a href="#" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a></li>
-        </ul>
-      </div>
-    </div><!-- /footer -->
+	<li>
+	<a href="#" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
+	</li>
+
+      </ul>
+    </div>
+  </div>
+  <!-- footer ends -->
+
 </div>
 
 </body>
