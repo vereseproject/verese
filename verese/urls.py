@@ -20,11 +20,14 @@ urlpatterns = patterns(
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/v1.0/', include('verese.vrscommon.api.v10.urls')),
-    url(r'^accounts/login/$',
+    url(r'^login/$',
         'django.contrib.auth.views.login',
-        {'template_name': 'login.html'}
-        ),
-    url(r'^accounts/logout/$', 'django.contrib.auth.views.logout' ),
+        {'template_name': 'login.html'},
+        name="login"),
+    url(r'^logout/$',
+        'django.contrib.auth.views.logout',
+        {'next_page': '/login'},
+        name="logout"),
     url(r'^browserid/', include('django_browserid.urls')),
     url(r'^verese/', include('verese.vrscommon.urls')),
     url(r'^$', redirect_to, {'url':'/verese/'}),
@@ -35,5 +38,4 @@ if settings.LOCAL_DEVELOPMENT:
     urlpatterns += patterns("django.views",
         url(r"%s(?P<path>.*)$" % settings.MEDIA_URL[1:],
             "static.serve", {"document_root": settings.MEDIA_ROOT,}),
-        url(r'^dev/(?P<path>.*)$', "static.serve", {"document_root":"vrscommon/templates"})
     )

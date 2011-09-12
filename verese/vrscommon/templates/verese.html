@@ -1,3 +1,4 @@
+{% load compress %}
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 
 <html>
@@ -18,14 +19,19 @@
   <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js" type="text/javascript"></script>
   <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" type="text/css">
 
-  <script src="/media/js/verese.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
-
   <link rel="apple-touch-icon" href="/media/images/app/apple-touch-icon.png">
   <link rel="apple-touch-icon" sizes="72x72" href="/media/images/app/apple-touch-icon-72.png">
   <link rel="apple-touch-icon" sizes="114x114" href="/media/images/app/apple-touch-icon-114.png">
 
   <link href="/verese.webapp" type="application/x-web-app-manifest+json"></script>
+
+{% compress css %}
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css">
+{% endcompress %}
+{% compress js %}
+  <script src="/media/js/verese.js" type="text/javascript"></script>
+{% endcompress %}
+
 </head>
 
 <body>
@@ -54,7 +60,7 @@
    <div id="header-logo">
      <img src="/media/verese-top.png"></img>
    </div>
-   <a href="/accounts/logout/" data-icon="gear" class="ui-btn-right">Logout</a>
+   <a href="{% url logout %}" data-icon="gear" class="ui-btn-right">Logout</a>
  </div><!-- /header -->
 
  <!-- content starts -->
