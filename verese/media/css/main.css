@@ -8,8 +8,8 @@ body {
 	}
 
 #header-logo {
-	text-align:center; 
-	padding-bottom: 3px; 
+	text-align:center;
+	padding-bottom: 3px;
 	padding-top: 5px;
 	}
 
@@ -27,6 +27,11 @@ body {
 	-webkit-border-radius: none !important;
 	border-radius: none !important;
 	}
+
+#my_avatar {
+    float:left;
+    margin-right: 5px;
+}
 
 #planet .ui-icon {
 	background:  url(/media/images/app/27-planet.png) 50% 50% no-repeat;
