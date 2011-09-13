@@ -129,7 +129,7 @@ $(document).bind('pagecreate', (function() {
   $.mobile.showPageLoadingMsg();
 
      var success_cb = function(dataReceived, textStatus) {
-       $.mobile.changePage("/verese/", { 'transition':'pop' });
+	 $.mobile.changePage("/verese/", "/login/", 'slide', 'true');
      };
 
      var error_cb = function(dataReceived, textStatus, errorThrown) {
@@ -145,6 +145,9 @@ $(document).bind('pagecreate', (function() {
         success: success_cb,
         error: error_cb
         });
+
+      // prevent browser from doing anything else
+      return false;
   });
 
   // browserid
