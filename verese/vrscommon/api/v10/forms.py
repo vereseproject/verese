@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.models import User
+
 from vrscommon.models import *
 
 class RelationUpdateForm(forms.ModelForm):
@@ -61,3 +63,33 @@ class TransactionCreateForm(forms.ModelForm):
         model = Transaction
         fields = ('comment', 'currency')
         # TODO add tags
+
+class UserUpdateForm(forms.ModelForm):
+    currency = forms.IntegerField(required=False)
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name')
+
+    def clean_currency(self):
+        if self.data.get('currency', None):
+            try:
+                currency = Currency.objects.get(pk=self.data['currency'])
+            except Currency.DoesNotExist:
+                raise FormValidationError('Currency does not exist')
+
+            return currency
+
+    def clean_first_name(self):
+        if self.data.get('first_name', None):
+            return self.data['first_name']
+
+        else:
+            return self.instance.first_name
+
+    def clean_last_name(self):
+        if self.data.get('last_name', None):
+            return self.data['last_name']
+
+        else:
+            return self.instance.last_name

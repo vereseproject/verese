@@ -117,8 +117,20 @@ class UserHandler(BaseHandler):
     @transaction.commit_on_success()
     def update(self, request):
         # user_id from request.user.id
-        # user and userprofile updatesx
-        pass
+        # user and userprofile updates
+        form = UserUpdateForm(request.POST, instance=request.user)
+
+        if not form.is_valid():
+            raise APIBadRequest(form.errors)
+
+        form.save()
+
+        if form.cleaned_data.get('currency', None):
+            profile = request.user.get_profile()
+            profile.currency = form.cleaned_data.get('currency')
+            profile.save()
+
+        return rc.ALL_OK
 
     @transaction.commit_on_success()
     def delete(self, request):
