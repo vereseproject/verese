@@ -100,7 +100,7 @@ function populate_transactions(json) {
 	       if (user_is_me(value.payer) == true) {
 		   // if more than one owers
 		   if (value.veresedakia.length > 1) {
-		       item_img = '/media/images/app/mutiple.png';
+		       item_img = '/media/images/app/multiple.png';
 
 		       item_name = '';
 		       $.each(value.veresedakia,
