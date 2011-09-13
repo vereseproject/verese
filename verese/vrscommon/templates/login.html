@@ -48,7 +48,7 @@
       <p>beta deployment</p>
 
       <div data-role="fieldcontain">
-        <form id="loginform" method="post" action="/api/v1.0/login/">
+        <form id="loginform">
           {% csrf_token %}
 	  <label for="username">Username:</label>
 	  <input type="text" name="username" id="username" value="">
