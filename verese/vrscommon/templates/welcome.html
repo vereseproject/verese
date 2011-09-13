@@ -42,7 +42,7 @@
 
       <p>Please fill in some details to complete your registration:</p>
 
-      <form action="form.php" method="post">
+      <form id="welcomeform">
 	<label for="first_name">First Name:</label>
 	<input type="text" name="first_name" id="first_name" />
 	<label for="first_name">Last Name:</label>
@@ -51,12 +51,13 @@
 	<div data-role="fieldcontain">
 	  <label for="currency" class="select">Currency:</label>
 	  <select name="currency" id="currency">
-	    <option value="{{ currency.id }}">Choose one... </option>
+	    <option value="{{ currency.id }}">Choose one...</option>
 	    {% for currency in currencies %}
 	    <option value="{{ currency.id }}">{{ currency.symbol }} - {{ currency.name }} </option>
 	    {% endfor %}
 	  </select>
 	</div>
+	<button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
       </form>
     </div>
     <!-- end content -->
@@ -70,6 +71,36 @@
 
   </div>
   <!-- end page -->
+
+<script>
+$(document).bind('pagecreate', (function() {
+    $('#welcomeform').submit(
+	function(event) {
+	    event.preventDefault();
+	    $.mobile.showPageLoadingMsg();
+
+	    var success_cb = function(dataReceived, textStatus) {
+		$.mobile.changePage("/verese/", {'transition':'pop'});
+	    };
+
+	    var error_cb = function(dataReceived, textStatus, errorThrown) {
+		alert('update error, please try again');
+		// make this a jqm popup or something
+	    };
+
+	    $.ajax({
+		type:'PUT',
+		url:'/api/v1.0/profile/',
+		dataType: 'text',
+		data:$(this).serialize(),
+		success: success_cb,
+		error: error_cb
+	    });
+	});
+})
+);
+
+</script>
 
 </body>
 </html>
