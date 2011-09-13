@@ -1,5 +1,7 @@
-from piston.handler import PistonView, Field
 import hashlib
+from datetime import datetime
+
+from piston.handler import PistonView, Field
 
 class CurrencyListView(PistonView):
     fields = [
@@ -73,22 +75,29 @@ class RelationListView(PistonView):
               )
         ]
 
+class StatusView(PistonView):
+    fields = [
+        'status',
+        Field('user', lambda x: UserView(x)),
+        Field('created', lambda x: x.isoformat()),
+        ]
+
 class VeresedakiRelationView(PistonView):
     fields = [
         Field('ower', lambda x: x.email),
         'amount',
         'local_amount',
         'comment',
-        'status',
+        Field('status', lambda x: StatusView(x))
         ]
 
 class VeresedakiView(PistonView):
     fields = [
-        Field('ower', lambda x: UserView(x), destination='ower'),
+        Field('ower', lambda x: UserView(x)),
         'amount',
         'local_amount',
         'comment',
-        'status',
+        Field('status', lambda x: StatusView(x))
         ]
 
 class TransactionView(PistonView):
@@ -97,7 +106,7 @@ class TransactionView(PistonView):
         Field('payer', lambda x: UserView(x), destination='payer'),
         Field('veresedakia', lambda x: [VeresedakiView(y) for y in x]),
         'currency',
-        'created',
+        Field('created', lambda x: x.isoformat()),
         'comment',
         'status',
         Field('total_amount', destination='amount'),

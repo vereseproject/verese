@@ -25,7 +25,7 @@ function populate_balance(json) {
 		   value.currency.code +
 		   '_transactions">' +
 		   // '<img src="' + value.currency.image + '">' +
-		   '<h2>' + value.currency.symbol + '<br/>' + value.balance  + '</h2>' +
+		   value.currency.symbol + '<br/>' + value.balance +
 		   '</a>';
 
     	       $('#currency_aggregations').append(button_text);//.trigger('create');
@@ -130,6 +130,7 @@ function populate_transactions(json) {
 	       	   '<img src="' + item_img + '" />' +
 	       	   '<h3>' + item_name + '</h3>' +
 	       	   '<p>' + value.comment + ' at ' + 'Kifisias Avenue 123' + '</p>' +
+	       	   '<p class="transaction_date" title="' + value.created + '">' + '</p>' +
 	       	   '</a>' +
 		   '<p class="ui-li-count">' + item_amount +'</div>' +
 	       	   '</li>';
@@ -142,4 +143,6 @@ function populate_transactions(json) {
     $('#transaction_list').attr('data-role', 'listview');
     $('#transaction_list').parent().trigger('create');
 
+    // pretty dates, updated once per minute
+    $(".transaction_date").prettyDate({interval:60000});
 }
