@@ -36,26 +36,25 @@
 </head>
 
 <body>
-  <!-- Dashboard page -->
 
+<!-- Dashboard page -->
 <div data-role="page" id="dashboard">
- <script type="text/javascript">
-  $(document).ready(function () {
 
-    $('#currency_aggregations').hide();
-    $('#balance_aggregation').click(function () {
-       $('#currency_aggregations').slideToggle('fast');
-    });
+<script type="text/javascript">
+    $(document).bind('pagebeforeshow', (function () {
+	if ($.mobile.activePage.attr('id') == 'dashboard') {
+	    $('#currency_aggregations').hide();
+	    $('#balance_aggregation').click(function () {
+		$('#currency_aggregations').slideToggle('fast');
+	    });
 
-
-    $.getJSON("/api/v1.0/profile/", populate_profile);
-    $.getJSON("/api/v1.0/balance/", populate_balance);
-    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
-
-  });
- </script>
-
-
+	    $.getJSON("/api/v1.0/profile/", populate_profile);
+	    $.getJSON("/api/v1.0/balance/", populate_balance);
+	    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
+	}
+    })
+);
+</script>
 
  <div data-role="header" data-position="fixed" data-id="vereseheader">
    <div id="header-logo">
@@ -168,6 +167,109 @@
   <!-- footer ends -->
 
 </div>
+
+
+
+
+<!-- welcome page start -->
+<div data-role="page" id="welcome">
+
+
+<script type="text/javascript">
+    $(document).bind('pagebeforeshow', (function () {
+	if ($.mobile.activePage.attr('id') == 'welcome') {
+	    $('#welcomeform').submit(
+		function(event) {
+		    event.preventDefault();
+
+		    var success_cb = function(dataReceived, textStatus) {
+			$.mobile.changePage("/verese/", {'transition':'pop'});
+		    };
+
+		    var error_cb = function(dataReceived, textStatus, errorThrown) {
+			alert('update error, please try again');
+			// make this a jqm popup or something
+		    };
+
+		    // validate
+		    if ($('#first_name').val() == '') {
+			$('#first_name').focus();
+			return false;
+		    }
+		    else if ($('#last_name').val() == '') {
+			$('#last_name').focus();
+			return false;
+		    }
+		    else if ($('#currency').val() == '') {
+			$('#currency').focus();
+			return false;
+		    }
+
+		    $.mobile.showPageLoadingMsg();
+
+		    $.ajax({
+			type:'PUT',
+			url:'/api/v1.0/profile/',
+			dataType: 'text',
+			data:$(this).serialize(),
+			success: success_cb,
+			error: error_cb
+		    });
+		    // prevent browser from doing anything else
+		    return false;
+		});
+
+	}
+    })
+);
+</script>
+
+  <!-- start header -->
+  <div data-role="header" data-position="fixed" data-id="vereseheader">
+    <div id="header-logo">
+      <img src="/media/verese-top.png"></img>
+    </div>
+  </div>
+  <!-- end header -->
+
+  <!-- start content -->
+  <div data-role="content">
+
+    <h2>Hello and welcome to Verese!</h2>
+
+    <p>Please fill in some details to complete your registration:</p>
+
+    <form id="welcomeform">
+      <label for="first_name">First Name:</label>
+      <input type="text" name="first_name" id="first_name" />
+      <label for="first_name">Last Name:</label>
+      <input type="text" name="last_name" id="last_name" />
+
+      <div data-role="fieldcontain">
+	<label for="currency" class="select">Currency:</label>
+	<select name="currency" id="currency">
+	  <option value="{{ currency.id }}">Choose one...</option>
+	  {% for currency in currencies %}
+	  <option value="{{ currency.id }}">{{ currency.symbol }} - {{ currency.name }} </option>
+	  {% endfor %}
+	</select>
+      </div>
+      <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
+    </form>
+  </div>
+  <!-- end content -->
+
+  <!-- start footer -->
+  <div data-role="footer" data-theme="d">
+    <h4><sub>copyleft verese project 2011</sub></h4>
+  </div><!-- /footer -->
+
+  <!-- end footer -->
+
+</div>
+<!-- end page -->
+
+<!-- welcome page end -->
 
 </body>
 </html>

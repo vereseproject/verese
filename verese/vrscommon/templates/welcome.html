@@ -96,6 +96,8 @@ $(document).bind('pagecreate', (function() {
 		success: success_cb,
 		error: error_cb
 	    });
+	    // prevent browser from doing anything else
+	    return false;
 	});
 })
 );

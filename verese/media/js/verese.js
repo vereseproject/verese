@@ -15,6 +15,7 @@ function populate_balance(json) {
     $('#balance_aggregation').attr('data-iconpos', 'bottom');
     $('#balance_aggregation').parent().trigger('create');
 
+    $('#currency_aggregations').empty();
     $.each(json.data.balance_details,
     	   function(key, value)
     	   {
@@ -46,6 +47,10 @@ function populate_profile(json) {
 			 json.data.emailmd5 +
 			 '?s=80&d=mm" />'
 			);
+
+    // check if new user
+    if (json.data.first_name == '')
+	$.mobile.changePage('#welcome', '#welcome');
 
     window.my_email = json.data.email;
 }
@@ -93,6 +98,7 @@ function find_my_veresedaki(list) {
 }
 
 function populate_transactions(json) {
+    $('#transaction_list').empty();
     $.each(json.data.transactions,
 	   function(key, value)
 	   {

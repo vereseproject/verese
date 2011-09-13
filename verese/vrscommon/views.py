@@ -18,11 +18,8 @@ def request_token_ready(request, token):
 
 @login_required
 def main(request):
-    return render_to_response('verese.html')
-
-@login_required
-def welcome(request):
     ctx = {
         'currencies':Currency.objects.all()
         }
-    return render_to_response('welcome.html', ctx)
+
+    return render_to_response('verese.html', ctx)
