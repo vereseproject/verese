@@ -125,7 +125,8 @@ content.height(content_height);
 <script>
 $(document).bind('pagecreate', (function() {
   $('#loginform').submit(function(event) {
-     $.mobile.showPageLoadingMsg();
+  event.preventDefault();
+  $.mobile.showPageLoadingMsg();
 
      var success_cb = function(dataReceived, textStatus) {
        $.mobile.changePage("/verese/", { 'transition':'pop' });
