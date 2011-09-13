@@ -112,7 +112,7 @@ class UserHandler(BaseHandler):
               )
 
     def read(self, request):
-        return request.user
+        return UserView(request.user)
 
     @transaction.commit_on_success()
     def update(self, request):
