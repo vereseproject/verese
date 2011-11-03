@@ -152,3 +152,48 @@ function populate_transactions(json) {
     // pretty dates, updated once per minute
     $(".transaction_date").prettyDate({interval:60000});
 }
+
+
+/// login form
+
+function initiliaze_login() {
+    $('#loginform').submit(function(event) {
+	event.preventDefault();
+	$.mobile.showPageLoadingMsg();
+
+	var success_cb = function(dataReceived, textStatus) {
+	    $.mobile.changePage("/verese/", "/login/", 'slide', 'true');
+	};
+
+	var error_cb = function(dataReceived, textStatus, errorThrown) {
+	    alert('login error, try again');
+	    // make this a jqm popup or something
+	};
+
+	$.ajax({
+            type: 'POST',
+            url: '/api/v1.0/login/',
+            dataType: 'text',
+            data: $(this).serialize(),
+            success: success_cb,
+            error: error_cb
+        });
+
+	// prevent browser from doing anything else
+	return false;
+    });
+
+    // browserid
+    $('#browserid').bind('click', function(e) {
+	e.preventDefault();
+	navigator.id.getVerifiedEmail(function(assertion) {
+            if (assertion) {
+		var $e = $('#id_assertion');
+		$e.val(assertion.toString());
+		$e.parent().submit();
+            }
+	});
+    });
+
+
+}
