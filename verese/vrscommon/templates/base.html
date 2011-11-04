@@ -1,0 +1,47 @@
+{% load compress %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta content="width=device-width, minimum-scale=1, maximum-scale=1" name="viewport" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+
+  <!-- javascript libraries -->
+  <script src="http://code.jquery.com/jquery-1.6.2.min.js" type="text/javascript"></script>
+  <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" type="text/css" />
+
+  <!-- browser id -->
+  <script src="https://www.browserid.org/include.js" type="text/javascript"></script>
+
+  <!-- application icons -->
+  <link rel="shortcut icon" href="/media/images/verese.ico" />
+  <link rel="apple-touch-startup-image" href="/media/verese.png" />
+  <link rel="apple-touch-icon" href="/media/images/app/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="72x72" href="/media/images/app/apple-touch-icon-72.png" />
+  <link rel="apple-touch-icon" sizes="114x114" href="/media/images/app/apple-touch-icon-114.png" />
+
+  <!-- open web app -->
+  <link href="/verese.webapp" type="application/x-web-app-manifest+json"></script>
+
+  <!-- verese stuff -->
+  {% compress css %}
+  <link rel="stylesheet" href="/media/css/main.css" type="text/css" />
+  {% endcompress %}
+
+  {% compress js %}
+  <script src="/media/js/jquery.prettydate.js" type="text/javascript"></script>
+  <script src="/media/js/verese-new.js" type="text/javascript"></script>
+  {% endcompress %}
+</head>
+
+<body>
+
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
