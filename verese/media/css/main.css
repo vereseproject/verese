@@ -30,7 +30,7 @@ body {
 
 #my_avatar {
     float:left;
-    margin-right: 5px;
+    margin-right: 1%;
 }
 
 #planet .ui-icon {
@@ -52,3 +52,13 @@ body {
 	background:  url(/media/images/app/10-medical.png) 50% 50% no-repeat;
 	background-size: 22px 22px;
 	}
+
+.ui-li-has-count .ui-li-count {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: -0.9em;
+    padding: 0.5em;
+    position: absolute;
+    right: 38px;
+    top: 40%;
+}
