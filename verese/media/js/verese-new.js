@@ -209,7 +209,7 @@ function populate_balance(json) {
 
 function populate_profile(json) {
     $('#my_name').html(json.data.first_name + ' ' + json.data.last_name);
-    $('#my_avatar').html('<img width="10%" src="http://www.gravatar.com/avatar/' +
+    $('#my_avatar').html('<img src="http://www.gravatar.com/avatar/' +
 			 json.data.emailmd5 +
 			 '?s=80&d=mm" />'
 			);
@@ -240,6 +240,8 @@ function find_my_veresedaki(list) {
 
 function populate_transactions(json) {
     $('#transaction_list').empty();
+    var ddata = [];
+
     $.each(json.data.transactions,
 	   function(key, value)
 	   {
@@ -247,7 +249,6 @@ function populate_transactions(json) {
 	       if (user_is_me(value.payer) == true) {
 		   // if more than one owers
 		   if (value.veresedakia.length > 1) {
-		       // item_img = '/media/images/app/multiple.png';
 		       item_img = 'http://www.gravatar.com/avatar/foo?s=80&d=identicon';
 
 		       item_name = '';
@@ -274,25 +275,22 @@ function populate_transactions(json) {
 
 	       // arrow direction is different depending on number of owers
 	       if (value.veresedakia.length > 1)
-		   arrow = "arrow-d";
+		   item_arrow = "arrow-d";
 	       else
-		   arrow = "arrow-r";
+		   item_arrow = "arrow-r";
 
-	       var list_item = '' +
-	       	   '<li class="ui-li-has-arrow ' + value.currency.code + '_transaction" data-icon="' + arrow + '">' +
-	       	   '<a href="index.html">' +
-	       	   '<img src="' + item_img + '" />' +
-	       	   '<h3>' + item_name + '</h3>' +
-	       	   '<p>' + value.comment + ' at ' + 'Kifisias Avenue 123' + '</p>' +
-//	       	   '<p class="transaction_date" title="' + value.created + '">foo' + '</p>' +
-	       	   '</a>' +
-		   '<p class="ui-li-count">' + item_amount +'</div>' +
-	       	   '</li>';
-
-	       $('#transaction_list').append(list_item);
+	       ddata.push({
+		   'img': item_img,
+		   'name': item_name,
+		   'comment':value.comment,
+		   'amount': item_amount,
+		   'arrow': item_arrow,
+		   'currency_code': value.currency.code,
+	       });
 	   }
 	  ); // end each();
 
+    $("#transctionItem").tmpl(ddata).appendTo("#transaction_list");
     // // pretty dates, updated once per minute
     // $(".transaction_date").prettyDate({interval:1000});
 

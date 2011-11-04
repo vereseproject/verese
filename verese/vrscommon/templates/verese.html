@@ -377,4 +377,18 @@
 
 <!-- welcome page end -->
 
+
+
+<script id="transctionItem" type="text/x-jquery-tmpl">
+  <li class="ui-li-has-arrow ${currency_code}_transaction" data-icon="${arrow}">
+    <a href="#">
+      <img src="${img}"/>
+      <h3>${name}</h3>
+      <p>${comment}</p>
+    </a>
+    <p class="ui-li-count">${amount}</div>
+  </li>
+</script>
+
 {% endblock %}
+
