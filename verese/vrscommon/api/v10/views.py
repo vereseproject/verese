@@ -63,6 +63,8 @@ class RelationView(PistonView):
         'id',
         'balance',
         'currency',
+        Field('created', lambda x: x.strftime("%Y-%m-%dT%H:%M:%S")),
+        Field('updated', lambda x: x.strftime("%Y-%m-%dT%H:%M:%S")),
         Field('user1', lambda x: UserView(x), destination='user1'),
         Field('user2', lambda x: UserView(x), destination='user2'),
         ]
