@@ -97,7 +97,63 @@
 <div data-role="page" id="dashboard" data-title="Dashboard" data-url="#dashboard">
 
   <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <h1>Dashboard</h1>
+    <h1>Verese</h1>
+    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
+  </div><!-- /header -->
+
+  <!-- content starts -->
+  <div data-role="content" style="text-align:center;">
+    <div class="apply-padding-10">
+      <img src="/media/images/app/apple-touch-icon-114.png"/>
+    </div>
+
+    <!-- grid 'a' starts -->
+    <div class="ui-grid-a">
+      <!-- populated by populate_profile -->
+      <div class="ui-block-a apply-padding-bottom-5">
+	<a href="#add"><img class="apply-padding-5" src="/media/images/app/add.png"/></a>
+	<br/>
+	Add
+      </div>
+
+      <!-- populated by populate_balance -->
+      <div class="ui-block-b apply-padding-bottom-5">
+	<a href="#activity"><img class="apply-padding-5" src="/media/images/app/activity.png"/></a>
+	<br/>
+	Activity
+      </div>
+
+      <!-- populated by populate_profile -->
+      <div class="ui-block-a apply-padding-bottom-5">
+	<a href="#connections"><img class="apply-padding-5" src="/media/images/app/connections.png"/></a>
+	<br/>
+	Connections
+      </div>
+
+      <!-- populated by populate_balance -->
+      <div class="ui-block-b apply-padding-bottom-5">
+	<a href="#statistics"><img class="apply-padding-5" src="/media/images/app/statistics.png"/></a>
+	<br/>
+	Statistics
+      </div>
+
+    </div>
+    <!-- grid 'a' ends -->
+
+  </div>
+  <!-- content ends -->
+
+</div>
+
+
+<!----------------------------------------------------------------------------->
+
+<!-- Activity page -->
+<div data-role="page" id="activity" data-title="Activity" data-url="#activity">
+
+  <div data-role="header" data-position="fixed" data-id="vereseheader">
+    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
+    <h1>Activity</h1>
     <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
   </div><!-- /header -->
 
@@ -142,32 +198,7 @@
   </div>
   <!-- content ends -->
 
-  <!-- footer starts -->
-  <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
-    <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-      <ul>
-	<li>
-	  <a href="#add" id="veresedaki" class="ui-state-persist" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
-	</li>
-
-	<li>
-	  <a href="#dashboard" class="ui-btn-active" class="ui-state-persist" id="planet" data-icon="custom" data-transition="slide" name="planet">Dashboard</a>
-	</li>
-
-	<li>
-	  <a href="#connections" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">Connections</a>
-	</li>
-
-	<li>
-	  <a href="#analysis" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
-	</li>
-      </ul>
-    </div>
-  </div>
-  <!-- footer ends-->
-
 </div>
-
 
 
 <!----------------------------------------------------------------------------->
@@ -179,6 +210,7 @@
 
   <!-- header starts -->
   <div data-role="header" data-position="fixed" data-id="vereseheader">
+    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
     <h1>Add new</h1>
     <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
   </div>
@@ -190,31 +222,6 @@
   </div>
   <!-- content ends -->
 
-  <!-- footer starts -->
-  <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
-    <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-      <ul>
-	<li>
-	  <a href="#add" class="ui-btn-active" class="ui-state-persist" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
-	</li>
-
-	<li>
-	  <a href="#dashboard" id="planet" class="ui-state-persist" data-icon="custom" data-transition="slide" name="planet">Dashboard</a>
-	</li>
-
-	<li>
-	  <a href="#connections" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">Connections</a>
-	</li>
-
-	<li>
-	  <a href="#analysis" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
-	</li>
-
-      </ul>
-    </div>
-  </div>
-  <!-- footer ends -->
-
 </div>
 
 <!----------------------------------------------------------------------------->
@@ -225,6 +232,7 @@
 
   <!-- header starts -->
   <div data-role="header" data-position="fixed" data-id="vereseheader">
+    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
     <h1>Connections</h1>
     <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
   </div>
@@ -236,31 +244,6 @@
   </div>
   <!-- content ends -->
 
-  <!-- footer starts -->
-  <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
-    <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-      <ul>
-	<li>
-	  <a href="#add" class="ui-btn-active" class="ui-state-persist" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
-	</li>
-
-	<li>
-	  <a href="#dashboard" id="planet" class="ui-state-persist" data-icon="custom" data-transition="slide" name="planet">Dashboard</a>
-	</li>
-
-	<li>
-	  <a href="#connections" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">Connections</a>
-	</li>
-
-	<li>
-	  <a href="#analysis" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
-	</li>
-
-      </ul>
-    </div>
-  </div>
-  <!-- footer ends -->
-
 </div>
 
 
@@ -271,11 +254,12 @@
 
 <!-- analysis page start -->
 
-<div data-role="page" id="analysis" data-title="Analysis" data-url="#analysis">
+<div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics">
 
   <!-- header starts -->
   <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <h1>Analysis</h1>
+    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
+    <h1>Statistics</h1>
     <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
   </div>
   <!-- header ends -->
@@ -286,30 +270,6 @@
   </div>
   <!-- content ends -->
 
-  <!-- footer starts -->
-  <div data-role="footer" class="nav-glyphish-example" data-position="fixed" data-theme="b" data-id="navbar">
-    <div data-role="navbar" class="nav-glyphish-example" data-grid="c">
-      <ul>
-	<li>
-	  <a href="#add" class="ui-btn-active" class="ui-state-persist" id="veresedaki" data-icon="custom" data-transition="slide" name="veresedaki">Add</a>
-	</li>
-
-	<li>
-	  <a href="#dashboard" id="planet" class="ui-state-persist" data-icon="custom" data-transition="slide" name="planet">Dashboard</a>
-	</li>
-
-	<li>
-	  <a href="#connections" id="group" class="ui-state-persist" data-icon="custom" data-transition="slide" name="group">Connections</a>
-	</li>
-
-	<li>
-	  <a href="#analysis" id="analitics" class="ui-state-persist" data-icon="custom" data-transition="slide" name="analitics">Analysis</a>
-	</li>
-
-      </ul>
-    </div>
-  </div>
-  <!-- footer ends -->
 
 </div>
 
