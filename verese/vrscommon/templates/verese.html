@@ -158,41 +158,10 @@
   </div><!-- /header -->
 
   <!-- content starts -->
-  <div data-role="content" style="text-align:center;">
-
-    <!-- grid 'a' starts -->
-    <div class="ui-grid-a">
-
-      <!-- populated by populate_profile -->
-      <div style="width:46%;margin:2%;text-align:left;" class="ui-block-a">
-	<div style="float:left;" id="my_avatar"></div>
-	<h2 id="my_name"></h2>
-      </div>
-
-      <!-- populated by populate_balance -->
-      <div style="width:46%;margin:2%;" class="ui-block-b">
-	<h2>
-	  <a href="#" data-role="button" data-icon="grid" data-iconpos="bottom">
-	    <div id="balance_aggregation"></div>
-	  </a>
-	</h2>
-      </div>
-
-    </div>
-    <!-- grid 'a' ends -->
-
-    <!-- populated by populate_balance -->
-    <div> <!-- extra div needed to avoid re'create()'ing all page -->
-      <div data-role="controlgroup" data-type="horizontal" style="width:auto; text-align:center;">
-	<div id="currency_aggregations"></div>
-      </div>
-    </div>
-
+  <div data-role="content">
     <!-- transaction list -->
-    <div>
-      <ul id="transaction_list" data-role='listview'>
-      </ul>
-    </div>
+    <ul id="transaction_list" data-role='listview'>
+    </ul>
     <!-- transaction list -->
 
   </div>
@@ -219,6 +188,9 @@
   <!-- content starts -->
   <div data-role="content">
     <p> not ready yet </p>
+    <a href="#" id="simplebool" data-role="button">Open Dialog</a>
+    <script>
+    </script>
   </div>
   <!-- content ends -->
 
@@ -240,7 +212,13 @@
 
   <!-- content starts -->
   <div data-role="content">
-    <p> not ready yet </p>
+    <!-- transaction list -->
+    <div>
+      <ul id="relation_list" data-role='listview' data-filter="true">
+      </ul>
+    </div>
+    <!-- transaction list -->
+
   </div>
   <!-- content ends -->
 
@@ -330,14 +308,26 @@
 
 
 <script id="transctionItem" type="text/x-jquery-tmpl">
-  <li class="ui-li-has-arrow ${currency_code}_transaction" data-icon="${arrow}">
-    <a href="#">
-      <img src="${img}"/>
-      <h3>${name}</h3>
-      <p>${comment}</p>
-    </a>
-    <p class="ui-li-count">${amount}</div>
-  </li>
+ <li data-icon="${icon}">
+   <a href="#" id="transaction-${id}">
+     <img style="top:1.4em" src="${img}">
+     <h3>${name}</h3>
+     <p>${comment}&nbsp;</p>
+     <p><span  class="transaction_date" title="${date}">more than a month ago</span> at ${location}</p>
+     <span class="ul-li-aside">${sign}${amount}</span>
+   </a>
+
+</li>
+</script>
+
+<script id="relationItem" type="text/x-jquery-tmpl">
+ <li>
+     <img style="top:0.9em" src="${img}">
+     <h3>${name}</h3>
+     <p>Last verese <span class="relation_date" title="${updated}">more than a month ago</span></p>
+     <span class="ul-li-aside">${balance} ${currency.symbol}</span>
+ </li>
+
 </script>
 
 {% endblock %}

@@ -22,6 +22,21 @@ function _fixgeometry() {
     /* Trim margin/border/padding height */
 }; /* fixgeometry */
 
+function find_my_veresedaki(list) {
+    // given a list of veresedakia, locate and return mine
+    veresedaki = null;
+
+    $.each(list,
+	   function(key, value) {
+	       if (value.ower.email == window.my_email) {
+		   veresedaki = value;
+	       }
+	   }
+	  );
+
+    return veresedaki;
+}
+
 
 // function to initialize #login page
 function initiliaze_login_page() {
@@ -83,7 +98,7 @@ function user_is_me(user) {
 // returns True gravatar image url
 function get_gravatar_url(user) {
     return 'http://www.gravatar.com/avatar/' +
-	user.emailmd5 + '?s=80&d=identicon'
+	user.emailmd5 + '?s=48&d=identicon'
 }
 
 // accepts a json object poiting to a user
@@ -97,16 +112,20 @@ function get_amount_repr(item) {
     return item.amount + ' ' + item.currency.symbol;
 }
 
+// function to initialize #activity page
+function initiliaze_activity_page() {
+    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
+}
+
+// function to initialize #connections page
+function initiliaze_connections_page() {
+    $.getJSON("/api/v1.0/relation/list/", populate_relations);
+}
+
+
 // function to initialize #dashboard page
 function initiliaze_dashboard_page() {
-    $('#currency_aggregations').hide();
-    $('#balance_aggregation').click(function () {
-	$('#currency_aggregations').slideToggle('fast');
-    });
-
-    $.getJSON("/api/v1.0/profile/", populate_profile);
-    $.getJSON("/api/v1.0/balance/", populate_balance);
-    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
+   $.getJSON("/api/v1.0/profile/", populate_profile);
 }
 
 // function to initialize #logout page
@@ -174,68 +193,81 @@ function initiliaze_welcome_page() {
 }
 
 
-function populate_balance(json) {
-    // populate balance
-    $('#balance_aggregation').html(
-        parseFloat(json.data.balance_aggregation.balance).toFixed(2) +
-            json.data.balance_aggregation.currency.symbol
-    );
+// function populate_balance(json) {
+//     // populate balance
+//     $('#balance_aggregation').html(
+//         parseFloat(json.data.balance_aggregation.balance).toFixed(2) +
+//             json.data.balance_aggregation.currency.symbol
+//     );
 
-    $('#currency_aggregations').empty();
-    $.each(json.data.balance_details,
-    	   function(key, value)
-    	   {
-    	       var button_text = '' +
-    		   '<a id="' +
-    		   value.currency.code +
-    		   '_transactions_button" data-role="button" name="' +
-    		   value.currency.code +
-    		   '_transactions">' +
-    		   // '<img src="' + value.currency.image + '">' +
-    		   value.currency.symbol + '<br/>' + value.balance +
-    		   '</a>';
+//     $('#currency_aggregations').empty();
+//     $.each(json.data.balance_details,
+//     	   function(key, value)
+//     	   {
+//     	       var button_text = '' +
+//     		   '<a id="' +
+//     		   value.currency.code +
+//     		   '_transactions_button" data-role="button" name="' +
+//     		   value.currency.code +
+//     		   '_transactions">' +
+//     		   // '<img src="' + value.currency.image + '">' +
+//     		   value.currency.symbol + '<br/>' + value.balance +
+//     		   '</a>';
 
-    	       $('#currency_aggregations').append(button_text);
+//     	       $('#currency_aggregations').append(button_text);
 
-    	       $('#' + value.currency.code + '_transactions_button').click(function() {
-    	       	   $('.' + value.currency.code + '_transaction').slideToggle('fast');
-    	       });
+//     	       $('#' + value.currency.code + '_transactions_button').click(function() {
+//     	       	   $('.' + value.currency.code + '_transaction').slideToggle('fast');
+//     	       });
 
-    	   }
-    	  ); // end each()
+//     	   }
+//     	  ); // end each()
 
-    $('#dashboard').trigger('create');
-}
+//     $('#dashboard').trigger('create');
+// }
 
 function populate_profile(json) {
-    $('#my_name').html(json.data.first_name + ' ' + json.data.last_name);
-    $('#my_avatar').html('<img src="http://www.gravatar.com/avatar/' +
-			 json.data.emailmd5 +
-			 '?s=80&d=mm" />'
-			);
-
     // check if new user
     if (json.data.first_name == '')
 	$.mobile.changePage('#welcome', '#welcome');
 
+    window.my_name = json.data.first_name + ' ' + json.data.last_name;
     window.my_email = json.data.email;
 
-    $('#dashboard').trigger('create');
 }
 
-function find_my_veresedaki(list) {
-    // given a list of veresedakia, locate and return mine
-    veresedaki = null;
+function populate_relations(json) {
+    $('#relation_list').empty();
+    var ddata = [];
 
-    $.each(list,
-	   function(key, value) {
-	       if (value.ower.email == window.my_email) {
-		   veresedaki = value;
-	       }
+    $.each(json.data.relations,
+           function(key, value) {
+	       if (user_is_me(value.user1) == true)
+		   user = value.user2;
+	       else
+		   user = value.user1;
+
+	       img = get_gravatar_url(user);
+	       name = get_full_name(user);
+
+	       ddata.push({
+			      'balance': value.balance,
+			      'name': name,
+			      'currency': value.currency,
+			      'id': value.id,
+			      'img': img,
+			      'updated': value.updated
+			  });
 	   }
 	  );
 
-    return veresedaki
+    $("#relationItem").tmpl(ddata).appendTo("#relation_list");
+
+    // pretty dates, updated once per minute
+    $(".relation_date").prettyDate({interval:60000});
+
+    $("#relation_list").listview("refresh");
+
 }
 
 function populate_transactions(json) {
@@ -247,52 +279,82 @@ function populate_transactions(json) {
 	   {
 	       // if payer is me
 	       if (user_is_me(value.payer) == true) {
-		   // if more than one owers
-		   if (value.veresedakia.length > 1) {
-		       item_img = 'http://www.gravatar.com/avatar/foo?s=80&d=identicon';
+	       	   // if more than one owers
+	       	   if (value.veresedakia.length > 1) {
+	       	       item_img = 'http://www.gravatar.com/avatar/foo?s=80&d=identicon';
 
-		       item_name = '';
-		       $.each(value.veresedakia,
-			      function(vkey, vvalue) {
-				  item_name += get_full_name(vvalue.ower) + ', ';
-			      }
-			     );
-		       item_name = item_name.substring(0, item_name.length-2);
-		   }
-		   else {
-		       item_img = get_gravatar_url(value.veresedakia[0].ower);
-		       item_name = get_full_name(value.veresedakia[0].ower);
-		   }
+	       	       item_name = '';
+	       	       $.each(value.veresedakia,
+	       		      function(vkey, vvalue) {
+	       			  item_name += get_full_name(vvalue.ower) + ', ';
+	       		      }
+	       		     );
+	       	       item_name = item_name.substring(0, item_name.length-2);
+	       	   }
+	       	   else {
+	       	       item_img = get_gravatar_url(value.veresedakia[0].ower);
+	       	       item_name = get_full_name(value.veresedakia[0].ower);
+	       	   }
 
-		   item_amount = get_amount_repr(value);
+	       	   item_amount = get_amount_repr(value);
+		   item_sign = '';
 	       }
 	       // i'm ower
 	       else {
-		   item_img = get_gravatar_url(value.payer);
-		   item_name = get_full_name(value.payer);
-		   item_amount = find_my_veresedaki(value.veresedakia).amount + ' ' + value.currency.symbol;
+		   item_sign = '-';
+	       	   item_img = get_gravatar_url(value.payer);
+	       	   item_name = get_full_name(value.payer);
+ 	       	   item_amount = find_my_veresedaki(value.veresedakia).amount + ' ' + value.currency.symbol;
 	       }
 
-	       // arrow direction is different depending on number of owers
-	       if (value.veresedakia.length > 1)
-		   item_arrow = "arrow-d";
+	       if (value.status == "Accepted")
+		   item_icon = 'check'
 	       else
-		   item_arrow = "arrow-r";
+		   item_icon = 'alert'
 
 	       ddata.push({
-		   'img': item_img,
-		   'name': item_name,
-		   'comment':value.comment,
-		   'amount': item_amount,
-		   'arrow': item_arrow,
-		   'currency_code': value.currency.code,
+		   'id': value.id,
+	       	   'img': item_img,
+	       	   'name': item_name,
+	       	   'comment':value.comment,
+	       	   'amount': item_amount,
+	           'date': value.created,
+	           'location': 'unknown location',
+		   'icon': item_icon,
+	           'sign': item_sign,
+	       	   'currency_code': value.currency.code
 	       });
+
+	       // if (value.status == 'Waiting' && item_sign == '-')
+	       // 	   $(document).delegate('#transaction-' + value.id, 'click', function() {
+	       // 				    $(this).simpledialog({
+	       // 							     'mode' : 'bool',
+	       // 							     'prompt' : '',
+	       // 							     'useModal': true,
+	       // 							     'buttons' : {
+	       // 								 'Accept': {
+	       // 								     click: function () {
+	       // 									 alert('accepted');
+	       // 								     }
+	       // 								 },
+	       // 								 'Deny': {
+	       // 								     click: function () {
+	       // 									 alert('denied');
+	       // 								     },
+	       // 								 icon: "delete",
+	       // 								     theme: "c"
+	       // 							     }
+	       // 							     }
+	       // 							 });
+	       // 				});
+
 	   }
 	  ); // end each();
 
     $("#transctionItem").tmpl(ddata).appendTo("#transaction_list");
-    // // pretty dates, updated once per minute
-    // $(".transaction_date").prettyDate({interval:1000});
+
+    // pretty dates, updated once per minute
+    $(".transaction_date").prettyDate({interval:60000});
 
     $("#transaction_list").listview("refresh");
 
@@ -302,6 +364,8 @@ function populate_transactions(json) {
 // lives
 $('#login').live('pagebeforeshow', initiliaze_login_page);
 $('#dashboard').live('pagebeforeshow', initiliaze_dashboard_page);
+$('#activity').live('pagebeforeshow', initiliaze_activity_page);
+$('#connections').live('pagebeforeshow', initiliaze_connections_page);
 $('#welcome').live('pagebeforeshow', initiliaze_welcome_page);
 $('#logout').live('pagebeforeshow', initiliaze_logout_page);
 

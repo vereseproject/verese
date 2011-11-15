@@ -28,42 +28,6 @@ body {
 	border-radius: none !important;
 	}
 
-#my_avatar {
-    float:left;
-    margin-right: 1%;
-}
-
-#planet .ui-icon {
-	background:  url(/media/images/app/27-planet.png) 50% 50% no-repeat;
-	background-size: 29px 18px;
-	}
-
-#group .ui-icon {
-	background:  url(/media/images/app/112-group.png) 50% 50% no-repeat;
-	background-size: 32px 21px;
-	}
-
-#analitics .ui-icon {
-	background:  url(/media/images/app/16-line-chart.png) 50% 50% no-repeat;
-	background-size: 30px 24px;
-	}
-
-#veresedaki .ui-icon {
-	background:  url(/media/images/app/10-medical.png) 50% 50% no-repeat;
-	background-size: 22px 22px;
-	}
-
-.ui-li-has-count .ui-li-count {
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: -0.9em;
-    padding: 0.5em;
-    position: absolute;
-    right: 38px;
-    top: 40%;
-}
-
-
 .apply-padding-5 {
    padding: 5%;
 }
@@ -78,4 +42,32 @@ body {
 
 .apply-padding-bottom-10 {
    padding-bottom: 10%;
+}
+
+
+.ui-li-thumb {
+ max-height: 48px;
+ max-width: 48px;
+ left: 0.9em;
+ background-color: white;
+ box-shadow: 2px 2px 2px #ccc;
+ padding: 4px;
+}
+
+.ul-li-aside {
+ font-size: 18px;
+ font-weight: bold;
+ margin-top: -0.9em;
+ padding: 0.2em 0.5em;
+ position: absolute;
+ top: 50%;
+ right: 38px;
+ color: maroon;
+ text-shadow: 1px 1px #ccc;
+ display
+}
+
+
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+ padding-left: 85px;
 }
