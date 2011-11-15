@@ -79,7 +79,7 @@ class StatusView(PistonView):
     fields = [
         'status',
         Field('user', lambda x: UserView(x)),
-        Field('created', lambda x: x.isoformat()),
+        Field('created', lambda x: x.strftime("%Y-%m-%dT%H:%M:%S")),
         ]
 
 class VeresedakiRelationView(PistonView):
@@ -106,7 +106,7 @@ class TransactionView(PistonView):
         Field('payer', lambda x: UserView(x), destination='payer'),
         Field('veresedakia', lambda x: [VeresedakiView(y) for y in x]),
         'currency',
-        Field('created', lambda x: x.isoformat()),
+        Field('created', lambda x: x.strftime("%Y-%m-%dT%H:%M:%S")),
         'comment',
         'status',
         Field('total_amount', destination='amount'),
