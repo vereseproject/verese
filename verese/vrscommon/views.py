@@ -16,7 +16,6 @@ def request_token_ready(request, token):
         context_instance = ctx
     )
 
-@login_required
 def main(request):
     ctx = {
         'currencies':Currency.objects.all()
