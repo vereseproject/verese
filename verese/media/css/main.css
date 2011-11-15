@@ -62,3 +62,20 @@ body {
     right: 38px;
     top: 40%;
 }
+
+
+.apply-padding-5 {
+   padding: 5%;
+}
+
+.apply-padding-10 {
+   padding: 10%;
+}
+
+.apply-padding-bottom-5 {
+   padding-bottom: 5%;
+}
+
+.apply-padding-bottom-10 {
+   padding-bottom: 10%;
+}
