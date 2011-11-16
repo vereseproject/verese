@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "name": "Verese",
+  "description": "Micropayments",
+  "icons": {
+    "57": "/media/images/app/apple-touch-icon.png",
+    "72": "/media/images/app/apple-touch-icon-72.png",
+    "114": "/media/images/app/apple-touch-icon-114.png"
+  },
+  "developer": {
+    "name": "Verese Project",
+    "url": "http://verese.net"
+  },
+  "installs_allowed_from": [
+    "http://beta.verese.net",
+    "http://www.verese.net"
+  ],
+  "locales": {
+    "el": {
+      "description": "Μικροπληρωμές",
+      "developer": {
+        "url": "http://verese.net"
+      }
+    }
+  },
+  "default_locale": "en"
+}

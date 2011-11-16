@@ -1,0 +1,73 @@
+body {
+	height:100%;
+	}
+
+#logo {
+	margin-bottom: 20px;
+	margin-top: 20px;
+	}
+
+#header-logo {
+	text-align:center;
+	padding-bottom: 3px;
+	padding-top: 5px;
+	}
+
+.nav-glyphish-example .ui-btn .ui-btn-inner {
+	padding-top: 40px !important;
+	}
+
+.nav-glyphish-example .ui-btn .ui-icon {
+	width: 30px!important;
+	height: 30px!important;
+	margin-left: -15px !important;
+	box-shadow: none!important;
+	-moz-box-shadow: none!important;
+	-webkit-box-shadow: none!important;
+	-webkit-border-radius: none !important;
+	border-radius: none !important;
+	}
+
+.apply-padding-5 {
+   padding: 5%;
+}
+
+.apply-padding-10 {
+   padding: 10%;
+}
+
+.apply-padding-bottom-5 {
+   padding-bottom: 5%;
+}
+
+.apply-padding-bottom-10 {
+   padding-bottom: 10%;
+}
+
+
+.ui-li-thumb {
+ max-height: 48px;
+ max-width: 48px;
+ left: 0.9em;
+ background-color: white;
+ box-shadow: 2px 2px 2px #ccc;
+ padding: 4px;
+}
+
+.ul-li-aside {
+ font-size: 18px;
+ font-weight: bold;
+ margin-top: -0.9em;
+ padding: 0.2em 0.5em;
+ position: absolute;
+ top: 50%;
+ right: 38px;
+ color: maroon;
+ text-shadow: 1px 1px #ccc;
+ display
+}
+
+
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+ padding-left: 85px;
+}

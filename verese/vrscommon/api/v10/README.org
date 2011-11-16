@@ -1,0 +1,65 @@
+* API Calls
+
+1. [X] Get Balance in local currency and approximation
+ * approximation
+ * detailed
+ * currency name, symbol etc
+2. [X] Get Relations List
+3. [X] Get a Relation
+4. [X] Get Transactions List
+ * return both transactions
+5. [X] Get a Transaction
+6. [-] Get Veresedakia for specific Relation
+ - [X] Basic
+ - [ ] Pagination
+7. [X] Add a Transaction
+8. [ ] Get pending
+9. [X] Get currencies
+10. [X] Get User details
+
+
+* Examples
+
+1. Get Balance
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/balance/
+
+2. Get Relations List
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/list/
+
+3. Get a Specific Relation
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/1/
+
+4. Get a Transactions List
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/transaction/list/
+
+5. Get a Specific Transaction
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/transaction/1/
+
+6. Get Veresedakia of a Specific Relation
+
+~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/1/details/
+
+7. Get supported currencies
+
+~$ curl -X GET http://localhost:8000/api/v1.0/currency/list/
+
+8. Get user profile
+
+~$ curl -X GET http://localhost:8000/api/v1.0/profile/
+
+9. Create a new transaction
+
+~$ curl -u "seadog:123" -X POST \
+        -F "currency=2" \
+        -F "veresedaki_set-TOTAL_FORMS=2"
+        -F "veresedaki_set-INITIAL_FORMS=0"
+        -F "veresedaki_set-MAX_NUM_FORMS=2"
+        -F "veresedaki_set-0-ower=2"
+        -F "veresedaki_set-0-amount=10"
+        -F "veresedaki_set-1-ower=2"
+        -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1.0/transaction/

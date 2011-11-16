@@ -1,0 +1,905 @@
+[
+  {
+    "pk": 22, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_logentry", 
+      "name": "Can add log entry", 
+      "content_type": 8
+    }
+  }, 
+  {
+    "pk": 23, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_logentry", 
+      "name": "Can change log entry", 
+      "content_type": 8
+    }
+  }, 
+  {
+    "pk": 24, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_logentry", 
+      "name": "Can delete log entry", 
+      "content_type": 8
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_group", 
+      "name": "Can add group", 
+      "content_type": 2
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_group", 
+      "name": "Can change group", 
+      "content_type": 2
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_group", 
+      "name": "Can delete group", 
+      "content_type": 2
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_message", 
+      "name": "Can add message", 
+      "content_type": 4
+    }
+  }, 
+  {
+    "pk": 11, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_message", 
+      "name": "Can change message", 
+      "content_type": 4
+    }
+  }, 
+  {
+    "pk": 12, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_message", 
+      "name": "Can delete message", 
+      "content_type": 4
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_permission", 
+      "name": "Can add permission", 
+      "content_type": 1
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_permission", 
+      "name": "Can change permission", 
+      "content_type": 1
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_permission", 
+      "name": "Can delete permission", 
+      "content_type": 1
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_user", 
+      "name": "Can add user", 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_user", 
+      "name": "Can change user", 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_user", 
+      "name": "Can delete user", 
+      "content_type": 3
+    }
+  }, 
+  {
+    "pk": 13, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_contenttype", 
+      "name": "Can add content type", 
+      "content_type": 5
+    }
+  }, 
+  {
+    "pk": 14, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_contenttype", 
+      "name": "Can change content type", 
+      "content_type": 5
+    }
+  }, 
+  {
+    "pk": 15, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_contenttype", 
+      "name": "Can delete content type", 
+      "content_type": 5
+    }
+  }, 
+  {
+    "pk": 16, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_session", 
+      "name": "Can add session", 
+      "content_type": 6
+    }
+  }, 
+  {
+    "pk": 17, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_session", 
+      "name": "Can change session", 
+      "content_type": 6
+    }
+  }, 
+  {
+    "pk": 18, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_session", 
+      "name": "Can delete session", 
+      "content_type": 6
+    }
+  }, 
+  {
+    "pk": 19, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_site", 
+      "name": "Can add site", 
+      "content_type": 7
+    }
+  }, 
+  {
+    "pk": 20, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_site", 
+      "name": "Can change site", 
+      "content_type": 7
+    }
+  }, 
+  {
+    "pk": 21, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_site", 
+      "name": "Can delete site", 
+      "content_type": 7
+    }
+  }, 
+  {
+    "pk": 25, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_migrationhistory", 
+      "name": "Can add migration history", 
+      "content_type": 9
+    }
+  }, 
+  {
+    "pk": 26, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_migrationhistory", 
+      "name": "Can change migration history", 
+      "content_type": 9
+    }
+  }, 
+  {
+    "pk": 27, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_migrationhistory", 
+      "name": "Can delete migration history", 
+      "content_type": 9
+    }
+  }, 
+  {
+    "pk": 28, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_tag", 
+      "name": "Can add Tag", 
+      "content_type": 10
+    }
+  }, 
+  {
+    "pk": 29, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_tag", 
+      "name": "Can change Tag", 
+      "content_type": 10
+    }
+  }, 
+  {
+    "pk": 30, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_tag", 
+      "name": "Can delete Tag", 
+      "content_type": 10
+    }
+  }, 
+  {
+    "pk": 31, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_taggeditem", 
+      "name": "Can add Tagged Item", 
+      "content_type": 11
+    }
+  }, 
+  {
+    "pk": 32, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_taggeditem", 
+      "name": "Can change Tagged Item", 
+      "content_type": 11
+    }
+  }, 
+  {
+    "pk": 33, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_taggeditem", 
+      "name": "Can delete Tagged Item", 
+      "content_type": 11
+    }
+  }, 
+  {
+    "pk": 46, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_currency", 
+      "name": "Can add currency", 
+      "content_type": 16
+    }
+  }, 
+  {
+    "pk": 47, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_currency", 
+      "name": "Can change currency", 
+      "content_type": 16
+    }
+  }, 
+  {
+    "pk": 48, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_currency", 
+      "name": "Can delete currency", 
+      "content_type": 16
+    }
+  }, 
+  {
+    "pk": 34, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_relation", 
+      "name": "Can add relation", 
+      "content_type": 12
+    }
+  }, 
+  {
+    "pk": 35, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_relation", 
+      "name": "Can change relation", 
+      "content_type": 12
+    }
+  }, 
+  {
+    "pk": 36, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_relation", 
+      "name": "Can delete relation", 
+      "content_type": 12
+    }
+  }, 
+  {
+    "pk": 37, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_transaction", 
+      "name": "Can add transaction", 
+      "content_type": 13
+    }
+  }, 
+  {
+    "pk": 38, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_transaction", 
+      "name": "Can change transaction", 
+      "content_type": 13
+    }
+  }, 
+  {
+    "pk": 39, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_transaction", 
+      "name": "Can delete transaction", 
+      "content_type": 13
+    }
+  }, 
+  {
+    "pk": 49, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_userbalance", 
+      "name": "Can add user balance", 
+      "content_type": 17
+    }
+  }, 
+  {
+    "pk": 50, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_userbalance", 
+      "name": "Can change user balance", 
+      "content_type": 17
+    }
+  }, 
+  {
+    "pk": 51, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_userbalance", 
+      "name": "Can delete user balance", 
+      "content_type": 17
+    }
+  }, 
+  {
+    "pk": 52, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_userprofile", 
+      "name": "Can add user profile", 
+      "content_type": 18
+    }
+  }, 
+  {
+    "pk": 53, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_userprofile", 
+      "name": "Can change user profile", 
+      "content_type": 18
+    }
+  }, 
+  {
+    "pk": 54, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_userprofile", 
+      "name": "Can delete user profile", 
+      "content_type": 18
+    }
+  }, 
+  {
+    "pk": 40, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_veresedaki", 
+      "name": "Can add veresedaki", 
+      "content_type": 14
+    }
+  }, 
+  {
+    "pk": 41, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_veresedaki", 
+      "name": "Can change veresedaki", 
+      "content_type": 14
+    }
+  }, 
+  {
+    "pk": 42, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_veresedaki", 
+      "name": "Can delete veresedaki", 
+      "content_type": 14
+    }
+  }, 
+  {
+    "pk": 43, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "add_veresedakistatus", 
+      "name": "Can add veresedaki status", 
+      "content_type": 15
+    }
+  }, 
+  {
+    "pk": 44, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "change_veresedakistatus", 
+      "name": "Can change veresedaki status", 
+      "content_type": 15
+    }
+  }, 
+  {
+    "pk": 45, 
+    "model": "auth.permission", 
+    "fields": {
+      "codename": "delete_veresedakistatus", 
+      "name": "Can delete veresedaki status", 
+      "content_type": 15
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "verese", 
+      "first_name": "\u039c\u03ac\u03ba\u03b7\u03c2", 
+      "last_name": "\u0392\u03b5\u03c1\u03b5\u03c3\u03b5\u03b4\u03ac\u03ba\u03b7\u03c2", 
+      "is_active": true, 
+      "is_superuser": true, 
+      "is_staff": true, 
+      "last_login": "2011-09-07 02:51:32", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$8ed3d$5d2360876ef2d66c2329e00f6a73cf4c5de3df2f", 
+      "email": "verese@verese.net", 
+      "date_joined": "2011-09-07 02:47:08"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "nikos", 
+      "first_name": "Nikos", 
+      "last_name": "Koukos", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2011-09-07 02:47:25", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$f4052$1a9ad7d823aa9392efb6e18853818887aaa7fe5f", 
+      "email": "nikos@example.com", 
+      "date_joined": "2011-09-07 02:47:25"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "babis", 
+      "first_name": "Babis", 
+      "last_name": "Sougias", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2011-09-07 02:47:49", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$2ad34$e9d63814c6aebae57dee10fef04e52dab1d631c5", 
+      "email": "babis@example.com", 
+      "date_joined": "2011-09-07 02:47:49"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "auth.user", 
+    "fields": {
+      "username": "dimitris", 
+      "first_name": "dimitris", 
+      "last_name": "\u039a\u03b1\u03b4\u03b9\u03b2\u03bf\u03cd\u03c1\u03ba\u03bf\u03c2", 
+      "is_active": true, 
+      "is_superuser": false, 
+      "is_staff": false, 
+      "last_login": "2011-09-07 02:48:15", 
+      "groups": [], 
+      "user_permissions": [], 
+      "password": "sha1$4ffe6$06dd08355308c6c929cf1afe94bfef218a0e0350", 
+      "email": "dimitris@example.com", 
+      "date_joined": "2011-09-07 02:48:15"
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "vrscommon.relation", 
+    "fields": {
+      "updated": "2011-09-07 03:45:48", 
+      "user2": 2, 
+      "user1": 1, 
+      "user2_trust_limit": "0", 
+      "created": "2011-09-07 03:36:49", 
+      "user1_trust_limit": "0", 
+      "currency": 1, 
+      "balance": "10"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.relation", 
+    "fields": {
+      "updated": "2011-09-07 03:45:17", 
+      "user2": 3, 
+      "user1": 1, 
+      "user2_trust_limit": "0", 
+      "created": "2011-09-07 03:37:20", 
+      "user1_trust_limit": "0", 
+      "currency": 3, 
+      "balance": "20"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.relation", 
+    "fields": {
+      "updated": "2011-09-07 04:08:03", 
+      "user2": 4, 
+      "user1": 1, 
+      "user2_trust_limit": "0", 
+      "created": "2011-09-07 03:37:20", 
+      "user1_trust_limit": "0", 
+      "currency": 3, 
+      "balance": "10"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "vrscommon.relation", 
+    "fields": {
+      "updated": "2011-09-07 03:43:32", 
+      "user2": 3, 
+      "user1": 2, 
+      "user2_trust_limit": "0", 
+      "created": "2011-09-07 03:37:32", 
+      "user1_trust_limit": "0", 
+      "currency": 1, 
+      "balance": "5"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "vrscommon.transaction", 
+    "fields": {
+      "comment": "", 
+      "currency": 2, 
+      "payer": 2, 
+      "created": "2011-09-07 03:38:26"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "vrscommon.transaction", 
+    "fields": {
+      "comment": "", 
+      "currency": 1, 
+      "payer": 2, 
+      "created": "2011-09-07 03:37:50"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.transaction", 
+    "fields": {
+      "comment": "", 
+      "currency": 1, 
+      "payer": 2, 
+      "created": "2011-09-07 03:37:32"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.transaction", 
+    "fields": {
+      "comment": "", 
+      "currency": 3, 
+      "payer": 1, 
+      "created": "2011-09-07 03:37:20"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "vrscommon.transaction", 
+    "fields": {
+      "comment": "Comment first\r\n", 
+      "currency": 1, 
+      "payer": 1, 
+      "created": "2011-09-07 03:36:49"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "10", 
+      "transaction": 1, 
+      "local_amount": "10", 
+      "ower": 2
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "20", 
+      "transaction": 2, 
+      "local_amount": "20", 
+      "ower": 3
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "10", 
+      "transaction": 2, 
+      "local_amount": "10", 
+      "ower": 4
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "5", 
+      "transaction": 3, 
+      "local_amount": "5", 
+      "ower": 3
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "10", 
+      "transaction": 4, 
+      "local_amount": "10", 
+      "ower": 3
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "vrscommon.veresedaki", 
+    "fields": {
+      "comment": "", 
+      "amount": "5", 
+      "transaction": 5, 
+      "local_amount": "3.5", 
+      "ower": 3
+    }
+  }, 
+  {
+    "pk": 10, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 40, 
+      "veresedaki": 3, 
+      "user": 4, 
+      "created": "2011-09-07 04:08:03"
+    }
+  }, 
+  {
+    "pk": 9, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 40, 
+      "veresedaki": 1, 
+      "user": 2, 
+      "created": "2011-09-07 03:45:48"
+    }
+  }, 
+  {
+    "pk": 8, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 40, 
+      "veresedaki": 2, 
+      "user": 3, 
+      "created": "2011-09-07 03:45:17"
+    }
+  }, 
+  {
+    "pk": 7, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 40, 
+      "veresedaki": 6, 
+      "user": 3, 
+      "created": "2011-09-07 03:40:33"
+    }
+  }, 
+  {
+    "pk": 6, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 6, 
+      "user": 2, 
+      "created": "2011-09-07 03:38:26"
+    }
+  }, 
+  {
+    "pk": 5, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 5, 
+      "user": 2, 
+      "created": "2011-09-07 03:37:50"
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 4, 
+      "user": 2, 
+      "created": "2011-09-07 03:37:32"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 3, 
+      "user": 1, 
+      "created": "2011-09-07 03:37:20"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 2, 
+      "user": 1, 
+      "created": "2011-09-07 03:37:20"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "vrscommon.veresedakistatus", 
+    "fields": {
+      "status": 30, 
+      "veresedaki": 1, 
+      "user": 1, 
+      "created": "2011-09-07 03:36:49"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "vrscommon.currency", 
+    "fields": {
+      "symbol": "\u20ac", 
+      "code": "EUR", 
+      "updated": "2011-09-07 03:36:02", 
+      "name": "Euro", 
+      "rate": "1"
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.currency", 
+    "fields": {
+      "symbol": "$", 
+      "code": "USD", 
+      "updated": "2011-09-07 03:36:02", 
+      "name": "US Dollar", 
+      "rate": "1.42881"
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.currency", 
+    "fields": {
+      "symbol": "\u00a3", 
+      "code": "GBP", 
+      "updated": "2011-09-07 03:36:02", 
+      "name": "British Pound", 
+      "rate": "0.8802"
+    }
+  }, 
+  {
+    "pk": 1, 
+    "model": "vrscommon.userprofile", 
+    "fields": {
+      "currency": 1, 
+      "wants_email": true, 
+      "user": 1, 
+      "pin": null
+    }
+  }, 
+  {
+    "pk": 2, 
+    "model": "vrscommon.userprofile", 
+    "fields": {
+      "currency": 1, 
+      "wants_email": true, 
+      "user": 2, 
+      "pin": null
+    }
+  }, 
+  {
+    "pk": 3, 
+    "model": "vrscommon.userprofile", 
+    "fields": {
+      "currency": 1, 
+      "wants_email": true, 
+      "user": 3, 
+      "pin": null
+    }
+  }, 
+  {
+    "pk": 4, 
+    "model": "vrscommon.userprofile", 
+    "fields": {
+      "currency": 1, 
+      "wants_email": true, 
+      "user": 4, 
+      "pin": null
+    }
+  }
+]
