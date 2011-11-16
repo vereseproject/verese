@@ -9,15 +9,22 @@ from fabric.api import env, run, sudo, local, \
      cd, hosts, runs_once, prompt, require
 
 env.user = "verese"
-env.hosts = ["beta.verese.net:2222"]
+env.hosts = ["dev.verese.net"]
 env.backup_dir = "/home/verese/backup"
 
 @runs_once
 def beta():
     """ The beta environment """
-    env.remote_app_dir = "/home/verese/domains/beta.verese.net/verese/"
-    env.branch = "dev"
+    env.remote_app_dir = "/home/verese/beta"
+    env.branch = "master"
     env.database = "beta"
+
+@runs_once
+def beta():
+    """ The beta environment """
+    env.remote_app_dir = "/home/verese/dev"
+    env.branch = "dev"
+    env.database = "dev"
 
 def update_code():
     """
@@ -40,16 +47,14 @@ def backup(files=True, database=True):
     date = strftime("%Y%m%d%H%M")
 
     if files:
-        with cd(os.path.join(env.remote_app_dir, '..')):
-            run("tar czf %s/%s/verese-%s-%s.tar "
-                "verese" % (env.backup_dir, env.branch, env.branch, date)
-                )
+        run("tar czf %s/%s/verese-%s-%s.tar %s"
+             % (env.backup_dir, env.branch, env.branch, date, env.remote_app_dir)
+            )
 
     if database:
-        with cd(os.path.join(env.remote_app_dir, '..')):
-            run("mysqldump %s | gzip > %s/%s/verese-database-%s-%s.gz" %\
-                (env.database, env.backup_dir, env.branch, env.branch, date)
-                )
+        run("pg_dump %s | gzip > %s/%s/verese-database-%s-%s.gz" %\
+            (env.database, env.backup_dir, env.branch, env.branch, date)
+            )
 
 def deploy(do_backup=True, do_update=True):
     require('branch', provided_by=[beta])
@@ -69,4 +74,4 @@ def list_backups():
     run("ls %s/%s" % (env.backup_dir, env.branch))
 
 def restart():
-    sudo("/etc/init.d/apache2 graceful", shell=False)
+    sudo("/usr/bin/supervisorctl restart %s" % env.branch, shell=False)
