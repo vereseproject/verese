@@ -7,6 +7,8 @@ from django.db import transaction
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.decorator import decorator
 from piston.utils import rc
+from piston.resource import PistonBadRequestException,\
+     PistonForbiddenException, PistonNotFoundException
 
 from vrscommon.models import *
 from vrscommon.exceptions import *
@@ -249,57 +251,37 @@ class TransactionHandler(BaseHandler):
 
 class VeresedakiHandler(BaseHandler):
     """
-    Veresedaki
-
-    only create a veresedaki as part of a transaction
+    Veresedaki Handler
     """
-    model = Veresedaki
-    allowed_methods = ('GET', 'POST', 'PUT', 'DELETE')
-    fields = ('ower', 'amount', 'local_amount', 'comment',
-              ('status', ('status', 'user', 'created')),
-              ('transaction', ('id', 'payer'))
-              )
+    allowed_methods = ('PUT', )
 
-    def read(self, request, veresedaki_id):
-        return VeresedakiView(get_object_or_404(Veresedaki, pk=veresedaki_id))
+    # use formsets
+    # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
 
     @transaction.commit_on_success()
-    def create(self, request, transaction_id):
-        transaction = get_object_or_404(Transaction,
-                                        pk=transaction_id)
-
-        data = request.POST
-        data['transaction'] = transaction_id
-        form = VeresedakiCreateForm(data,
-                                    instance=Veresedaki(transaction=transaction)
-                                    )
-
-        if not form.is_valid():
-            raise APIBadRequest(form.errors)
-
-        form.save()
-        return rc.CREATED
-
-    @transaction.commit_on_success()
-    def update(self, request, veresedaki_id):
-        # can update value
-        # and / or set status
+    def update(self, request, veresedaki_id, action):
         veresedaki = get_object_or_404(Veresedaki, pk=veresedaki_id)
 
-        form = VeresedakiUpdateForm(request.user,
-                                    request.POST,
-                                    instance=veresedaki,
-                                    )
+        # check if user exists in transaction
+        # TODO add transaction payer
+        if not veresedaki.ower == request.user:
+            raise APIForbidden("You are not the ower")
 
-        if not form.is_valid():
-            raise APIBadRequest(form.errors)
 
-        form.save()
+        for status in status_choices:
+            if status[1].lower() == action:
+                action = status[0]
+                break
+
+        if not isinstance(action, int):
+            raise PistonBadRequestException("Invalid action")
+
+        elif veresedaki.status.status == action:
+            raise rc.DUPLICATE_ENTRY
+
+        status = VeresedakiStatus(user=request.user,
+                                  veresedaki=veresedaki,
+                                  status=action)
+        status.save()
+
         return rc.ALL_OK
-
-    @transaction.commit_on_success()
-    def delete(self, request, veresedaki_id):
-        obj = get_object_or_404(Veresedak, pk=veresedaki_id)
-        obj.delete()
-        return rc.DELETED
-

@@ -34,6 +34,9 @@ urlpatterns = patterns(
     api_url(r'^transaction/list/$', transaction_handler),
     api_url(r'^transaction/$', transaction_handler),
 
+    api_url(r'^veresedaki/(?P<veresedaki_id>\d+)/(?P<action>\w+)/$',
+            veresedaki_handler),
+
     api_url(r'^currency/list/$', currency_handler),
 
     api_url(r'^profile/$', user_handler),
