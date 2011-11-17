@@ -22,35 +22,35 @@
 
 1. Get Balance
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/balance/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/balance/
 
 2. Get Relations List
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/list/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/list/
 
 3. Get a Specific Relation
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/1/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/1/
 
 4. Get a Transactions List
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/transaction/list/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/transaction/list/
 
 5. Get a Specific Transaction
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/transaction/1/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/transaction/1/
 
 6. Get Veresedakia of a Specific Relation
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1.0/relation/1/details/
+~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/1/details/
 
 7. Get supported currencies
 
-~$ curl -X GET http://localhost:8000/api/v1.0/currency/list/
+~$ curl -X GET http://localhost:8000/api/v1/currency/list/
 
 8. Get user profile
 
-~$ curl -X GET http://localhost:8000/api/v1.0/profile/
+~$ curl -X GET http://localhost:8000/api/v1/profile/
 
 9. Create a new transaction
 
@@ -62,4 +62,4 @@
         -F "veresedaki_set-0-ower=2"
         -F "veresedaki_set-0-amount=10"
         -F "veresedaki_set-1-ower=2"
-        -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1.0/transaction/
+        -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1/transaction/
