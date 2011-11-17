@@ -11,29 +11,8 @@ from piston.resource import PistonBadRequestException,\
      PistonForbiddenException, PistonNotFoundException
 
 from vrscommon.models import *
-from vrscommon.exceptions import *
 from forms import *
 from views import *
-
-def validate(v_form, operations):
-    # We don't use piston.utils.validate function
-    # because it does not support request.FILES
-    # and it's not according to documentation
-    # i.e. when a form is valid it does not populate
-    # request.form
-    @decorator
-    def wrap(function, self, request, *args, **kwargs):
-        form = v_form(*tuple( getattr(request, operation) for operation in operations),
-                      **{'request':request}
-                      )
-
-        if form.is_valid():
-            request.form = form
-            return function(self, request, *args, **kwargs)
-        else:
-            raise FormValidationError(form)
-
-    return wrap
 
 class CurrencyHandler(BaseHandler):
     """
@@ -123,7 +102,7 @@ class UserHandler(BaseHandler):
         form = UserUpdateForm(request.POST, instance=request.user)
 
         if not form.is_valid():
-            raise APIBadRequest(form.errors)
+            raise FormValidationError(form)
 
         form.save()
 
@@ -177,7 +156,7 @@ class RelationHandler(BaseHandler):
         form = RelationUpdateForm(request.user, request.POST, instance=relation)
 
         if not form.is_valid():
-            raise APIBadRequest(form.errors)
+            raise FormValidationError(form)
 
         form.save()
         return rc.ALL_OK
@@ -228,14 +207,14 @@ class TransactionHandler(BaseHandler):
                                          instance=Transaction(payer=request.user)
                                          )
         if not form.is_valid():
-            raise APIBadRequest(form.errors)
+            raise FormValidationError(form)
 
         form.save()
 
         veresedaki_formset = inlineformset_factory(Transaction, Veresedaki)
         formset = veresedaki_formset(request.POST, instance=form.instance)
         if not formset.is_valid():
-            raise APIBadRequest(formset.errors)
+            raise FormValidationError(formset)
 
         formset.save()
 
@@ -265,7 +244,7 @@ class VeresedakiHandler(BaseHandler):
         # check if user exists in transaction
         # TODO add transaction payer
         if not veresedaki.ower == request.user:
-            raise APIForbidden("You are not the ower")
+            raise PistonForbiddenException("You are not the ower")
 
 
         for status in status_choices:
