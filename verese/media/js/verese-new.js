@@ -307,10 +307,22 @@ function populate_transactions(json) {
  	       	   item_amount = find_my_veresedaki(value.veresedakia).amount + ' ' + value.currency.symbol;
 	       }
 
-	       if (value.status == "Accepted")
+	       if (value.status == "Accepted") {
+		   // set icon
 		   item_icon = 'check';
-	       else
+
+		   // set details
+		   item_details = $('#transactionConfirmed').tmpl({})[0].innerHTML;
+	       }
+
+	       else {
+		   // set icon
 		   item_icon = 'alert';
+
+		   // set details
+		   window.e = $('#transactionUnconfirmed').tmpl({});
+		   item_details = $('#transactionUnconfirmed').tmpl({})[0].innerHTML;
+	       }
 
 	       ddata.push({
 		   'id': value.id,
@@ -322,7 +334,8 @@ function populate_transactions(json) {
 	           'location': 'unknown location',
 		   'icon': item_icon,
 	           'sign': item_sign,
-	       	   'currency_code': value.currency.code
+	       	   'currency_code': value.currency.code,
+	           'details': item_details
 	       });
 
 	       $('#transaction-' + value.id).die();
@@ -347,6 +360,8 @@ function populate_transactions(json) {
 
     // pretty dates, updated once per minute
     $(".transaction_date").prettyDate({interval:60000});
+
+    $(".transaction-item-details").trigger('create');
 
     $("#transaction_list").listview("refresh");
 

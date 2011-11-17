@@ -318,7 +318,9 @@
    </a>
  </li>
  <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
-   details
+ {# trying to implement {{html details}} with django template systems parsing that #}
+ {% templatetag openvariable %}html details{% templatetag closevariable %}
+
  </li>
 </script>
 
@@ -332,5 +334,17 @@
 
 </script>
 
+<script id="transactionUnconfirmed" type="text/x-jquery-tmpl">
+<div>
+ <fieldset class="ui-grid-a">
+  <div class="ui-block-a"><button type="submit" data-theme="c" id="transaction-${id}-button-deny">Deny</button></div>
+  <div class="ui-block-b"><button type="submit" data-theme="b" id="transaction-${id}-button-accept">Accept</button></div>
+ </fieldset>
+</div>
+</script>
+
+<script id="transactionConfirmed" type="text/x-jquery-tmpl">
+ confirmed
+</script>
 {% endblock %}
 
