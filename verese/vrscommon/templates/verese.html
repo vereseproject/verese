@@ -307,8 +307,8 @@
 
 
 
-<script id="transctionItem" type="text/x-jquery-tmpl">
- <li data-icon="${icon}">
+<script id="transactionItem" type="text/x-jquery-tmpl">
+ <li data-icon="${icon}" class="transaction-item">
    <a href="#" id="transaction-${id}">
      <img style="top:1.4em" src="${img}">
      <h3>${name}</h3>
@@ -316,8 +316,10 @@
      <p><span  class="transaction_date" title="${date}">more than a month ago</span> at ${location}</p>
      <span class="ul-li-aside">${sign}${amount}</span>
    </a>
-
-</li>
+ </li>
+ <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
+   details
+ </li>
 </script>
 
 <script id="relationItem" type="text/x-jquery-tmpl">

@@ -308,9 +308,9 @@ function populate_transactions(json) {
 	       }
 
 	       if (value.status == "Accepted")
-		   item_icon = 'check'
+		   item_icon = 'check';
 	       else
-		   item_icon = 'alert'
+		   item_icon = 'alert';
 
 	       ddata.push({
 		   'id': value.id,
@@ -325,33 +325,25 @@ function populate_transactions(json) {
 	       	   'currency_code': value.currency.code
 	       });
 
-	       // if (value.status == 'Waiting' && item_sign == '-')
-	       // 	   $(document).delegate('#transaction-' + value.id, 'click', function() {
-	       // 				    $(this).simpledialog({
-	       // 							     'mode' : 'bool',
-	       // 							     'prompt' : '',
-	       // 							     'useModal': true,
-	       // 							     'buttons' : {
-	       // 								 'Accept': {
-	       // 								     click: function () {
-	       // 									 alert('accepted');
-	       // 								     }
-	       // 								 },
-	       // 								 'Deny': {
-	       // 								     click: function () {
-	       // 									 alert('denied');
-	       // 								     },
-	       // 								 icon: "delete",
-	       // 								     theme: "c"
-	       // 							     }
-	       // 							     }
-	       // 							 });
-	       // 				});
+	       $('#transaction-' + value.id).die();
+	       $(document).delegate('#transaction-' + value.id,
+				    'click',
+				    function(event) {
+					if ($('#' + event.target.parentNode.id + '-details').is(":visible") == false)
+					    toggle_only = true;
+					else
+					    toggle_only = false;
+
+					if (toggle_only == true)
+					    $(".transaction-item-details").slideUp();
+
+					$('#transaction-' + value.id + '-details').slideToggle();
+					});
 
 	   }
 	  ); // end each();
 
-    $("#transctionItem").tmpl(ddata).appendTo("#transaction_list");
+    $("#transactionItem").tmpl(ddata).appendTo("#transaction_list");
 
     // pretty dates, updated once per minute
     $(".transaction_date").prettyDate({interval:60000});
