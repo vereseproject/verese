@@ -261,7 +261,7 @@ class VeresedakiHandler(BaseHandler):
               )
 
     def read(self, request, veresedaki_id):
-        return get_object_or_404(Veresedaki, pk=veresedaki_id)
+        return VeresedakiView(get_object_or_404(Veresedaki, pk=veresedaki_id))
 
     @transaction.commit_on_success()
     def create(self, request, transaction_id):
@@ -290,6 +290,7 @@ class VeresedakiHandler(BaseHandler):
                                     request.POST,
                                     instance=veresedaki,
                                     )
+
         if not form.is_valid():
             raise APIBadRequest(form.errors)
 
