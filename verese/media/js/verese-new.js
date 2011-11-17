@@ -54,7 +54,7 @@ function initiliaze_login_page() {
 
 	$.ajax({
             type: 'POST',
-            url: '/api/v1.0/login/',
+            url: '/api/v1/login/',
             dataType: 'text',
             data: $(this).serialize(),
             success: success_cb,
@@ -114,18 +114,18 @@ function get_amount_repr(item) {
 
 // function to initialize #activity page
 function initiliaze_activity_page() {
-    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
+    $.getJSON("/api/v1/transaction/list/", populate_transactions);
 }
 
 // function to initialize #connections page
 function initiliaze_connections_page() {
-    $.getJSON("/api/v1.0/relation/list/", populate_relations);
+    $.getJSON("/api/v1/relation/list/", populate_relations);
 }
 
 
 // function to initialize #dashboard page
 function initiliaze_dashboard_page() {
-   $.getJSON("/api/v1.0/profile/", populate_profile);
+   $.getJSON("/api/v1/profile/", populate_profile);
 }
 
 // function to initialize #logout page
@@ -140,7 +140,7 @@ function initiliaze_logout_page() {
 
     $.ajax({
 	type:'GET',
-	url:'/api/v1.0/logout/',
+	url:'/api/v1/logout/',
 	dataType: 'text',
 	data:$(this).serialize(),
 	success: success_cb,
@@ -181,7 +181,7 @@ function initiliaze_welcome_page() {
 
 	    $.ajax({
 		type:'PUT',
-		url:'/api/v1.0/profile/',
+		url:'/api/v1/profile/',
 		dataType: 'text',
 		data:$(this).serialize(),
 		success: success_cb,
