@@ -17,7 +17,7 @@ def master():
     """ The beta environment """
     env.remote_app_dir = "/home/verese/master"
     env.branch = "master"
-    env.database = "beta"
+    env.database = "master"
 
 @runs_once
 def dev():
@@ -26,14 +26,21 @@ def dev():
     env.branch = "dev"
     env.database = "dev"
 
+@runs_once
+def experimental():
+    """ The experimental environment """
+    env.remote_app_dir = "/home/verese/experimental"
+    env.branch = "experimental"
+    env.database = None
+
 def update_code():
     """
     Push code to github
     Pull code from server
     """
-    require('remote_app_dir', provided_by=[dev, master])
+    require('remote_app_dir', provided_by=[dev, master, experimental])
 
-    local("git push origin master dev")
+    local("git push origin master dev experimental")
 
     with cd(env.remote_app_dir):
         run("git checkout %s" % env.branch)
@@ -43,7 +50,7 @@ def backup(files=True, database=True):
     """
     Backup
     """
-    require('branch', provided_by=[dev, master])
+    require('branch', provided_by=[dev, master, experimental])
     date = strftime("%Y%m%d%H%M")
 
     if files:
@@ -57,8 +64,8 @@ def backup(files=True, database=True):
             )
 
 def deploy(do_backup=True, do_update=True):
-    require('branch', provided_by=[dev, master])
-    require('remote_app_dir', provided_by=[dev, master])
+    require('branch', provided_by=[dev, master, experimental])
+    require('remote_app_dir', provided_by=[dev, master, experimental])
 
     if do_backup == True:
         backup()
@@ -66,11 +73,19 @@ def deploy(do_backup=True, do_update=True):
     if do_update == True:
         update_code()
 
+    if env.branch == "experimental":
+        # delete database
+        run("rm /home/verese/experimental/verese/verese.sqlite")
+
     with cd(env.remote_app_dir):
         run("bash ./scripts/build-environment.sh")
 
+        if env.branch == "experimental":
+            # load initial data
+            run("./bin/python manage.py loaddata demo")
+
 def list_backups():
-    require('branch', provided_by=[dev, master])
+    require('branch', provided_by=[dev, master, experimental])
     run("ls %s/%s" % (env.backup_dir, env.branch))
 
 def restart():
