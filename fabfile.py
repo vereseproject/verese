@@ -18,6 +18,7 @@ def master():
     env.remote_app_dir = "/home/verese/master"
     env.branch = "master"
     env.database = "master"
+    env.backup = False
 
 @runs_once
 def dev():
@@ -25,6 +26,7 @@ def dev():
     env.remote_app_dir = "/home/verese/dev"
     env.branch = "dev"
     env.database = "dev"
+    env.backup = True
 
 @runs_once
 def experimental():
@@ -32,6 +34,7 @@ def experimental():
     env.remote_app_dir = "/home/verese/experimental"
     env.branch = "experimental"
     env.database = None
+    env.backup = False
 
 def update_code():
     """
@@ -40,7 +43,7 @@ def update_code():
     """
     require('remote_app_dir', provided_by=[dev, master, experimental])
 
-    local("git push origin master dev experimental")
+    local("git push origin %s" % env.branch)
 
     with cd(env.remote_app_dir):
         run("git checkout %s" % env.branch)
@@ -67,7 +70,7 @@ def deploy(do_backup=True, do_update=True):
     require('branch', provided_by=[dev, master, experimental])
     require('remote_app_dir', provided_by=[dev, master, experimental])
 
-    if do_backup == True:
+    if env.backup:
         backup()
 
     if do_update == True:
@@ -82,7 +85,7 @@ def deploy(do_backup=True, do_update=True):
 
         if env.branch == "experimental":
             # load initial data
-            run("./bin/python manage.py loaddata demo")
+            run("./env/bin/python verese/manage.py loaddata demo")
 
 def list_backups():
     require('branch', provided_by=[dev, master, experimental])
