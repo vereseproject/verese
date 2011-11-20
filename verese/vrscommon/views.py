@@ -2,6 +2,7 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from vrscommon.models import Currency
 
@@ -17,7 +18,14 @@ def request_token_ready(request, token):
     )
 
 def main(request):
+    try:
+        site_edition = settings.SITE_EDITION
+
+    except:
+        site_edition = 'unset'
+
     ctx = {
+        'site_edition': site_edition,
         'currencies':Currency.objects.all()
         }
 

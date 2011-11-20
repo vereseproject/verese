@@ -14,7 +14,6 @@
       <div id="logo">
         <img src="/media/verese.png"></img>
       </div>
-      <p>beta deployment</p>
 
       <div data-role="fieldcontain">
         <form id="loginform">
@@ -307,8 +306,8 @@
 
 
 
-<script id="transctionItem" type="text/x-jquery-tmpl">
- <li data-icon="${icon}">
+<script id="transactionItem" type="text/x-jquery-tmpl">
+ <li data-icon="${icon}" class="transaction-item">
    <a href="#" id="transaction-${id}">
      <img style="top:1.4em" src="${img}">
      <h3>${name}</h3>
@@ -316,8 +315,12 @@
      <p><span  class="transaction_date" title="${date}">more than a month ago</span> at ${location}</p>
      <span class="ul-li-aside">${sign}${amount}</span>
    </a>
+ </li>
+ <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
+ {# trying to implement {{html details}} with django template systems parsing that #}
+ {% templatetag openvariable %}html details{% templatetag closevariable %}
 
-</li>
+ </li>
 </script>
 
 <script id="relationItem" type="text/x-jquery-tmpl">
@@ -330,5 +333,17 @@
 
 </script>
 
+<script id="transactionUnconfirmed" type="text/x-jquery-tmpl">
+<div>
+ <fieldset class="ui-grid-a">
+  <div class="ui-block-a"><button type="submit" data-theme="c" id="transaction-${id}-button-deny">Deny</button></div>
+  <div class="ui-block-b"><button type="submit" data-theme="b" id="transaction-${id}-button-accept">Accept</button></div>
+ </fieldset>
+</div>
+</script>
+
+<script id="transactionConfirmed" type="text/x-jquery-tmpl">
+ confirmed
+</script>
 {% endblock %}
 

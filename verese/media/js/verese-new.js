@@ -54,7 +54,7 @@ function initiliaze_login_page() {
 
 	$.ajax({
             type: 'POST',
-            url: '/api/v1.0/login/',
+            url: '/api/v1/login/',
             dataType: 'text',
             data: $(this).serialize(),
             success: success_cb,
@@ -114,18 +114,18 @@ function get_amount_repr(item) {
 
 // function to initialize #activity page
 function initiliaze_activity_page() {
-    $.getJSON("/api/v1.0/transaction/list/", populate_transactions);
+    $.getJSON("/api/v1/transaction/list/", populate_transactions);
 }
 
 // function to initialize #connections page
 function initiliaze_connections_page() {
-    $.getJSON("/api/v1.0/relation/list/", populate_relations);
+    $.getJSON("/api/v1/relation/list/", populate_relations);
 }
 
 
 // function to initialize #dashboard page
 function initiliaze_dashboard_page() {
-   $.getJSON("/api/v1.0/profile/", populate_profile);
+   $.getJSON("/api/v1/profile/", populate_profile);
 }
 
 // function to initialize #logout page
@@ -140,7 +140,7 @@ function initiliaze_logout_page() {
 
     $.ajax({
 	type:'GET',
-	url:'/api/v1.0/logout/',
+	url:'/api/v1/logout/',
 	dataType: 'text',
 	data:$(this).serialize(),
 	success: success_cb,
@@ -181,7 +181,7 @@ function initiliaze_welcome_page() {
 
 	    $.ajax({
 		type:'PUT',
-		url:'/api/v1.0/profile/',
+		url:'/api/v1/profile/',
 		dataType: 'text',
 		data:$(this).serialize(),
 		success: success_cb,
@@ -307,10 +307,22 @@ function populate_transactions(json) {
  	       	   item_amount = find_my_veresedaki(value.veresedakia).amount + ' ' + value.currency.symbol;
 	       }
 
-	       if (value.status == "Accepted")
-		   item_icon = 'check'
-	       else
-		   item_icon = 'alert'
+	       if (value.status == "Accepted") {
+		   // set icon
+		   item_icon = 'check';
+
+		   // set details
+		   item_details = $('#transactionConfirmed').tmpl({})[0].innerHTML;
+	       }
+
+	       else {
+		   // set icon
+		   item_icon = 'alert';
+
+		   // set details
+		   window.e = $('#transactionUnconfirmed').tmpl({});
+		   item_details = $('#transactionUnconfirmed').tmpl({})[0].innerHTML;
+	       }
 
 	       ddata.push({
 		   'id': value.id,
@@ -322,39 +334,34 @@ function populate_transactions(json) {
 	           'location': 'unknown location',
 		   'icon': item_icon,
 	           'sign': item_sign,
-	       	   'currency_code': value.currency.code
+	       	   'currency_code': value.currency.code,
+	           'details': item_details
 	       });
 
-	       // if (value.status == 'Waiting' && item_sign == '-')
-	       // 	   $(document).delegate('#transaction-' + value.id, 'click', function() {
-	       // 				    $(this).simpledialog({
-	       // 							     'mode' : 'bool',
-	       // 							     'prompt' : '',
-	       // 							     'useModal': true,
-	       // 							     'buttons' : {
-	       // 								 'Accept': {
-	       // 								     click: function () {
-	       // 									 alert('accepted');
-	       // 								     }
-	       // 								 },
-	       // 								 'Deny': {
-	       // 								     click: function () {
-	       // 									 alert('denied');
-	       // 								     },
-	       // 								 icon: "delete",
-	       // 								     theme: "c"
-	       // 							     }
-	       // 							     }
-	       // 							 });
-	       // 				});
+	       $('#transaction-' + value.id).die();
+	       $(document).delegate('#transaction-' + value.id,
+				    'click',
+				    function(event) {
+					if ($('#' + event.target.parentNode.id + '-details').is(":visible") == false)
+					    toggle_only = true;
+					else
+					    toggle_only = false;
+
+					if (toggle_only == true)
+					    $(".transaction-item-details").slideUp();
+
+					$('#transaction-' + value.id + '-details').slideToggle();
+					});
 
 	   }
 	  ); // end each();
 
-    $("#transctionItem").tmpl(ddata).appendTo("#transaction_list");
+    $("#transactionItem").tmpl(ddata).appendTo("#transaction_list");
 
     // pretty dates, updated once per minute
     $(".transaction_date").prettyDate({interval:60000});
+
+    $(".transaction-item-details").trigger('create');
 
     $("#transaction_list").listview("refresh");
 

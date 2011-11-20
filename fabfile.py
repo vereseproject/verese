@@ -13,14 +13,14 @@ env.hosts = ["dev.verese.net"]
 env.backup_dir = "/home/verese/backup"
 
 @runs_once
-def beta():
+def master():
     """ The beta environment """
-    env.remote_app_dir = "/home/verese/beta"
+    env.remote_app_dir = "/home/verese/master"
     env.branch = "master"
     env.database = "beta"
 
 @runs_once
-def beta():
+def dev():
     """ The beta environment """
     env.remote_app_dir = "/home/verese/dev"
     env.branch = "dev"
@@ -31,7 +31,7 @@ def update_code():
     Push code to github
     Pull code from server
     """
-    require('remote_app_dir', provided_by=[beta])
+    require('remote_app_dir', provided_by=[dev, master])
 
     local("git push origin master dev")
 
@@ -43,7 +43,7 @@ def backup(files=True, database=True):
     """
     Backup
     """
-    require('branch', provided_by=[beta])
+    require('branch', provided_by=[dev, master])
     date = strftime("%Y%m%d%H%M")
 
     if files:
@@ -57,8 +57,8 @@ def backup(files=True, database=True):
             )
 
 def deploy(do_backup=True, do_update=True):
-    require('branch', provided_by=[beta])
-    require('remote_app_dir', provided_by=[beta])
+    require('branch', provided_by=[dev, master])
+    require('remote_app_dir', provided_by=[dev, master])
 
     if do_backup == True:
         backup()
@@ -70,7 +70,7 @@ def deploy(do_backup=True, do_update=True):
         run("bash ./scripts/build-environment.sh")
 
 def list_backups():
-    require('branch', provided_by=[beta])
+    require('branch', provided_by=[dev, master])
     run("ls %s/%s" % (env.backup_dir, env.branch))
 
 def restart():
