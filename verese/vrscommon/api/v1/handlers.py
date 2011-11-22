@@ -1,3 +1,6 @@
+import urllib
+import json
+
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.shortcuts import get_object_or_404
@@ -309,3 +312,31 @@ class PendingHandler(BaseHandler):
                        exclude(veresedakistatus__status__lt=30)
 
         return PendingListView(query)
+
+class LocationHandler(BaseHandler):
+    """
+    Location handler return vanue name for given lang/lon
+    """
+    allowed_methods = ('GET',)
+
+    def read(self, request):
+        try:
+            lat = request.GET['lat']
+            lon = request.GET['lon']
+
+        except KeyError:
+            raise PistonBadRequestException("Lat / Lon parameters not provided")
+
+        URL = "http://api.infochimps.com/geo/location/foursquare/places/search?" +\
+              "g.radius=10&g.latitude=%s&g.longitude=%s"+\
+              "&apikey=verese-18HGJZXnTEkWvZQOmQVuZYvh169"
+
+        URL = URL % (lat, lon)
+
+        try:
+            result = json.loads(urllib.urlopen(URL).read())
+
+        except ValueError:
+            return rc.THROTTLED
+
+        return result
