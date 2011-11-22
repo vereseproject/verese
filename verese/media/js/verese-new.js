@@ -40,6 +40,13 @@ function find_my_veresedaki(list) {
     return veresedaki;
 }
 
+// functino to initiailize #add page
+function initialize_add_page() {
+    $('#add-person-search').autocomplete({
+        source: ['foo', 'bar', 'foor'],
+        select: function (event, ui) { }
+    });
+}
 
 // function to initialize #login page
 function initiliaze_login_page() {
@@ -320,6 +327,7 @@ $('#activity').live('pagebeforeshow', initiliaze_activity_page);
 $('#connections').live('pagebeforeshow', initiliaze_connections_page);
 $('#welcome').live('pagebeforeshow', initiliaze_welcome_page);
 $('#logout').live('pagebeforeshow', initiliaze_logout_page);
+$('#add').live('pagebeforeshow', initialize_add_page);
 
 
 // init
@@ -342,6 +350,8 @@ $(document).on("click", ".transaction-item",
 
 $(document).on('click', "#load-more-button",
 	       function() {
-		   $.getJSON("/api/v1/transaction/before/" + window.transaction_list_min + "/?limit=10", populate_transactions);
-
+		   $.getJSON("/api/v1/transaction/before/" +
+			     window.transaction_list_min +
+			     "/?limit=10",
+			     populate_transactions);
 	       });
