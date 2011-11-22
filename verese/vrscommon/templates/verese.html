@@ -95,10 +95,7 @@
 <!-- Dashboard page -->
 <div data-role="page" id="dashboard" data-title="Dashboard" data-url="#dashboard">
 
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <h1>Verese</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div><!-- /header -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content" style="text-align:center;">
@@ -164,11 +161,7 @@
 <!-- Activity page -->
 <div data-role="page" id="activity" data-title="Activity" data-url="#activity">
 
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Activity</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div><!-- /header -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
@@ -204,13 +197,7 @@
 
 <div data-role="page" id="add" data-title="Add" data-url="#add">
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Add new</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
@@ -243,13 +230,7 @@
 
 <div data-role="page" id="connections" data-title="Connections" data-url="#connections">
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Connections</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
@@ -288,13 +269,7 @@
 
 <div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics">
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Statistics</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
