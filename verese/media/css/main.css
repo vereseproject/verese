@@ -52,6 +52,14 @@ body {
  margin:10px;
 }
 
+#dateblock {
+ width:30%
+}
+
+#locationblock {
+ width:70%
+}
+
 .ui-li-thumb {
  max-height: 48px;
  max-width: 48px;

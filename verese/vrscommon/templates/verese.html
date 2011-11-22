@@ -193,7 +193,7 @@
 <!----------------------------------------------------------------------------->
 
 
-<!-- Add Veresedaki Page -->
+<!-- Add Page -->
 
 <div data-role="page" id="add" data-title="Add" data-url="#add" data-theme="a">
 
@@ -203,11 +203,11 @@
   <div data-role="content">
 
 	  <fieldset class="ui-grid-a">
-	    <div class="ui-block-a">
+	    <div id="dateblock" class="ui-block-a">
           <label for="date">Date :</label>
           <input name="date" id="date" type="date" data-role="datebox" data-options='{"mode": "calbox", 'calTodayButton': true}'>
         </div>	
-	    <div class="ui-block-b">
+	    <div id="locationblock" class="ui-block-b">
           <label class="ui-input-text" for="name">Location :</label>
           <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="location" id="location" value="Hackerspace.gr"  />
         </div>      
