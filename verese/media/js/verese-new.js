@@ -211,15 +211,11 @@ function populate_relations(json) {
 	       else
 		   user = value.user1;
 
-	       name = get_full_name(user);
-
 	       ddata.push({
 			      'balance': value.balance,
-			      'md5': user.emailmd5,
-			      'name': name,
+			      'user': user,
 			      'currency': value.currency,
 			      'id': value.id,
-			      'img': img,
 			      'updated': value.updated
 			  });
 	   }
@@ -282,7 +278,6 @@ function populate_transactions(json) {
 		   item_icon = 'alert';
 
 		   // set details
-		   window.e = $('#transactionUnconfirmed').tmpl({});
 		   item_details = $('#transactionUnconfirmed').tmpl({})[0].innerHTML;
 	       }
 
