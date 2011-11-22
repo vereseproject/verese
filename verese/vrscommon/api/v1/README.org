@@ -20,46 +20,61 @@
 
 * Examples
 
-1. Get Balance
+1. Login
+   ~$ curl -c cookiejar -F username=USERNAME -F password=PASSWORD http://localhost:8000/api/v1/login/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/balance/
+2. Get Balance
 
-2. Get Relations List
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/balance/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/list/
+3. Get Relations List
 
-3. Get a Specific Relation
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/relation/list/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/1/
+4. Get a Specific Relation
 
-4. Get a Transactions List
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/relation/1/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/transaction/list/
+5. Get a Transactions List
 
-5. Get a Specific Transaction
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/transaction/list/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/transaction/1/
+6. Get a Specific Transaction
 
-6. Get Veresedakia of a Specific Relation
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/transaction/1/
 
-~$ curl -u username:password -X GET http://localhost:8000/api/v1/relation/1/details/
+7. Get Veresedakia of a Specific Relation
 
-7. Get supported currencies
+  ~$ curl -b cookiejar -X GET http://localhost:8000/api/v1/relation/1/details/
 
-~$ curl -X GET http://localhost:8000/api/v1/currency/list/
+8. Get supported currencies
 
-8. Get user profile
+  ~$ curl -X GET http://localhost:8000/api/v1/currency/list/
 
-~$ curl -X GET http://localhost:8000/api/v1/profile/
+9. Get user profile
 
-9. Create a new transaction
+  ~$ curl -X GET http://localhost:8000/api/v1/profile/
 
-~$ curl -u "seadog:123" -X POST \
-        -F "currency=2" \
-        -F "veresedaki_set-TOTAL_FORMS=2"
-        -F "veresedaki_set-INITIAL_FORMS=0"
-        -F "veresedaki_set-MAX_NUM_FORMS=2"
-        -F "veresedaki_set-0-ower=2"
-        -F "veresedaki_set-0-amount=10"
-        -F "veresedaki_set-1-ower=2"
-        -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1/transaction/
+10. Create a new transaction
+
+   ~$ curl -u "seadog:123" -X POST \
+         -F "currency=2" \
+         -F "veresedaki_set-TOTAL_FORMS=2"
+         -F "veresedaki_set-INITIAL_FORMS=0"
+         -F "veresedaki_set-MAX_NUM_FORMS=2"
+         -F "veresedaki_set-0-ower=2"
+         -F "veresedaki_set-0-amount=10"
+         -F "veresedaki_set-1-ower=2"
+         -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1/transaction/
+
+11. Approve a transaction
+
+    ~$ curl -b cookiejar -X PUT http://127.0.0.1:8000/api/v1/veresedaki/1/accept/
+
+12. Deny a transaction
+
+    ~$ curl -b cookiejar -X PUT http://127.0.0.1:8000/api/v1/veresedaki/1/deny/
+
+13. Cancel a transaction
+
+    ~$ curl -b cookiejar -X PUT http://127.0.0.1:8000/api/v1/veresedaki/1/cancel/

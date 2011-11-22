@@ -233,6 +233,7 @@ class VeresedakiHandler(BaseHandler):
     Veresedaki Handler
     """
     allowed_methods = ('PUT', )
+    update_choices = {'accept':40, 'cancel':10, 'deny':20}
 
     # use formsets
     # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
@@ -241,26 +242,28 @@ class VeresedakiHandler(BaseHandler):
     def update(self, request, veresedaki_id, action):
         veresedaki = get_object_or_404(Veresedaki, pk=veresedaki_id)
 
-        # check if user exists in transaction
-        # TODO add transaction payer
-        if not veresedaki.ower == request.user:
-            raise PistonForbiddenException("You are not the ower")
+        try:
+            status = self.update_choices[action]
 
-
-        for status in status_choices:
-            if status[1].lower() == action:
-                action = status[0]
-                break
-
-        if not isinstance(action, int):
+        except KeyError:
             raise PistonBadRequestException("Invalid action")
 
-        elif veresedaki.status.status == action:
+        if veresedaki.status.status == status:
             raise rc.DUPLICATE_ENTRY
+
+        # permission control
+        if action == 'accept' and not request.user == veresedaki.ower:
+            raise PistonForbiddenException("You are not allowed to accept this veresedaki")
+
+        elif action == 'deny' and not request.user == veresedaki.ower:
+            raise PistonForbiddenException("You are not allowed to deny this veresedaki")
+
+        elif action == 'cancel' and not request.user == veresedaki.transaction.payer:
+            raise PistonForbiddenException("You are not allowed to cancel this veresedaki")
 
         status = VeresedakiStatus(user=request.user,
                                   veresedaki=veresedaki,
-                                  status=action)
+                                  status=status)
         status.save()
 
         return rc.ALL_OK
