@@ -60,6 +60,10 @@ body {
  width:70%
 }
 
+#locationfield {
+ width:100%
+}
+
 .ui-li-thumb {
  max-height: 48px;
  max-width: 48px;
