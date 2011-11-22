@@ -107,11 +107,6 @@ function get_full_name(user) {
     return user.first_name + ' ' + user.last_name;
 }
 
-// represent amount with currency appended
-function get_amount_repr(item) {
-    return item.amount + ' ' + item.currency.symbol;
-}
-
 // function to initialize #activity page
 function initiliaze_activity_page() {
     $.getJSON("/api/v1/transaction/list/", populate_transactions);
@@ -263,7 +258,7 @@ function populate_transactions(json) {
 	       	       item_name = get_full_name(value.veresedakia[0].ower);
 	       	   }
 
-	       	   item_amount = get_amount_repr(value);
+	       	   item_amount = value.amount;
 		   item_sign = '';
 	       }
 	       // i'm ower
@@ -301,7 +296,7 @@ function populate_transactions(json) {
 	           'location': 'unknown location',
 		   'icon': item_icon,
 	           'sign': item_sign,
-	       	   'currency_code': value.currency.code,
+		   'currency': value.currency,
 	           'details': item_details
 	       });
 
