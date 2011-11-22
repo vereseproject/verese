@@ -178,6 +178,8 @@ class TransactionHandler(BaseHandler):
     # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
 
     def read(self, request, transaction_id=None, before=False, after=False):
+        limit = request.GET.get('limit', 10)
+
         # fetch transaction and related veresedakia
         if transaction_id:
             if before == False and after == False:
@@ -199,7 +201,8 @@ class TransactionHandler(BaseHandler):
                                filter(Q(payer=request.user)|\
                                       Q(veresedaki__ower__in = [request.user]
                                         )
-                                      ).distinct().filter(id__lt=transaction_id)
+                                      ).distinct().filter(id__lt=transaction_id)\
+                                      [:limit]
 
                 return TransactionListView(transactions)
 
@@ -209,7 +212,8 @@ class TransactionHandler(BaseHandler):
                                filter(Q(payer=request.user)|\
                                       Q(veresedaki__ower__in = [request.user]
                                         )
-                                      ).distinct().filter(id__gt=transaction_id)
+                                      ).distinct().filter(id__gt=transaction_id)\
+                                      [:limit]
 
                 return TransactionListView(transactions)
 
@@ -218,7 +222,7 @@ class TransactionHandler(BaseHandler):
                            filter(Q(payer=request.user)|\
                                   Q(veresedaki__ower__in = [request.user]
                                     )
-                                  ).distinct()
+                                  ).distinct()[:limit]
 
             return TransactionListView(transactions)
 
