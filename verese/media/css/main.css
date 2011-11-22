@@ -112,3 +112,12 @@ body {
  font-size: 35px;
  margin-top: 20px;
 }
+
+#listview {
+ margin:0px;
+}
+
+#peoplelist {
+ margin-top:20px;
+}
+
