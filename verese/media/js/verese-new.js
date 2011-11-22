@@ -1,7 +1,8 @@
 // variables
 var my_email = null;
 var my_name = null;
-var transaction_list = [0];
+var transaction_list_max = 0;
+var transaction_list_min = 1000000;
 
 // function to correct geometry bug
 function _fixgeometry() {
@@ -104,14 +105,13 @@ function get_full_name(user) {
 
 // function to initialize #activity page
 function initiliaze_activity_page() {
-    $.getJSON("/api/v1/transaction/after/" + window.transaction_list[window.transaction_list.length-1] + "/", populate_transactions);
+    $.getJSON("/api/v1/transaction/after/" + window.transaction_list_max + "/?limit=10", populate_transactions);
 }
 
 // function to initialize #connections page
 function initiliaze_connections_page() {
     $.getJSON("/api/v1/relation/list/", populate_relations);
 }
-
 
 // function to initialize #dashboard page
 function initiliaze_dashboard_page() {
@@ -228,7 +228,6 @@ function populate_relations(json) {
 }
 
 function populate_transactions(json) {
-    $('#transaction_list').empty();
     var ddata = [];
 
     $.each(json.data.transactions,
@@ -294,24 +293,11 @@ function populate_transactions(json) {
 	           'details': item_details
 	       });
 
-	       window.transaction_list.push(value.id);
+	       if (window.transaction_list_max < value.id)
+		   window.transaction_list_max = value.id;
 
-	       // $('#transaction-' + value.id).die();
-	       // $(document).delegate('#transaction-' + value.id,
-	       // 			    'click',
-	       // 			    function(event) {
-	       // 				if ($('#' + event.target.parentNode.id + '-details').is(":visible") == false)
-	       // 				    toggle_only = true;
-	       // 				else
-	       // 				    toggle_only = false;
-
-	       // 				if (toggle_only == true)
-	       // 				    $(".transaction-item-details").slideUp();
-
-	       // 				$('#transaction-' + value.id + '-details').slideToggle();
-	       // 			    });
-
-
+	       if (window.transaction_list_min > value.id)
+		   window.transaction_list_min = value.id;
 
 	   }
 	  ); // end each();
@@ -324,7 +310,6 @@ function populate_transactions(json) {
     $(".transaction-item-details").trigger('create');
 
     $("#transaction_list").listview("refresh");
-
 }
 
 
@@ -339,3 +324,24 @@ $('#logout').live('pagebeforeshow', initiliaze_logout_page);
 
 // init
 $(window).bind("orientationchange resize pageshow", _fixgeometry);
+
+$(document).on("click", ".transaction-item",
+	       function(event) {
+		   id = "#" + event.target.parentNode.id + "-details";
+		   if ($(id).is(":visible") == false)
+		       toggle_only = true;
+		   else
+		       toggle_only = false;
+
+		   if (toggle_only == true)
+		       $(".transaction-item-details").slideUp();
+
+		   $("#" + event.target.parentNode.id + '-details').slideToggle();
+	       }
+	      );
+
+$(document).on('click', "#load-more-button",
+	       function() {
+		   $.getJSON("/api/v1/transaction/before/" + window.transaction_list_min + "/?limit=10", populate_transactions);
+
+	       });

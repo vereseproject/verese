@@ -162,7 +162,9 @@
     <ul id="transaction_list" data-role='listview'>
     </ul>
     <!-- transaction list -->
-
+    <div class="ui-grid-a">
+      <button id="load-more-button" name="more" data-theme="a" class="ui-btn-hidden" aria-disabled="false">Load More</button>
+    </div>
   </div>
   <!-- content ends -->
 
@@ -305,6 +307,8 @@
 <!-- welcome page end -->
 
 
+<!----------------------------------------------------------------------------->
+<!-- templates start -->
 
 <script id="transactionItem" type="text/x-jquery-tmpl">
  <li data-icon="${icon}" class="transaction-item">
@@ -323,7 +327,6 @@
  <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
  {# trying to implement {{html details}} with django template systems parsing that #}
  {% templatetag openvariable %}html details{% templatetag closevariable %}
-
  </li>
 </script>
 
@@ -349,5 +352,7 @@
 <script id="transactionConfirmed" type="text/x-jquery-tmpl">
  confirmed
 </script>
+
+<!-- templates end -->
 {% endblock %}
 
