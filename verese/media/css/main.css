@@ -44,6 +44,9 @@ body {
    padding-bottom: 10%;
 }
 
+.ui-header .ui-bar-a .ui-header-fixed .fade .ui-fixed-overlay {
+ text-align:center;
+}
 
 .ui-li-thumb {
  max-height: 48px;
