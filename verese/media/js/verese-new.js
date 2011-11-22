@@ -1,5 +1,7 @@
 // variables
 var my_email = null;
+var my_name = null;
+var transaction_list = [0];
 
 // function to correct geometry bug
 function _fixgeometry() {
@@ -94,13 +96,6 @@ function user_is_me(user) {
 	return false;
 }
 
-// acceptes a json object poiting to a user,
-// returns True gravatar image url
-function get_gravatar_url(user) {
-    return 'http://www.gravatar.com/avatar/' +
-	user.emailmd5 + '?s=48&d=identicon';
-}
-
 // accepts a json object poiting to a user
 // return string with full name
 function get_full_name(user) {
@@ -109,7 +104,7 @@ function get_full_name(user) {
 
 // function to initialize #activity page
 function initiliaze_activity_page() {
-    $.getJSON("/api/v1/transaction/list/", populate_transactions);
+    $.getJSON("/api/v1/transaction/after/" + window.transaction_list[window.transaction_list.length-1] + "/", populate_transactions);
 }
 
 // function to initialize #connections page
@@ -209,11 +204,11 @@ function populate_relations(json) {
 	       else
 		   user = value.user1;
 
-	       img = get_gravatar_url(user);
 	       name = get_full_name(user);
 
 	       ddata.push({
 			      'balance': value.balance,
+			      'md5': user.emailmd5,
 			      'name': name,
 			      'currency': value.currency,
 			      'id': value.id,
@@ -243,7 +238,7 @@ function populate_transactions(json) {
 	       if (user_is_me(value.payer) == true) {
 	       	   // if more than one owers
 	       	   if (value.veresedakia.length > 1) {
-	       	       item_img = 'http://www.gravatar.com/avatar/foo?s=80&d=identicon';
+		       item_md5 = 'foo';
 
 	       	       item_name = '';
 	       	       $.each(value.veresedakia,
@@ -254,7 +249,7 @@ function populate_transactions(json) {
 	       	       item_name = item_name.substring(0, item_name.length-2);
 	       	   }
 	       	   else {
-	       	       item_img = get_gravatar_url(value.veresedakia[0].ower);
+		       item_md5 = value.veresedakia[0].ower.emailmd5;
 	       	       item_name = get_full_name(value.veresedakia[0].ower);
 	       	   }
 
@@ -264,7 +259,7 @@ function populate_transactions(json) {
 	       // i'm ower
 	       else {
 		   item_sign = '-';
-	       	   item_img = get_gravatar_url(value.payer);
+	       	   item_md5 = value.payer.emailmd5;
 	       	   item_name = get_full_name(value.payer);
  	       	   item_amount = find_my_veresedaki(value.veresedakia).amount + ' ' + value.currency.symbol;
 	       }
@@ -276,7 +271,6 @@ function populate_transactions(json) {
 		   // set details
 		   item_details = $('#transactionConfirmed').tmpl({})[0].innerHTML;
 	       }
-
 	       else {
 		   // set icon
 		   item_icon = 'alert';
@@ -288,32 +282,36 @@ function populate_transactions(json) {
 
 	       ddata.push({
 		   'id': value.id,
-	       	   'img': item_img,
+	           'md5': item_md5,
 	       	   'name': item_name,
 	       	   'comment':value.comment,
 	       	   'amount': item_amount,
 	           'date': value.created,
-	           'location': 'unknown location',
+	           'location': value.place,
 		   'icon': item_icon,
 	           'sign': item_sign,
 		   'currency': value.currency,
 	           'details': item_details
 	       });
 
-	       $('#transaction-' + value.id).die();
-	       $(document).delegate('#transaction-' + value.id,
-				    'click',
-				    function(event) {
-					if ($('#' + event.target.parentNode.id + '-details').is(":visible") == false)
-					    toggle_only = true;
-					else
-					    toggle_only = false;
+	       window.transaction_list.push(value.id);
 
-					if (toggle_only == true)
-					    $(".transaction-item-details").slideUp();
+	       // $('#transaction-' + value.id).die();
+	       // $(document).delegate('#transaction-' + value.id,
+	       // 			    'click',
+	       // 			    function(event) {
+	       // 				if ($('#' + event.target.parentNode.id + '-details').is(":visible") == false)
+	       // 				    toggle_only = true;
+	       // 				else
+	       // 				    toggle_only = false;
 
-					$('#transaction-' + value.id + '-details').slideToggle();
-					});
+	       // 				if (toggle_only == true)
+	       // 				    $(".transaction-item-details").slideUp();
+
+	       // 				$('#transaction-' + value.id + '-details').slideToggle();
+	       // 			    });
+
+
 
 	   }
 	  ); // end each();

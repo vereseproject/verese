@@ -309,10 +309,14 @@
 <script id="transactionItem" type="text/x-jquery-tmpl">
  <li data-icon="${icon}" class="transaction-item">
    <a href="#" id="transaction-${id}">
-     <img style="top:1.4em" src="${img}">
+     <img style="top:1.4em" src="http://www.gravatar.com/avatar/${md5}?s=48&d=identicon">
      <h3>${name}</h3>
      <p>${comment}&nbsp;</p>
-     <p><span  class="transaction_date" title="${date}">more than a month ago</span> at ${location}</p>
+     <p><span  class="transaction_date" title="${date}">more than a month ago</span>
+         {% templatetag openvariable %}if location{% templatetag closevariable %}
+           at ${location}
+         {% templatetag openvariable %}/if{% templatetag closevariable %}
+     </p>
      <span class="ul-li-aside">${currency.symbol} ${sign}${amount}</span>
    </a>
  </li>
@@ -325,7 +329,7 @@
 
 <script id="relationItem" type="text/x-jquery-tmpl">
  <li>
-     <img style="top:0.9em" src="${img}">
+     <img style="top:0.9em" src="http://www.gravatar.com/avatar/${md5}?s=48&d=identicon">
      <h3>${name}</h3>
      <p>Last verese <span class="relation_date" title="${updated}">more than a month ago</span></p>
      <span class="ul-li-aside">${balance} ${currency.symbol}</span>
