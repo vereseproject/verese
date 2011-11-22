@@ -80,11 +80,19 @@ body {
 
 /* Add page CSS ------------------------- */
 
-#dateblock #currencyblock {
+#dateblock {
  width:30%;
 }
 
-#locationblock #sumblock {
+#currencyblock {
+ width:30%;
+}
+
+#locationblock {
+ width:70%;
+}
+
+#sumblock {
  width:70%;
 }
 
@@ -92,7 +100,13 @@ body {
  width:100%;
 }
 
-#currencyfield #sumfield {
+#currencyfield {
+ text-align:center;
+ font-size: 35px;
+ margin-top: 30px;
+}
+
+#sumfield {
  text-align:center;
  font-size: 35px;
  margin-top: 30px;
