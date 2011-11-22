@@ -44,8 +44,11 @@ body {
    padding-bottom: 10%;
 }
 
-#vereseheader img{
+#vereseheader {
  text-align:center;
+}
+
+#vereseheader img{
  margin:7px;
 }
 
