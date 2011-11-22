@@ -177,20 +177,41 @@ class TransactionHandler(BaseHandler):
     # use formsets
     # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
 
-    def read(self, request, transaction_id=None):
+    def read(self, request, transaction_id=None, before=False, after=False):
         # fetch transaction and related veresedakia
         if transaction_id:
-            try:
-                transaction = Transaction.objects.\
-                              get(Q(payer=request.user) |\
-                                  Q(veresedaki__ower__in=[request.user]),
-                                  id=transaction_id,
-                                  )
+            if before == False and after == False:
+                try:
+                    transaction = Transaction.objects.\
+                                  get(Q(payer=request.user) |\
+                                      Q(veresedaki__ower__in=[request.user]),
+                                      id=transaction_id,
+                                      )
 
-            except Transaction.DoesNotExist:
-                return rc.FORBIDDEN
+                except Transaction.DoesNotExist:
+                    return rc.FORBIDDEN
 
-            return TransactionView(transaction)
+                return TransactionView(transaction)
+
+            elif before:
+                # return objects with id smaller than transaction_id
+                transactions = Transaction.objects.\
+                               filter(Q(payer=request.user)|\
+                                      Q(veresedaki__ower__in = [request.user]
+                                        )
+                                      ).distinct().filter(id__lt=transaction_id)
+
+                return TransactionListView(transactions)
+
+            elif after:
+                # return objects with id larger than transaction_id
+                transactions = Transaction.objects.\
+                               filter(Q(payer=request.user)|\
+                                      Q(veresedaki__ower__in = [request.user]
+                                        )
+                                      ).distinct().filter(id__gt=transaction_id)
+
+                return TransactionListView(transactions)
 
         else:
             transactions = Transaction.objects.\

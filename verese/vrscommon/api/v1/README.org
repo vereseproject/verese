@@ -85,3 +85,10 @@
 14. Get pending transactions (transactions that require user input)
 
     ~$ curl -b cookiejar -X GET http://127.0.0.1:8000/api/v1/pending/
+15. Get transaction list newer than an ID
+
+    ~$ curl -b cookiejar -X GET http://127.0.0.1:8000/api/v1/transaction/after/7/
+
+16. Get transaction list older than an ID
+
+    ~$ curl -b cookiejar -X GET http://127.0.0.1:8000/api/v1/transaction/before/7/

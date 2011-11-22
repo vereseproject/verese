@@ -31,6 +31,10 @@ urlpatterns = patterns(
     api_url(r'^relation/(?P<relation_id>\d+)/$', relation_handler),
     api_url(r'^relation/list/$', relation_handler),
 
+    api_url(r'^transaction/before/(?P<transaction_id>\d+)/$',
+            transaction_handler, {'before':True}),
+    api_url(r'^transaction/after/(?P<transaction_id>\d+)/$',
+            transaction_handler, {'after':True}),
     api_url(r'^transaction/(?P<transaction_id>\d+)/$', transaction_handler),
     api_url(r'^transaction/list/$', transaction_handler),
     api_url(r'^transaction/$', transaction_handler),
