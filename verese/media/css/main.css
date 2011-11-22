@@ -104,10 +104,11 @@ body {
  text-align:center;
  font-size: 35px;
  margin-top: 30px;
+ width:100%;
 }
 
 #sumfield {
- text-align:center;
+ text-align:right;
  font-size: 35px;
  margin-top: 30px;
 }
