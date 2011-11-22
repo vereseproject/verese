@@ -6,7 +6,7 @@ from django.db import transaction
 
 from piston.handler import BaseHandler, AnonymousBaseHandler
 from piston.decorator import decorator
-from piston.utils import rc
+from piston.utils import rc, FormValidationError
 from piston.resource import PistonBadRequestException,\
      PistonForbiddenException, PistonNotFoundException
 
@@ -204,8 +204,9 @@ class TransactionHandler(BaseHandler):
     @transaction.commit_on_success()
     def create(self, request):
         form = TransactionCreateForm(request.POST,
-                                         instance=Transaction(payer=request.user)
-                                         )
+                                     instance=Transaction(payer=request.user)
+                                     )
+
         if not form.is_valid():
             raise FormValidationError(form)
 

@@ -96,7 +96,9 @@ class Transaction(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     currency = models.ForeignKey("Currency")
     tags = TaggableManager(blank=True)
-    # geolocation
+    lon = models.FloatField(null=True, blank=True)
+    lat = models.FloatField(null=True, blank=True)
+    place = models.CharField(max_length="200", blank=True, null=True)
 
     class Meta:
         ordering = ['-created']

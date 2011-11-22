@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from piston.utils import FormValidationError
+
 from vrscommon.models import *
 
 class RelationUpdateForm(forms.ModelForm):
@@ -57,11 +59,10 @@ class VeresedakiCreateForm(forms.ModelForm):
         model = Veresedaki
         fields = ('ower', 'transaction', 'amount', 'comment')
 
-
 class TransactionCreateForm(forms.ModelForm):
     class Meta:
         model = Transaction
-        fields = ('comment', 'currency')
+        fields = ('comment', 'currency', 'lat', 'lon', 'place')
         # TODO add tags
 
 class UserUpdateForm(forms.ModelForm):
@@ -75,6 +76,7 @@ class UserUpdateForm(forms.ModelForm):
         if self.data.get('currency', None):
             try:
                 currency = Currency.objects.get(pk=self.data['currency'])
+
             except Currency.DoesNotExist:
                 raise FormValidationError('Currency does not exist')
 

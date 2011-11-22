@@ -57,14 +57,17 @@
 
 10. Create a new transaction
 
-   ~$ curl -u "seadog:123" -X POST \
-         -F "currency=2" \
+   ~$ curl -u "seadog:123" -X POST
+         -F "currency=2"
          -F "veresedaki_set-TOTAL_FORMS=2"
          -F "veresedaki_set-INITIAL_FORMS=0"
          -F "veresedaki_set-MAX_NUM_FORMS=2"
          -F "veresedaki_set-0-ower=2"
          -F "veresedaki_set-0-amount=10"
          -F "veresedaki_set-1-ower=2"
+	 -F "lat=23.223"
+	 -F "lon=33.333"
+	 -F "place=foobar"
          -F "veresedaki_set-1-amount=98.99" http://127.0.0.1:8000/api/v1/transaction/
 
 11. Approve a transaction
@@ -78,6 +81,7 @@
 13. Cancel a transaction
 
     ~$ curl -b cookiejar -X PUT http://127.0.0.1:8000/api/v1/veresedaki/1/cancel/
+
 14. Get pending transactions (transactions that require user input)
 
     ~$ curl -b cookiejar -X GET http://127.0.0.1:8000/api/v1/pending/

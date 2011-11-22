@@ -111,6 +111,9 @@ class TransactionView(PistonView):
         Field('created', lambda x: x.strftime("%Y-%m-%dT%H:%M:%S")),
         'comment',
         'status',
+        'lat',
+        'lon',
+        'place',
         Field('total_amount', destination='amount'),
         ]
 
