@@ -98,7 +98,7 @@ function user_is_me(user) {
 // returns True gravatar image url
 function get_gravatar_url(user) {
     return 'http://www.gravatar.com/avatar/' +
-	user.emailmd5 + '?s=48&d=identicon'
+	user.emailmd5 + '?s=48&d=identicon';
 }
 
 // accepts a json object poiting to a user
@@ -192,39 +192,6 @@ function initiliaze_welcome_page() {
     )
 }
 
-
-// function populate_balance(json) {
-//     // populate balance
-//     $('#balance_aggregation').html(
-//         parseFloat(json.data.balance_aggregation.balance).toFixed(2) +
-//             json.data.balance_aggregation.currency.symbol
-//     );
-
-//     $('#currency_aggregations').empty();
-//     $.each(json.data.balance_details,
-//     	   function(key, value)
-//     	   {
-//     	       var button_text = '' +
-//     		   '<a id="' +
-//     		   value.currency.code +
-//     		   '_transactions_button" data-role="button" name="' +
-//     		   value.currency.code +
-//     		   '_transactions">' +
-//     		   // '<img src="' + value.currency.image + '">' +
-//     		   value.currency.symbol + '<br/>' + value.balance +
-//     		   '</a>';
-
-//     	       $('#currency_aggregations').append(button_text);
-
-//     	       $('#' + value.currency.code + '_transactions_button').click(function() {
-//     	       	   $('.' + value.currency.code + '_transaction').slideToggle('fast');
-//     	       });
-
-//     	   }
-//     	  ); // end each()
-
-//     $('#dashboard').trigger('create');
-// }
 
 function populate_profile(json) {
     // check if new user
