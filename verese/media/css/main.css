@@ -44,26 +44,6 @@ body {
    padding-bottom: 10%;
 }
 
-#vereseheader {
- text-align:center;
-}
-
-#vereseheader img{
- margin:10px;
-}
-
-#dateblock {
- width:30%
-}
-
-#locationblock {
- width:70%
-}
-
-#locationfield {
- width:100%
-}
-
 .ui-li-thumb {
  max-height: 48px;
  max-width: 48px;
@@ -88,4 +68,46 @@ body {
 
 .ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
  padding-left: 85px;
+}
+
+#vereseheader {
+ text-align:center;
+}
+
+/* Add page CSS ------------------------- */
+
+#vereseheader img{
+ margin:10px;
+}
+
+#dateblock {
+ width:30%;
+}
+
+#locationblock {
+ width:70%;
+}
+
+#locationfield {
+ width:100%;
+}
+
+#sumblock {
+ width:70%;
+}
+
+#sumfield {
+ height:60px;
+ text-align:right;
+ font-size: 40px;
+}
+
+#currencyblock {
+ width:30%;
+}
+
+#currencyfield {
+ height:60px;
+ text-align:center;
+ font-size: 40px;
 }
