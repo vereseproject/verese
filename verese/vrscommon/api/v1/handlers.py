@@ -267,3 +267,19 @@ class VeresedakiHandler(BaseHandler):
         status.save()
 
         return rc.ALL_OK
+
+class PendingHandler(BaseHandler):
+    """
+    Pending Handler returns transaction that need user's action
+    """
+    allowed_methods = ('GET',)
+
+    def read(self, request):
+        query = Veresedaki.objects.\
+                filter(Q(ower=request.user) |\
+                       Q(transaction__payer=request.user)
+                       ).\
+                       exclude(veresedakistatus__status__gt=30).\
+                       exclude(veresedakistatus__status__lt=30)
+
+        return PendingListView(query)

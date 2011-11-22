@@ -6,7 +6,7 @@ from authentication import DjangoAuthentication
 from utils import api_url, Resource
 from handlers import VeresedakiHandler, TransactionHandler, \
      RelationHandler, LoginHandler, LogoutHandler, \
-     BalanceHandler, CurrencyHandler, UserHandler
+     BalanceHandler, CurrencyHandler, UserHandler, PendingHandler
 
 django_auth = DjangoAuthentication(login_url='/api/login/')
 basic_auth = HttpBasicAuthentication(realm='verese')
@@ -18,6 +18,7 @@ logout_handler = Resource(LogoutHandler)
 balance_handler = Resource(BalanceHandler, django_auth)
 currency_handler = Resource(CurrencyHandler)
 user_handler = Resource(UserHandler, django_auth)
+pending_handler = Resource(PendingHandler, django_auth)
 
 urlpatterns = patterns(
     '',
@@ -40,6 +41,8 @@ urlpatterns = patterns(
     api_url(r'^currency/list/$', currency_handler),
 
     api_url(r'^profile/$', user_handler),
+
+    api_url(r'^pending/$', pending_handler),
 
     api_url(r'login/$', login_handler),
     api_url(r'logout/$', logout_handler),

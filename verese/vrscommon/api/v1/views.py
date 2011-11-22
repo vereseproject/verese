@@ -121,3 +121,16 @@ class TransactionListView(PistonView):
               destination='transactions'
               )
         ]
+
+class PendingView(PistonView):
+    fields = [
+        Field('transaction', lambda x: TransactionView(x), destination='')
+        ]
+
+class PendingListView(PistonView):
+    fields = [
+        Field('',
+              lambda x: [PendingView(y) for y in x],
+              destination='pending'
+              )
+        ]

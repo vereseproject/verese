@@ -78,3 +78,6 @@
 13. Cancel a transaction
 
     ~$ curl -b cookiejar -X PUT http://127.0.0.1:8000/api/v1/veresedaki/1/cancel/
+14. Get pending transactions (transactions that require user input)
+
+    ~$ curl -b cookiejar -X GET http://127.0.0.1:8000/api/v1/pending/
