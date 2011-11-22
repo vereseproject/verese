@@ -74,17 +74,17 @@ body {
  text-align:center;
 }
 
-/* Add page CSS ------------------------- */
-
 #vereseheader img{
  margin:10px;
 }
 
-#dateblock {
+/* Add page CSS ------------------------- */
+
+#dateblock #currencyblock {
  width:30%;
 }
 
-#locationblock {
+#locationblock #sumblock {
  width:70%;
 }
 
@@ -92,22 +92,8 @@ body {
  width:100%;
 }
 
-#sumblock {
- width:70%;
-}
-
-#sumfield {
- height:60px;
- text-align:right;
- font-size: 40px;
-}
-
-#currencyblock {
- width:30%;
-}
-
-#currencyfield {
- height:60px;
+#currencyfield #sumfield {
  text-align:center;
- font-size: 40px;
+ font-size: 35px;
+ margin-top: 30px;
 }
