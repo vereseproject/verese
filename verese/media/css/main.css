@@ -44,8 +44,9 @@ body {
    padding-bottom: 10%;
 }
 
-.ui-header .ui-bar-a .ui-header-fixed .fade .ui-fixed-overlay {
+.vereseheader img{
  text-align:center;
+ margin:7px;
 }
 
 .ui-li-thumb {
