@@ -124,3 +124,7 @@ body {
 #peoplelist img{
  margin-top:20px;
 }
+
+div.ui-slider {
+ width:80%;
+}
