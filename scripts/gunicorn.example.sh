@@ -13,4 +13,4 @@ SOCKET="unix:$USERDIR/sockets/$INSTANCE/verese.sock"
 cd $USERDIR/$INSTANCE
 source ./env/bin/activate
 exec ./env/bin/gunicorn_django -w $NUM_WORKERS \
-    --log-level=info --log-file=$LOGFILE --bind $SOCKET 2l>> $LOGFILE verese/settings.py
+    --log-level=info --log-file=$LOGFILE --bind $SOCKET 2>> $LOGFILE verese/settings.py
