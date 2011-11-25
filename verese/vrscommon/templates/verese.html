@@ -22,7 +22,7 @@
 	  <input type="text" name="username" id="username" value="">
 	  <label for="password">Password:</label>
 	  <input type="password" name="password" id="password" value="">
-	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
+	  <button value="submit-value" name="submit"  type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
         </form>
 
 	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
@@ -93,7 +93,7 @@
 <!----------------------------------------------------------------------------->
 
 <!-- Dashboard page -->
-<div data-role="page" id="dashboard" data-title="Dashboard" data-url="#dashboard" data-theme="a">
+<div data-role="page" id="dashboard" data-title="Dashboard" data-url="#dashboard">
 
   {% include "header.html" %}
 
@@ -119,7 +119,7 @@
 <!----------------------------------------------------------------------------->
 
 <!-- Activity page -->
-<div data-role="page" id="activity" data-title="Activity" data-url="#activity" data-theme="a">
+<div data-role="page" id="activity" data-title="Activity" data-url="#activity">
 
   {% include "header.html" %}
 
@@ -155,7 +155,7 @@
 
 <!-- Add Page -->
 
-<div data-role="page" id="add" data-title="Add" data-url="#add" data-theme="a">
+<div data-role="page" id="add" data-title="Add" data-url="#add" >
 
   {% include "header.html" %}
 
@@ -245,7 +245,7 @@
 
 <!-- connections page start -->
 
-<div data-role="page" id="connections" data-title="Connections" data-url="#connections" data-theme="a">
+<div data-role="page" id="connections" data-title="Connections" data-url="#connections" >
 
   {% include "header.html" %}
 
@@ -284,7 +284,7 @@
 
 <!-- statistics page start -->
 
-<div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics" data-theme="a">
+<div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics" >
 
   {% include "header.html" %}
 
@@ -348,7 +348,7 @@
 	  {% endfor %}
 	</select>
       </div>
-      <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
+      <button value="submit-value" name="submit"  type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
     </form>
   </div>
   <!-- end content -->
@@ -377,7 +377,7 @@
      <span class="ul-li-aside">${sign}${amount}</span>
    </a>
  </li>
- <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
+ <li  style="display:none" class="transaction-item-details" id="transaction-${id}-details">
  {# trying to implement {{html details}} with django template systems parsing that #}
  {% templatetag openvariable %}html details{% templatetag closevariable %}
 
