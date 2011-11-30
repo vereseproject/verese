@@ -183,6 +183,8 @@ LOGIN_URL = '/login'
 LOGIN_REDIRECT_URL = '/verese/'
 LOGOUT_REDIRECT_URL = '/logout/'
 
+SITE_EDITION=None
+
 # import local settings
 from local_settings import *
 
