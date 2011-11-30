@@ -44,3 +44,87 @@ body {
    padding-bottom: 10%;
 }
 
+.ui-li-thumb {
+ max-height: 48px;
+ max-width: 48px;
+ left: 0.9em;
+ background-color: white;
+ box-shadow: 2px 2px 2px #ccc;
+ padding: 4px;
+}
+
+.ul-li-aside {
+ font-size: 18px;
+ font-weight: bold;
+ margin-top: -0.9em;
+ padding: 0.2em 0.5em;
+ position: absolute;
+ top: 50%;
+ right: 38px;
+ color: maroon;
+ text-shadow: 1px 1px #ccc;
+}
+
+
+.ui-li-has-thumb .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li-has-thumb {
+ padding-left: 85px;
+}
+
+#vereseheader {
+ text-align:center;
+}
+
+#vereseheader img{
+ margin:10px;
+}
+
+/* Add page CSS ------------------------- */
+
+#dateblock {
+ width:30%;
+}
+
+#currencyblock {
+ width:30%;
+ font-size: 27px;
+ margin-top: 7px;
+}
+
+#locationblock {
+ width:70%;
+}
+
+#sumblock {
+ width:70%;
+}
+
+#locationfield {
+ width:100%;
+}
+
+#currencyfield {
+ text-align:center;
+ width:100%;
+}
+
+#sumfield {
+ text-align:right;
+ font-size: 35px;
+ margin-top: 20px;
+}
+
+#listview {
+ margin:0px;
+}
+
+#peoplelist {
+ margin-top:20px;
+}
+
+#peoplelist img{
+ margin-top:20px;
+}
+
+div.ui-slider {
+ width:80%;
+}

@@ -345,6 +345,10 @@ $('#welcome').live('pagebeforeshow', initiliaze_welcome_page);
 $('#logout').live('pagebeforeshow', initiliaze_logout_page);
 $('#add').live('pagebeforeshow', initialize_add_page);
 
+//disable Tap to togle on Bars
+$.mobile.fixedToolbars
+   .setTouchToggleEnabled(false);
+
 
 // init
 $(window).bind("orientationchange resize pageshow", _fixgeometry);

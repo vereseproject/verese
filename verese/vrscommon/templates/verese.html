@@ -22,7 +22,7 @@
 	  <input type="text" name="username" id="username" value="">
 	  <label for="password">Password:</label>
 	  <input type="password" name="password" id="password" value="">
-	  <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
+	  <button value="submit-value" name="submit"  type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
         </form>
 
 	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
@@ -37,7 +37,7 @@
     </div><!-- /content -->
 
     <div data-role="footer" data-theme="d">
-      <h4><sub>copyleft verese project 2011</sub></h4>
+      <h4><sub><span style="transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);">&copy;</span> verese project 2011</sub></h4>
     </div><!-- /footer -->
 
   </div><!-- /login page -->
@@ -57,7 +57,7 @@
     </div>
 
     <div data-role="footer" data-theme="d">
-      <h4><sub>copyleft verese project 2011</sub></h4>
+      <h4><sub><span style="transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);">&copy;</span> verese project 2011</sub></h4>
     </div><!-- /footer -->
 
   </div><!-- /logout page -->
@@ -86,7 +86,7 @@
     </div>
 
     <div data-role="footer" data-theme="d">
-      <h4><sub>copyleft verese project 2011</sub></h4>
+      <h4><sub><span style="transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);">&copy;</span> verese project 2011</sub></h4>
     </div><!-- /footer -->
   </div><!-- /FAQ page -->
 
@@ -95,52 +95,23 @@
 <!-- Dashboard page -->
 <div data-role="page" id="dashboard" data-title="Dashboard" data-url="#dashboard">
 
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <h1>Verese</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div><!-- /header -->
+  {% include "header.html" %}
 
-  <!-- content starts -->
-  <div data-role="content" style="text-align:center;">
-    <div class="apply-padding-10">
-      <img src="/media/images/app/apple-touch-icon-114.png"/>
-    </div>
+  <p> This will be our new dashboard </p>
 
-    <!-- grid 'a' starts -->
-    <div class="ui-grid-a">
-      <!-- populated by populate_profile -->
-      <div class="ui-block-a apply-padding-bottom-5">
-	<a href="#add"><img class="apply-padding-5" src="/media/images/app/add.png"/></a>
-	<br/>
-	Add
-      </div>
-
-      <!-- populated by populate_balance -->
-      <div class="ui-block-b apply-padding-bottom-5">
-	<a href="#activity"><img class="apply-padding-5" src="/media/images/app/activity.png"/></a>
-	<br/>
-	Activity
-      </div>
-
-      <!-- populated by populate_profile -->
-      <div class="ui-block-a apply-padding-bottom-5">
-	<a href="#connections"><img class="apply-padding-5" src="/media/images/app/connections.png"/></a>
-	<br/>
-	Connections
-      </div>
-
-      <!-- populated by populate_balance -->
-      <div class="ui-block-b apply-padding-bottom-5">
-	<a href="#statistics"><img class="apply-padding-5" src="/media/images/app/statistics.png"/></a>
-	<br/>
-	Statistics
-      </div>
-
-    </div>
-    <!-- grid 'a' ends -->
-
+  <!-- footer starts -->
+  <div data-role="footer" data-id="footer5" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#activity">Activity</a></li>
+        <li><a href="#dashboard" class="ui-btn-active ui-state-persist">Dashboard</a></li>
+        <li><a href="#connections">Connections</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+      </ul>
+	</div>
   </div>
-  <!-- content ends -->
+  <!-- footer ends -->
 
 </div>
 
@@ -150,11 +121,7 @@
 <!-- Activity page -->
 <div data-role="page" id="activity" data-title="Activity" data-url="#activity">
 
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Activity</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div><!-- /header -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
@@ -168,29 +135,110 @@
   </div>
   <!-- content ends -->
 
+  <!-- footer starts -->
+  <div data-role="footer" data-id="footer5" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#activity" class="ui-btn-active ui-state-persist">Activity</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#connections">Connections</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+      </ul>
+	</div>
+  </div>
+  <!-- footer ends -->
+
 </div>
 
 
 <!----------------------------------------------------------------------------->
 
 
-<!-- Add Veresedaki Page -->
+<!-- Add Page -->
 
-<div data-role="page" id="add" data-title="Add" data-url="#add">
+<div data-role="page" id="add" data-title="Add" data-url="#add" >
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Add new</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
-    <input type="text" name="name" id="add-person-search" value=""  />
+	  <fieldset class="ui-grid-a">
+	    <div id="dateblock" class="ui-block-a">
+          <label for="datefield">Date :</label>
+          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="date" name="datefield" id="datefield" value="2011-08-10"  />
+        </div>
+	    <div id="locationblock" class="ui-block-b">
+          <label class="ui-input-text" for="locationfield">Location :</label>
+          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Hackerspace.gr"  />
+        </div>
+      </fieldset>
+
+	  <fieldset class="ui-grid-a">
+	    <div id="sumblock" class="ui-block-a">
+          <input type="text" name="sumfield" id="sumfield" value="23.23"  />
+        </div>
+	    <div id="currencyblock" class="ui-block-b">
+          <select name="currencyfield" id="currencyfield">
+            <option value="USD">$</option>
+            <option value="EUR">€</option>
+            <option value="GBP">£</option>
+            <option value="JPY">¥</option>
+          </select>
+        </div>
+      </fieldset>
+
+    <div id="peoplelist">
+        <label class="ui-input-text">Participants :</label>
+        <ul data-role="listview" id="listview">
+			<li>
+				<img src="http://dummyimage.com/80x80/999/ccc" />
+				<h3>Makis Veresedakis</h3>
+				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
+			</li>
+			<li>
+				<img src="http://dummyimage.com/80x80/999/ccc" />
+				<h3>Makis Veresedakis</h3>
+				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
+			</li>
+			<li>
+				<img src="http://dummyimage.com/80x80/999/ccc" />
+				<h3>Makis Veresedakis</h3>
+				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
+			</li>
+			<li>
+				<img src="http://dummyimage.com/80x80/999/ccc" />
+				<h3>Makis Veresedakis</h3>
+				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
+			</li>
+			<li>
+				<img src="http://dummyimage.com/80x80/999/ccc" />
+				<h3>Makis Veresedakis</h3>
+				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
+			</li>
+        </ul>
+
+    </div>
+
+    <a href="#" id="submitbutton" data-role="button" data-theme="e">Submit</a>
+    <script>
+    </script>
   </div>
   <!-- content ends -->
+
+  <!-- footer starts -->
+  <div data-role="footer" data-id="footer5" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#add" class="ui-btn-active ui-state-persist">Add</a></li>
+        <li><a href="#activity">Activity</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#connections">Connections</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+      </ul>
+	</div>
+  </div>
+  <!-- footer ends -->
 
 </div>
 
@@ -198,15 +246,9 @@
 
 <!-- connections page start -->
 
-<div data-role="page" id="connections" data-title="Connections" data-url="#connections">
+<div data-role="page" id="connections" data-title="Connections" data-url="#connections" >
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Connections</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
   <div data-role="content">
@@ -220,31 +262,52 @@
   </div>
   <!-- content ends -->
 
-</div>
+  <!-- footer starts -->
+  <div data-role="footer" data-id="footer5" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#activity">Activity</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#connections" class="ui-btn-active ui-state-persist">Connections</a></li>
+        <li><a href="#statistics">Statistics</a></li>
+      </ul>
+	</div>
+  </div>
+  <!-- footer ends -->
 
+</div>
 
 <!-- connections page end -->
 
 <!----------------------------------------------------------------------------->
 
 
-<!-- analysis page start -->
+<!-- statistics page start -->
 
-<div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics">
+<div data-role="page" id="statistics" data-title="Statistics" data-url="#statistics" >
 
-  <!-- header starts -->
-  <div data-role="header" data-position="fixed" data-id="vereseheader">
-    <a href="#dashboard" data-icon="home" data-iconpos="notext" class="ui-btn-left jqm-home" data-direction="reverse">Dashboard</a>
-    <h1>Statistics</h1>
-    <a href="#logout" data-icon="gear" data-iconpos="notext" class="ui-btn-right jqm-home">Logout</a>
-  </div>
-  <!-- header ends -->
+  {% include "header.html" %}
 
   <!-- content starts -->
-  <div data-role="content">
-    <p> not ready yet 2</p>
+  <div data-role="content" style="text-align:center">
+    <img src="http://imgs.xkcd.com/comics/self_description.png">
   </div>
   <!-- content ends -->
+
+  <!-- footer starts -->
+  <div data-role="footer" data-id="footer5" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#add">Add</a></li>
+        <li><a href="#activity">Activity</a></li>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#connections">Connections</a></li>
+        <li><a href="#statistics" class="ui-btn-active ui-state-persist">Statistics</a></li>
+      </ul>
+	</div>
+  </div>
+  <!-- footer ends -->
 
 
 </div>
@@ -286,14 +349,14 @@
 	  {% endfor %}
 	</select>
       </div>
-      <button value="submit-value" name="submit" data-theme="a" type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
+      <button value="submit-value" name="submit"  type="submit" class="ui-btn-hidden" aria-disabled="false">Ready</button>
     </form>
   </div>
   <!-- end content -->
 
   <!-- start footer -->
   <div data-role="footer" data-theme="d">
-    <h4><sub>copyleft verese project 2011</sub></h4>
+      <h4><sub><span style="transform:rotate(180deg);-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-o-transform:rotate(180deg);filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2);">&copy;</span> verese project 2011</sub></h4>
   </div><!-- /footer -->
 
   <!-- end footer -->
@@ -321,7 +384,7 @@
      <span class="ul-li-aside">${currency.symbol} ${sign}${amount}</span>
    </a>
  </li>
- <li data-theme="a" style="display:none" class="transaction-item-details" id="transaction-${id}-details">
+ <li  style="display:none" class="transaction-item-details" id="transaction-${id}-details">
  {# trying to implement {{html details}} with django template systems parsing that #}
  {% templatetag openvariable %}html details{% templatetag closevariable %}
  </li>
