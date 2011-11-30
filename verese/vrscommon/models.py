@@ -3,6 +3,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.core.exceptions import ValidationError
 from django.db.models import Sum, Q
+from django.core.mail import send_mail
+from django.conf import settings
+import datetime
 
 from taggit.managers import TaggableManager
 
@@ -231,6 +234,45 @@ class VeresedakiStatus(models.Model):
                 relation.balance -= self.veresedaki.amount
 
             relation.save(args, kwargs)
+
+        # send emails
+        # TODO to be moved to celery when deployed
+        to = self.veresedaki.transaction.payer.email \
+             if self.veresedaki.ower == self.user \
+             else self.veresedaki.ower.email
+        subject = '[Verese] %(first_name)s %(last_name)s '\
+                  '%(action)s %(currency_symbol)s%(amount)s veresedaki' %\
+                  {'first_name':self.user.first_name,
+                   'last_name':self.user.last_name,
+                   'action':self.get_status_display().lower(),
+                   'currency_symbol':self.veresedaki.transaction.currency.symbol,
+                   'amount':self.veresedaki.amount
+                   }
+        body = 'Hi,\n' \
+               '\n'\
+               '%(first_name)s %(last_name)s just %(action)s '\
+               '%(currency_symbol)s%(amount)s veresedaki!\n\n'\
+               'Veresedaki Details:\n\n'\
+               ' Payer: %(payer_first_name)s %(payer_last_name)s (@%(payer_username)s)\n'\
+               ' Created At: %(created_at)s\n'\
+               ' Amount: %(currency_symbol)s%(amount)s\n'\
+               ' Place: %(place)s\n\n'\
+               'Thanks,\n'\
+               'The Verese Bot' % { 'first_name': self.user.first_name,
+                                    'last_name': self.user.last_name,
+                                    'action': self.get_status_display().lower(),
+                                    'currency_symbol': self.veresedaki.transaction.currency.symbol,
+                                    'amount': self.veresedaki.amount,
+                                    'payer_first_name': self.veresedaki.transaction.payer.first_name,
+                                    'payer_last_name': self.veresedaki.transaction.payer.last_name,
+                                    'payer_username': self.veresedaki.transaction.payer.username,
+                                    'created_at': datetime.datetime.strftime(
+                                        self.veresedaki.transaction.created,
+                                        "%d-%m-%Y on %a %d %B"
+                                        ),
+                                    'place': self.veresedaki.transaction.place
+                                    }
+        send_mail(subject, body, settings.VERESE_EMAIL_FROM, to)
 
         super(VeresedakiStatus, self).save(*args, **kwargs)
 
