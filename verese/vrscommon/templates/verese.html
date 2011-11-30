@@ -16,6 +16,15 @@
       </div>
 
       <div data-role="fieldcontain">
+        <form id="loginform">
+          {% csrf_token %}
+	  <label for="username">Username:</label>
+	  <input type="text" name="username" id="username" value="">
+	  <label for="password">Password:</label>
+	  <input type="password" name="password" id="password" value="">
+	  <button value="submit-value" name="submit"  type="submit" class="ui-btn-hidden" aria-disabled="false">Login</button>
+        </form>
+
 	<a id="browserid" href="#"><img src="https://browserid.org/i/sign_in_blue.png"></img></a>
 	<form method="POST" action="{% url browserid_verify %}" data-ajax="false">
 	{% csrf_token %}
