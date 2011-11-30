@@ -47,6 +47,7 @@ class RelationDetailedView(PistonView):
 
 class UserView(PistonView):
     fields = [
+        'id',
         'first_name',
         'last_name',
         'username',
