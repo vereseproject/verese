@@ -42,10 +42,31 @@ function find_my_veresedaki(list) {
 
 // functino to initiailize #add page
 function initialize_add_page() {
-    $('#add-person-search').autocomplete({
-        source: ['foo', 'bar', 'foor'],
-        select: function (event, ui) { }
-    });
+    var users = [];
+    $.getJSON('/api/v1/relation/list/short/', function(json) {
+		  $.map(json.data.relations,
+		       function(item) {
+		  	   users.push(item.username);
+		  	   });
+		  $('#add-person-search').autocomplete(
+    		      {
+    			  source: users,
+    			  //submit form on suggestion selection
+    			  select:function(e, ui){
+
+    			  }
+    		      });
+
+		  // override private autocomplete method which encodes html and creates anchor with no href
+		  $('#add-person-search').data( "autocomplete" )._renderItem = function( ul, item ) {
+    		      return $( "<li></li>" )
+			  .data( "item.autocomplete", item )
+			  .append( $( "<a></a>" ).attr({href: '#'}).html( item.label ) )
+			  .appendTo( ul );
+		  };
+
+	      });
+
 }
 
 // function to initialize #login page
