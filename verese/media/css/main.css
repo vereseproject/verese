@@ -128,3 +128,24 @@ body {
 div.ui-slider {
  width:80%;
 }
+
+#add-search-block {
+ width:70%;
+}
+
+#add-search-field {
+ text-align:left;
+ font-size: 28px;
+ margin-top: 20px;
+}
+
+#add-button-block {
+ width:30%;
+ font-size: 21px;
+ margin-top: 10px;
+}
+
+#add-search-button {
+ text-align:center;
+ width:100%;
+}

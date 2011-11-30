@@ -3,6 +3,7 @@ var my_email = null;
 var my_name = null;
 var transaction_list_max = 0;
 var transaction_list_min = 1000000;
+var user_dict = {};
 
 // function to correct geometry bug
 function _fixgeometry() {
@@ -40,20 +41,22 @@ function find_my_veresedaki(list) {
     return veresedaki;
 }
 
-// functino to initiailize #add page
+// function to initiailize #add page
 function initialize_add_page() {
     var users = [];
+
     $.getJSON('/api/v1/relation/list/short/', function(json) {
 		  $.map(json.data.relations,
 		       function(item) {
 		  	   users.push(item.username);
+			   window.user_dict[item.username] = item
 		  	   });
-		  $('#add-person-search').autocomplete(
+		  $('#add-search-field').autocomplete(
     		      {
     			  source: users,
     			  //submit form on suggestion selection
     			  select:function(e, ui){
-
+			      $('#add-search-button').click();
     			  }
     		      });
 
@@ -66,6 +69,43 @@ function initialize_add_page() {
 		  };
 
 	      });
+
+    $('#add-search-field').bind('focus', function() { this.value='' });
+
+    $('#add-search-button').bind('click', function(event) {
+				   user = window.user_dict[$('#add-search-field').attr('value')];
+				   $('#add-search-field').attr('value', 'Add another person');
+				   ddata = [{
+						'name': get_full_name(user),
+						'md5': user.emailmd5,
+						'id': user.id
+					    }];
+				   $('#addVeresedakiParticipant').tmpl(ddata).appendTo('#peoplelist');
+				   $('#peoplelist').trigger('create');
+				   $("#peoplelist").listview("refresh");
+
+				   sum_value = $('#sumfield').attr('value') / $('.veresedaki_participant').length;
+
+				   $('.veresedaki_participant_slider').attr('value', sum_value);
+				   $('.veresedaki_participant_slider').attr('max', $('#sumfield').attr('value'));
+				   $('.veresedaki_participant_slider').slider('refresh');
+
+				   $('#add-search-field').attr('value', 'Add another person');
+			       });
+
+    navigator.geolocation.getCurrentPosition(
+	function(position) {
+	    if (position.coords.accuracy <= 10) {
+		$.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
+			  function(json) {
+			      $('#locationfield').attr('value', json.data.results[0].name);
+			  });
+
+	    }
+	    else {
+		$('#locationfield').attr('value', '');
+	    }
+	});
 
 }
 
@@ -207,7 +247,7 @@ function initiliaze_welcome_page() {
 	    });
 	    return false;
 	}
-    )
+    );
 }
 
 
@@ -353,25 +393,25 @@ $.mobile.fixedToolbars
 // init
 $(window).bind("orientationchange resize pageshow", _fixgeometry);
 
-$(document).on("click", ".transaction-item",
-	       function(event) {
-		   id = "#" + event.target.parentNode.id + "-details";
-		   if ($(id).is(":visible") == false)
-		       toggle_only = true;
-		   else
-		       toggle_only = false;
+$(".transaction-item").bind("click",
+			    function(event) {
+				id = "#" + event.target.parentNode.id + "-details";
+				if ($(id).is(":visible") == false)
+				    toggle_only = true;
+				else
+				    toggle_only = false;
 
-		   if (toggle_only == true)
-		       $(".transaction-item-details").slideUp();
+				if (toggle_only == true)
+				    $(".transaction-item-details").slideUp();
 
-		   $("#" + event.target.parentNode.id + '-details').slideToggle();
-	       }
-	      );
+				$("#" + event.target.parentNode.id + '-details').slideToggle();
+			    }
+			   );
 
-$(document).on('click', "#load-more-button",
-	       function() {
-		   $.getJSON("/api/v1/transaction/before/" +
-			     window.transaction_list_min +
-			     "/?limit=10",
-			     populate_transactions);
-	       });
+$('#load-more-button').bind('click', "",
+			    function() {
+				$.getJSON("/api/v1/transaction/before/" +
+					  window.transaction_list_min +
+					  "/?limit=10",
+					  populate_transactions);
+			    });

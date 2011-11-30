@@ -170,11 +170,11 @@
         </div>
 	    <div id="locationblock" class="ui-block-b">
           <label class="ui-input-text" for="locationfield">Location :</label>
-          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Hackerspace.gr"  />
+          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
         </div>
       </fieldset>
 
-	  <fieldset class="ui-grid-a">
+	<fieldset class="ui-grid-a">
 	    <div id="sumblock" class="ui-block-a">
           <input type="text" name="sumfield" id="sumfield" value="23.23"  />
         </div>
@@ -188,20 +188,24 @@
         </div>
       </fieldset>
 
-    <div id="peoplelist">
+    <div>
         <label class="ui-input-text">Participants :</label>
-        <ul data-role="listview" id="listview">
-			<li>
-				<img src="http://dummyimage.com/80x80/999/ccc" />
-				<h3>Makis Veresedakis</h3>
-				<input type="range" name="slider" id="slider-0" value="25" min="0" max="100" />
-			</li>
+        <ul id="peoplelist" data-role="listview" id="listview">
         </ul>
     </div>
- <div data-role="content">
-    <input type="text" name="name" id="add-person-search" value=""  />
-  </div>
-    <a href="#" id="submitbutton" data-role="button" data-theme="e">Submit</a>
+
+    <fieldset class="ui-grid-a">
+    <div id="add-search-block" class="ui-block-a">
+      <input type="text" id="add-search-field" value="Add a person"  />
+    </div>
+    <div id="add-button-block" class="ui-block-b">
+      <button type="submit" id="add-search-button" data-theme="b" data-icon="add">Add</button>
+    </div>
+    </fieldset>
+
+
+
+  <a href="#" id="submitbutton" data-role="button" data-theme="e">Create!</a>
     <script>
     </script>
   </div>
@@ -392,6 +396,14 @@
 
 <script id="transactionConfirmed" type="text/x-jquery-tmpl">
  confirmed
+</script>
+
+<script id="addVeresedakiParticipant" type="text/x-jquery-tmpl">
+<li class="veresedaki_participant">
+  <img src="http://www.gravatar.com/avatar/${md5}?s=48&d=identicon" />
+  <h3>${name}</h3>
+  <input type="range" class="veresedaki_participant_slider" name="slider" id="slider-${id}" value="20" min="0" max="100" />
+</li>
 </script>
 
 <!-- templates end -->
