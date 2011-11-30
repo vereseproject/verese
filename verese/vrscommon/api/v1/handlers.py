@@ -189,9 +189,6 @@ class TransactionHandler(BaseHandler):
     allowed_methods = ('GET', 'POST', 'DELETE')
     fields = ('id', 'payer', 'total_amount')
 
-    # use formsets
-    # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
-
     def read(self, request, transaction_id=None, before=False, after=False):
         limit = request.GET.get('limit', 10)
 
@@ -241,6 +238,8 @@ class TransactionHandler(BaseHandler):
 
             return TransactionListView(transactions)
 
+    # use formsets
+    # https://docs.djangoproject.com/en/dev/topics/forms/formsets/#formset-validation
     @transaction.commit_on_success()
     def create(self, request):
         form = TransactionCreateForm(request.POST,
