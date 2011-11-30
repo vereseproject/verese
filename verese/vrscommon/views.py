@@ -24,9 +24,11 @@ def main(request):
     except:
         site_edition = 'unset'
 
-    ctx = {
-        'site_edition': site_edition,
-        'currencies':Currency.objects.all()
-        }
+    ctx = RequestContext(request,
+                         {
+                             'site_edition': site_edition,
+                             'currencies':Currency.objects.all()
+                             }
+                         )
 
     return render_to_response('verese.html', ctx)

@@ -174,14 +174,13 @@ BROWSERID_CACERT_FILE = '/etc/ssl/certs/ca-certificates.crt'
 BROWSERID_CREATE_USER = True
 
 # Path to redirect to on successful login.
-LOGIN_REDIRECT_URL = '/verese/'
+LOGIN_REDIRECT_URL = '/verese/#dashboard'
 
 # Path to redirect to on unsuccessful login attempt.
-LOGIN_REDIRECT_URL_FAILURE = '/login/'
+LOGIN_REDIRECT_URL_FAILURE = '/verese/#login'
 
-LOGIN_URL = '/login'
-LOGIN_REDIRECT_URL = '/verese/'
-LOGOUT_REDIRECT_URL = '/logout/'
+LOGIN_URL = '/verese/#login'
+LOGOUT_REDIRECT_URL = '/verese/#logout'
 
 SITE_EDITION=None
 
