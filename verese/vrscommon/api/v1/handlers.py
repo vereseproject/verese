@@ -130,7 +130,7 @@ class RelationHandler(BaseHandler):
     model = Relation
     allowed_methods = ('GET', 'PUT', 'DELETE')
 
-    def read(self, request, relation_id=None, details=False):
+    def read(self, request, relation_id=None, details=False, short=False):
         if relation_id:
             try:
                 relation = Relation.objects.\
@@ -150,6 +150,18 @@ class RelationHandler(BaseHandler):
         else:
             relations = Relation.objects.\
                         filter(Q(user1=request.user)|Q(user2=request.user))
+
+            if short:
+                userlist = []
+                print relations
+                for relation in relations:
+                    userlist.append(relation.user1)
+                    userlist.append(relation.user2)
+
+                userlist = set(userlist)
+                userlist.discard(request.user)
+
+                return RelationListShortView(userlist)
 
             return RelationListView(relations)
 

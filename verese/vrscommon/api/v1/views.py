@@ -77,6 +77,14 @@ class RelationListView(PistonView):
               )
         ]
 
+class RelationListShortView(PistonView):
+    fields = [
+        Field('',
+              lambda x: [UserView(y) for y in x],
+              destination='relations'
+              )
+        ]
+
 class StatusView(PistonView):
     fields = [
         'status',
