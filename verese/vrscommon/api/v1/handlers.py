@@ -153,7 +153,7 @@ class RelationHandler(BaseHandler):
 
             if short:
                 userlist = []
-                print relations
+
                 for relation in relations:
                     userlist.append(relation.user1)
                     userlist.append(relation.user2)
