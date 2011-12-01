@@ -1,6 +1,7 @@
 // variables
 var my_email = null;
 var my_name = null;
+var my_currency = null;
 var transaction_list_max = 0;
 var transaction_list_min = 1000000;
 var user_dict = {};
@@ -80,17 +81,25 @@ function initialize_add_page() {
 						'md5': user.emailmd5,
 						'id': user.id
 					    }];
-				   $('#addVeresedakiParticipant').tmpl(ddata).appendTo('#peoplelist');
-				   $('#peoplelist').trigger('create');
-				   $("#peoplelist").listview("refresh");
+				     $('#addVeresedakiParticipant').tmpl(ddata).appendTo('#peoplelist');
+				     $('#peoplelist').trigger('create');
 
-				   sum_value = $('#sumfield').attr('value') / $('.veresedaki_participant').length;
+				     if ($('.veresedaki_participant').length == 1)
+				     	 $('.veresedaki_participant_slider').slider('disable');
+				     else
+				     	 $('.veresedaki_participant_slider').slider('enable');
 
-				   $('.veresedaki_participant_slider').attr('value', sum_value);
-				   $('.veresedaki_participant_slider').attr('max', $('#sumfield').attr('value'));
-				   $('.veresedaki_participant_slider').slider('refresh');
+				     $("#peoplelist").listview("refresh");
 
-				   $('#add-search-field').attr('value', 'Add another person');
+				     $('#slider-' + user.id).siblings('.ui-slider').bind('touchstart', sliderTouchStart);
+				     $('#slider-' + user.id).siblings('.ui-slider').bind('mousedown', sliderTouchStart);
+				     $('#slider-' + user.id).siblings('.ui-slider').bind('mouseup', sliderTouchEnd);
+				     $('#slider-' + user.id).siblings('.ui-slider').bind('touchend', sliderTouchEnd);
+
+				     update_veresedaki_sliders();
+
+
+				     $('#add-search-field').attr('value', 'Add another person');
 			       });
 
     navigator.geolocation.getCurrentPosition(
@@ -107,6 +116,40 @@ function initialize_add_page() {
 	    }
 	});
 
+    $('#sumfield').change(function() {
+			      update_veresedaki_sliders();
+			  });
+}
+
+function sliderTouchStart(event) {
+    window._slider_starting_value = $(event.target).closest('.veresedaki_participant').find('.veresedaki_participant_slider').val();
+    window._slider_item = $(event.target).closest('.veresedaki_participant').find('.veresedaki_participant_slider');
+
+}
+
+function sliderTouchEnd(event) {
+    diff = window._slider_item.val() - window._slider_starting_value;
+
+    each_diff = diff / ($('.veresedaki_participant_slider').length - 1);
+
+    $('.veresedaki_participant_slider').each(function(index, item) {
+						 if (item != window._slider_item)
+						     $(item).val(item.value - each_diff);
+					     });
+
+    $('.veresedaki_participant_slider').slider('refresh');
+
+    window._slider_starting_value = null;
+    window._slider_item = null;
+}
+
+function update_veresedaki_sliders() {
+    sum_value = $('#sumfield').attr('value') / $('.veresedaki_participant').length;
+
+    $('.veresedaki_participant_slider').attr('value', sum_value);
+    $('.veresedaki_participant_slider').attr('max', $('#sumfield').attr('value'));
+
+    $('.veresedaki_participant_slider').slider('refresh');
 }
 
 // function to initialize #login page
