@@ -453,7 +453,7 @@ $.mobile.fixedToolbars
 
 
 // init
-$(window).bind("orientationchange resize pageshow", _fixgeometry);
+// $(window).bind("orientationchange resize pageshow", _fixgeometry);
 
 $(".transaction-item").bind("click",
 			    function(event) {
