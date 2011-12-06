@@ -159,7 +159,11 @@
 
 <div data-role="page" id="add" data-title="Add" data-url="#add" >
 
-  {% include "header.html" %}
+<div id="vereseheader" data-role="header" data-position="fixed" data-id="vereseheader">
+  <img src="/media/images/app/header.png">
+  <a href="#" id="add_clear_button" data-icon="delete" class="ui-btn-left">Clear</a>
+  <a href="#options" data-icon="gear" data-iconpos="notext" class="ui-btn-right">Options</a>
+</div>
 
   <!-- content starts -->
   <div data-role="content">

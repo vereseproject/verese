@@ -447,14 +447,13 @@ $('#add').live('pagebeforeshow', initialize_add_page);
 $('#addpeople').live('pagebeforeshow', initialize_addpeople_page);
 
 //disable Tap to togle on Bars
-$.mobile.fixedToolbars
-   .setTouchToggleEnabled(false);
+$.mobile.fixedToolbars.setTouchToggleEnabled(false);
 
 
 // init
 // $(window).bind("orientationchange resize pageshow", _fixgeometry);
 
-$(".transaction-item").bind("click",
+$(".transaction-item").live("click",
 			    function(event) {
 				id = "#" + event.target.parentNode.id + "-details";
 				if ($(id).is(":visible") == false)
@@ -468,11 +467,19 @@ $(".transaction-item").bind("click",
 				$("#" + event.target.parentNode.id + '-details').slideToggle();
 			    }
 			   );
+$(document).ready(function() {
+		      $('#load-more-button').click(
+			  function() {
+			      $.getJSON("/api/v1/transaction/before/" +
+					window.transaction_list_min +
+					"/?limit=10",
+					populate_transactions);
+			  });
 
-$('#load-more-button').bind('click', "",
-			    function() {
-				$.getJSON("/api/v1/transaction/before/" +
-					  window.transaction_list_min +
-					  "/?limit=10",
-					  populate_transactions);
-			    });
+		      $('#add_clear_button').click(
+			  function() {
+			      $("#sumfield").attr('value', 0);
+			      $("#peoplelist").empty();
+			  });
+
+		  });
