@@ -42,26 +42,30 @@ function find_my_veresedaki(list) {
     return veresedaki;
 }
 
+function initialize_addpeople_page() {
+    $.mobile.showPageLoadingMsg();
+
+    $.getJSON('/api/v1/relation/list/short/', function(json) {
+		  $.mobile.hidePageLoadingMsg();
+
+		  var ddata = [];
+
+		  $.map(json.data.relations,
+			function(item) {
+			    ddata.push({
+					   filtertext: item.username + ' ' + item.first_name + ' ' + item.last_name,
+					   value: get_full_name(item),
+				       });
+		  	});
+		  $('#AddPeopleListItem').tmpl(ddata).appendTo('#add_people_list');
+		  $('#add_people_list').listview("refresh");
+	      });
+}
+
 // function to initiailize #add page
 function initialize_add_page() {
     var users = [];
 
-    $.getJSON('/api/v1/relation/list/short/', function(json) {
-		  $.map(json.data.relations,
-		       function(item) {
-		  	   users.push(item.username);
-			   window.user_dict[item.username] = item
-		  	   });
-		  $('#add-search-field').autocomplete(
-    		      {
-    			  source: users,
-    			  //submit form on suggestion selection
-    			  select:function(e, ui){
-			      $('#add-search-button').click();
-    			  }
-    		      });
-
-	      });
 
     $('#add-search-field').bind('focus', function() { this.value='' });
 
@@ -93,6 +97,12 @@ function initialize_add_page() {
 
 				     $('#add-search-field').attr('value', 'Add another person');
 			       });
+
+    // update sliders on #sumfield change
+    $('#sumfield').change(function() {
+			      update_veresedaki_sliders();
+			  });
+
 
     // populate location field
     var _geolocation;
@@ -126,9 +136,6 @@ function initialize_add_page() {
 	$("#locationfield").attr('value', '');
     }
 
-    $('#sumfield').change(function() {
-			      update_veresedaki_sliders();
-			  });
 }
 
 function sliderTouchStart(event) {
@@ -437,6 +444,7 @@ $('#connections').live('pagebeforeshow', initiliaze_connections_page);
 $('#welcome').live('pagebeforeshow', initiliaze_welcome_page);
 $('#logout').live('pagebeforeshow', initiliaze_logout_page);
 $('#add').live('pagebeforeshow', initialize_add_page);
+$('#addpeople').live('pagebeforeshow', initialize_addpeople_page);
 
 //disable Tap to togle on Bars
 $.mobile.fixedToolbars

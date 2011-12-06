@@ -33,7 +33,7 @@
 
       </div>
 
-      <a href="#faq" data-role="button" data-transition="slide" data-inline="true" data-icon="info">Frequently Asked Questions</a>
+      <a href="#faq" data-role="button" data-transition="slidedown" data-inline="true" data-icon="info">Frequently Asked Questions</a>
     </div><!-- /content -->
 
     <div data-role="footer" data-theme="d" data-position="fixed">
@@ -67,7 +67,7 @@
 
   <!-- FAQ Page -->
 
-  <div data-role="page" id="faq" data-add-back-btn="true" data-title="FAQ">
+  <div data-role="page" id="faq" data-add-back-btn="true" data-direction="reverse" data-transition="slidedown" data-title="FAQ">
     <div data-role="header" data-position="fixed">
       <h1>FAQ</h1>
     </div><!-- /header -->
@@ -194,20 +194,9 @@
         </ul>
     </div>
 
-    <fieldset class="ui-grid-a">
-    <div id="add-search-block" class="ui-block-a">
-      <input type="text" id="add-search-field" value="Add a person"  />
-    </div>
-    <div id="add-button-block" class="ui-block-b">
-      <button type="submit" id="add-search-button" data-theme="b" data-icon="add">Add</button>
-    </div>
-    </fieldset>
 
-
-
-  <a href="#" id="submitbutton" data-role="button" data-theme="e">Create!</a>
-    <script>
-    </script>
+    <a href="#addpeople" id="addbutton" data-role="button" data-rel="dialog" data-transition="pop" data-theme="b">Add</a>
+    <a href="#" id="submitbutton" data-role="button" data-theme="e">Create!</a>
   </div>
   <!-- content ends -->
 
@@ -226,6 +215,23 @@
   <!-- footer ends -->
 
 </div>
+
+<!----------------------------------------------------------------------------->
+
+<!-- add people page -->
+
+  <div data-role="page" id="addpeople" data-add-back-btn="true" data-title="Add People">
+    <div data-role="header" data-position="fixed">
+      <h1>Add People</h1>
+    </div><!-- /header -->
+
+    <div data-role="content">
+      <ul id="add_people_list" data-role="listview" data-filter="true" data-inset="true">
+      </ul>
+    </div>
+
+  </div><!-- /FAQ page -->
+
 
 <!----------------------------------------------------------------------------->
 
@@ -437,6 +443,10 @@
   <h3>${name}</h3>
   <input type="range" class="veresedaki_participant_slider" name="slider" id="slider-${id}" value="0" min="0" max="100" />
 </li>
+</script>
+
+<script id="AddPeopleListItem" type="text/x-jquery-tmpl">
+<li data-filtertext="${filtertext}"><a href="#">${value}</a></li>
 </script>
 
 <!-- templates end -->
