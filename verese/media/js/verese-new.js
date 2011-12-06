@@ -61,14 +61,6 @@ function initialize_add_page() {
     			  }
     		      });
 
-		  // override private autocomplete method which encodes html and creates anchor with no href
-		  $('#add-person-search').data( "autocomplete" )._renderItem = function( ul, item ) {
-    		      return $( "<li></li>" )
-			  .data( "item.autocomplete", item )
-			  .append( $( "<a></a>" ).attr({href: '#'}).html( item.label ) )
-			  .appendTo( ul );
-		  };
-
 	      });
 
     $('#add-search-field').bind('focus', function() { this.value='' });
@@ -106,7 +98,6 @@ function initialize_add_page() {
     var _geolocation;
     if (navigator.geolocation) {
 	_geolocation = window.navigator.geolocation.watchPosition(
-
             function (position) {
 		if (position.coords.accuracy <= 10) {
 		    $.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
