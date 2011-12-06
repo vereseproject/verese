@@ -102,19 +102,38 @@ function initialize_add_page() {
 				     $('#add-search-field').attr('value', 'Add another person');
 			       });
 
-    navigator.geolocation.getCurrentPosition(
-	function(position) {
-	    if (position.coords.accuracy <= 10) {
-		$.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
-			  function(json) {
-			      $('#locationfield').attr('value', json.data.results[0].name);
-			  });
+    // populate location field
+    var _geolocation;
+    if (navigator.geolocation) {
+	_geolocation = window.navigator.geolocation.watchPosition(
 
-	    }
-	    else {
+            function (position) {
+		if (position.coords.accuracy <= 100000) {
+		    $.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
+			      function(json) {
+				  $('#locationfield').attr('value', json.data.results[0].name);
+			      });
+		}
+		else {
+		    $('#locationfield').attr('value', '');
+		}
+
+            },
+            function () {
 		$('#locationfield').attr('value', '');
-	    }
-	});
+	    },
+            { maximumAge: 50000, enableHighAccuracy: true }
+
+	);
+
+	window.setTimeout(function() {
+			      window.navigator.geolocation.clearWatch( _geolocation );
+			  }, 5000 );
+
+    }
+    else {
+	$("#locationfield").attr('value', '');
+    }
 
     $('#sumfield').change(function() {
 			      update_veresedaki_sliders();
