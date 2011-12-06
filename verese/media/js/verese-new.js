@@ -108,7 +108,7 @@ function initialize_add_page() {
 	_geolocation = window.navigator.geolocation.watchPosition(
 
             function (position) {
-		if (position.coords.accuracy <= 100000) {
+		if (position.coords.accuracy <= 10) {
 		    $.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
 			      function(json) {
 				  $('#locationfield').attr('value', json.data.results[0].name);
