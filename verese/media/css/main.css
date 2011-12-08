@@ -80,10 +80,6 @@ body {
 
 /* Add page CSS ------------------------- */
 
-#dateblock {
- width:30%;
-}
-
 #currencyblock {
  width: 38%;
  float: left;
@@ -104,8 +100,15 @@ body {
  margin-right: 2%;
 }
 
+#dateblock {
+ width:38%;
+ float: left;
+}
+
 #locationblock {
- width:70%;
+ width:60%;
+ margin-right: 2%;
+ float: left;
 }
 
 #locationfield {

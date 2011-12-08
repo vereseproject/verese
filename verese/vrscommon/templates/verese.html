@@ -166,20 +166,19 @@
 </div>
 
   <!-- content starts -->
-  <div data-role="content">
-	  <fieldset class="ui-grid-a">
-	    <div id="dateblock" class="ui-block-a">
-          <label for="datefield">Date :</label>
-          <input data-role="datebox" class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="date" name="datefield" id="datefield" value="2011-08-10"  />
-        </div>
-	    <div id="locationblock" class="ui-block-b">
-          <label class="ui-input-text" for="locationfield">Location :</label>
-          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
-        </div>
-      </fieldset>
+<div data-role="content">
+  <fieldset class="ui-grid-a">
+  <span id="locationblock" >
+  <label class="ui-input-text" for="locationfield">Location :</label>
+  <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
+  </span>
+  <span id="dateblock">
+  <label for="datefield">Date :</label>
+  <input data-role="datebox" class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="date" name="datefield" id="datefield"  data-options='{"noButtonFocusMode":true,  "beforeToday":true, "headerFormat": "dd.mm.YYYY", "dateFormat": "dd.mm.YYYY"}'>
+  </span>
+  </fieldset>
 
 	<fieldset class="ui-grid-a" style="font-size: 1.7em">
-          <input type="number" name="sumfield" id="sumfield" value="0"  />
 	  <span id="currencyblock">
          	<select name="currencyfield" id="currencyfield">
 		  <option value="USD">$</option>
@@ -188,8 +187,9 @@
 		  <option value="JPY">¥</option>
 		</select>
 	   </span>
+          <input type="number" name="sumfield" id="sumfield" value="0"  />
 
-		</fieldset>
+	</fieldset>
 
     <div>
         <label class="ui-input-text">Participants :</label>
