@@ -193,7 +193,7 @@
 
     <div>
         <label class="ui-input-text">Participants :</label>
-        <ul id="peoplelist" data-role="listview" id="listview">
+        <ul id="peoplelist" data-role="listview" data-inset="true">
         </ul>
     </div>
 
@@ -447,7 +447,8 @@
 <li class="veresedaki_participant" id="veresedaki-participant-${id}">
   <img src="http://www.gravatar.com/avatar/${md5}?s=48&d=identicon" />
   <h3>${name}</h3>
-  <input type="range" class="veresedaki_participant_slider" disabled="disabled" name="slider" id="slider-${id}" value="0" min="0" max="100" />
+  <span class="ul-li-aside veresedaki_participant_slider" id="slider-${id}">0</span>
+  <!-- <input type="number" class="veresedaki_participant_slider" disabled="disabled" name="slider" id="slider-${id}" value="0" min="0" max="100" /> -->
 </li>
 </script>
 
