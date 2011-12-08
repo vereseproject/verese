@@ -174,23 +174,22 @@
         </div>
 	    <div id="locationblock" class="ui-block-b">
           <label class="ui-input-text" for="locationfield">Location :</label>
-          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value=""  />
+          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
         </div>
       </fieldset>
 
-	<fieldset class="ui-grid-a">
-	    <div id="sumblock" class="ui-block-a">
+	<fieldset class="ui-grid-a" style="font-size: 1.7em">
           <input type="number" name="sumfield" id="sumfield" value="0"  />
-        </div>
-	    <div id="currencyblock" class="ui-block-b">
-          <select name="currencyfield" id="currencyfield">
-            <option value="USD">$</option>
-            <option value="EUR">€</option>
-            <option value="GBP">£</option>
-            <option value="JPY">¥</option>
-          </select>
-        </div>
-      </fieldset>
+	  <span id="currencyblock">
+         	<select name="currencyfield" id="currencyfield">
+		  <option value="USD">$</option>
+		  <option value="EUR">€</option>
+		  <option value="GBP">£</option>
+		  <option value="JPY">¥</option>
+		</select>
+	   </span>
+
+		</fieldset>
 
     <div>
         <label class="ui-input-text">Participants :</label>
@@ -198,9 +197,11 @@
         </ul>
     </div>
 
+    <div style="margin-top:25px;">
+      <a href="#addpeople" id="addbutton" data-role="button" data-rel="dialog" data-transition="pop" data-theme="b">Add</a>
+      <a href="#" id="createbutton" class="ui-disabled" data-role="button" data-theme="e">Create!</a>
+    </div>
 
-    <a href="#addpeople" id="addbutton" data-role="button" data-rel="dialog" data-transition="pop" data-theme="b">Add</a>
-    <a href="#" id="createbutton" class="ui-disabled" data-role="button" data-theme="e">Create!</a>
   </div>
   <!-- content ends -->
 

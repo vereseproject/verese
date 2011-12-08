@@ -85,16 +85,26 @@ body {
 }
 
 #currencyblock {
- width:30%;
- font-size: 27px;
- margin-top: 7px;
+ width: 38%;
+ float: left;
+}
+
+#currencyfield {
+ text-align:center;
+ margin-top: 0.2em;
+ font-size: 1.7em;
+}
+
+#sumfield {
+ text-align:right;
+ font-size: 1.2em;
+ margin-top: 0.5em;
+ width: 60%;
+ float: left;
+ margin-right: 2%;
 }
 
 #locationblock {
- width:70%;
-}
-
-#sumblock {
  width:70%;
 }
 
@@ -102,16 +112,6 @@ body {
  width:100%;
 }
 
-#currencyfield {
- text-align:center;
- width:100%;
-}
-
-#sumfield {
- text-align:right;
- font-size: 35px;
- margin-top: 20px;
-}
 
 #listview {
  margin:0px;
