@@ -91,6 +91,7 @@ function initialize_add_page() {
 
     // update sliders on #sumfield change
     $('#sumfield').change(function() {
+			      $('#sumfield').attr('edited', 'true');
 			      update_veresedaki_sliders();
 			  });
 
@@ -523,12 +524,14 @@ $(document).ready(function() {
 		      $('#add_clear_button').click(
 			  function() {
 			      $("#sumfield").attr('value', 0);
+			      $("#sumfield").removeAttr('edited');
 			      $("#peoplelist").empty();
 			  });
 
 		      $('#sumfield').focus(
 			  function() {
-			      $('#sumfield').attr('value', '');
+			      if ($('#sumfield').attr('edited') == undefined)
+				  $('#sumfield').attr('value', '');
 			  });
 
 		      $('#locationfield').focus(
