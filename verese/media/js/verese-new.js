@@ -44,6 +44,7 @@ function find_my_veresedaki(list) {
 
 function initialize_addpeople_page() {
     $.mobile.showPageLoadingMsg();
+    $('#add_people_list').empty();
 
     $.getJSON('/api/v1/relation/list/short/', function(json) {
 		  $.mobile.hidePageLoadingMsg();
@@ -52,9 +53,24 @@ function initialize_addpeople_page() {
 
 		  $.map(json.data.relations,
 			function(item) {
+			    if ($("veresedaki-participant-" + item.id).length) {
+				icon = "item-minus";
+				theme = "e";
+				checked = 'checked';
+			    }
+			    else {
+				icon = "icon-add";
+				theme = "c";
+				checked = '';
+			    }
 			    ddata.push({
+					   id: item.id,
+					   md5: item.emailmd5,
 					   filtertext: item.username + ' ' + item.first_name + ' ' + item.last_name,
-					   value: get_full_name(item),
+					   fullname: get_full_name(item),
+					   theme: theme,
+					   icon: icon,
+					   checked: checked
 				       });
 		  	});
 		  $('#AddPeopleListItem').tmpl(ddata).appendTo('#add_people_list');
@@ -104,37 +120,42 @@ function initialize_add_page() {
 			  });
 
 
-    // populate location field
-    var _geolocation;
-    if (navigator.geolocation) {
-	_geolocation = window.navigator.geolocation.watchPosition(
-            function (position) {
-		if (position.coords.accuracy <= 10) {
-		    $.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
-			      function(json) {
-				  $('#locationfield').attr('value', json.data.results[0].name);
-			      });
-		}
-		else {
-		    $('#locationfield').attr('value', '');
-		}
+    // // populate location field
+    // var _geolocation;
+    // if (navigator.geolocation) {
+    // 	_geolocation = window.navigator.geolocation.watchPosition(
+    //         function (position) {
+    // 		console.log(position.coords.accuracy);
+    // 		console.log(position.coords.latitude);
+    // 		console.log(position.coords.longitude);
+    // 		console.log(position.address);
+    // 		console.log(position.city);
+    // 		console.log(position.street);
 
-            },
-            function () {
-		$('#locationfield').attr('value', '');
-	    },
-            { maximumAge: 50000, enableHighAccuracy: true }
+    // 		if (position.coords.accuracy <= 80) {
+    // 		    $.getJSON('/api/v1/locateme/?lat=' + position.coords.latitude + '&lon=' + position.coords.longitude,
+    // 			      function(json) {
+    // 				  $('#locationfield').attr('value', json.data.results[0].name);
+    // 			      });
+    // 		}
 
-	);
+    //         },
+    //         function (error) {
+    // 		$('#locationfield').attr('value', 'Not accurate position');
+    // 		$('#locationfield').attr('lat', position.coords.latitude);
+    // 		$('#locationfield').attr('lon', position.coords.longitude);
+    // 		$('#locationfield').attr('accuracy', position.coords.accuracy);
 
-	window.setTimeout(function() {
-			      window.navigator.geolocation.clearWatch( _geolocation );
-			  }, 5000 );
+    // 	    },
+    //         { maximumAge: 0, timeout: 10 * 1000, enableHighAccuracy: false }
 
-    }
-    else {
-	$("#locationfield").attr('value', '');
-    }
+    // 	);
+
+    // }
+    // else {
+    // 	$("#locationfield").attr('value', 'Unknown Location');
+    // 	$("#locationfield").attr('location', '-1');
+    // }
 
 }
 
@@ -467,6 +488,53 @@ $(".transaction-item").live("click",
 				$("#" + event.target.parentNode.id + '-details').slideToggle();
 			    }
 			   );
+
+$(".addpeoplelistitem").live("click",
+			     function(event) {
+				 event.preventDefault();
+				 li_item = $(event.target).closest('li');
+
+				 // already selected
+				 if (li_item.attr('checked') !== undefined) {
+				     li_item.find('span').removeClass('ui-icon-minus');
+				     li_item.find('span').addClass('ui-icon-add');
+				     li_item.removeClass('ui-btn-up-e');
+				     li_item.addClass('ui-btn-up-c');
+				     li_item.removeAttr('checked');
+
+				     $("#veresedaki-participant-" + li_item.attr('vereseid')).remove();
+
+				 }
+				 // just selected
+				 else {
+				     li_item.find('span').removeClass('ui-icon-add');
+				     li_item.find('span').addClass('ui-icon-minus');
+				     li_item.removeClass('ui-btn-up-c');
+				     li_item.addClass('ui-btn-up-e');
+				     li_item.attr('checked','');
+
+				     ddata = [{
+						  'name': li_item.attr('fullname'),
+						  'md5': li_item.attr('md5'),
+						  'id': li_item.attr('vereseid')
+					      }];
+
+				     $('#addVeresedakiParticipant').tmpl(ddata).appendTo('#peoplelist');
+				     $("#peoplelist").trigger('create');
+				     $("#peoplelist").listview('refresh');
+				 }
+
+				 // enable disabled "create" button
+				 if ($('.veresedaki_participant').length > 0)
+				     $('#createbutton').removeClass("ui-disabled");
+
+				 else
+				     $('#createbutton').addClass('ui-disabled');
+
+				 // update sliders
+				 update_veresedaki_sliders();
+			     });
+
 $(document).ready(function() {
 		      $('#load-more-button').click(
 			  function() {
@@ -480,6 +548,11 @@ $(document).ready(function() {
 			  function() {
 			      $("#sumfield").attr('value', 0);
 			      $("#peoplelist").empty();
+			  });
+
+		      $('#sumfield').focus(
+			  function() {
+			      $('#sumfield').attr('value', '');
 			  });
 
 		  });
