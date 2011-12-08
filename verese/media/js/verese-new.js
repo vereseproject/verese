@@ -555,4 +555,10 @@ $(document).ready(function() {
 			      $('#sumfield').attr('value', '');
 			  });
 
+		      $('#locationfield').focus(
+			  function() {
+			      $('#locationfield').attr('value', '');
+			  });
+
+
 		  });
