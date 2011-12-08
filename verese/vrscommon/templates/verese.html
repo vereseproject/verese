@@ -174,7 +174,7 @@
         </div>
 	    <div id="locationblock" class="ui-block-b">
           <label class="ui-input-text" for="locationfield">Location :</label>
-          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
+          <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value=""  />
         </div>
       </fieldset>
 
@@ -200,7 +200,7 @@
 
 
     <a href="#addpeople" id="addbutton" data-role="button" data-rel="dialog" data-transition="pop" data-theme="b">Add</a>
-    <a href="#" id="submitbutton" data-role="button" data-theme="e">Create!</a>
+    <a href="#" id="createbutton" class="ui-disabled" data-role="button" data-theme="e">Create!</a>
   </div>
   <!-- content ends -->
 
@@ -232,6 +232,7 @@
     <div data-role="content">
       <ul id="add_people_list" data-role="listview" data-filter="true" data-inset="true">
       </ul>
+
     </div>
 
   </div><!-- /FAQ page -->
@@ -442,15 +443,15 @@
 </script>
 
 <script id="addVeresedakiParticipant" type="text/x-jquery-tmpl">
-<li class="veresedaki_participant">
+<li class="veresedaki_participant" id="veresedaki-participant-${id}">
   <img src="http://www.gravatar.com/avatar/${md5}?s=48&d=identicon" />
   <h3>${name}</h3>
-  <input type="range" class="veresedaki_participant_slider" name="slider" id="slider-${id}" value="0" min="0" max="100" />
+  <input type="range" class="veresedaki_participant_slider" disabled="disabled" name="slider" id="slider-${id}" value="0" min="0" max="100" />
 </li>
 </script>
 
 <script id="AddPeopleListItem" type="text/x-jquery-tmpl">
-<li data-filtertext="${filtertext}"><a href="#">${value}</a></li>
+  <li data-filtertext="${filtertext}" data-icon="${icon}" data-theme="${theme}" md5="${md5}" vereseid="${id}" fullname="${fullname}" data-icon="add" ${checked}><a href="#" class="addpeoplelistitem">${fullname}</a></li>
 </script>
 
 <!-- templates end -->
