@@ -87,7 +87,7 @@ function initialize_addpeople_page() {
 
 // function to initiailize #add page
 function initialize_add_page() {
-    var users = [];
+    reset_veresedaki_date();
 
     // update sliders on #sumfield change
     $('#sumfield').change(function() {
@@ -262,6 +262,14 @@ function initiliaze_logout_page() {
 	success: success_cb,
 	error: error_cb
     });
+}
+
+function reset_veresedaki_date() {
+    today = new Date();
+    month = parseInt(today.getMonth()) + 1;
+    today_str = today.getDate() + '.' + month + '.' + today.getFullYear();
+    $('#veresedaki_datefield').attr('value', today_str);
+
 }
 
 // function to initialize #welcome page
@@ -526,6 +534,7 @@ $(document).ready(function() {
 			      $("#sumfield").attr('value', 0);
 			      $("#sumfield").removeAttr('edited');
 			      $("#peoplelist").empty();
+			      reset_veresedaki_date();
 			  });
 
 		      $('#sumfield').focus(
