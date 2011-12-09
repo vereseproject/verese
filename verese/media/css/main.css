@@ -153,3 +153,7 @@ div.ui-slider {
    color: #333;
    text-align: center;
 }
+
+.ui-input-datebox {
+   padding: 0.2em;
+}
