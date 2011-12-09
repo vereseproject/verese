@@ -83,6 +83,7 @@ body {
 #currencyblock {
  width: 38%;
  float: left;
+ margin-right: 2%;
 }
 
 #currencyfield {
@@ -95,24 +96,18 @@ body {
  text-align:right;
  font-size: 1.2em;
  margin-top: 0.5em;
- width: 60%;
+ width: 57%;
  float: left;
- margin-right: 2%;
 }
 
 #dateblock {
- width:38%;
- float: left;
 }
 
 #locationblock {
- width:60%;
- margin-right: 2%;
- float: left;
 }
 
 #locationfield {
- width:100%;
+ padding: 0.7em;
 }
 
 
@@ -151,4 +146,10 @@ div.ui-slider {
 #add-search-button {
  text-align:center;
  width:100%;
+}
+
+.ui-input-datebox input {
+   text-shadow: 0 1px 0 #FFFFFF;
+   color: #333;
+   text-align: center;
 }

@@ -168,14 +168,16 @@
   <!-- content starts -->
 <div data-role="content">
   <fieldset class="ui-grid-a">
-  <span id="locationblock" >
-  <label class="ui-input-text" for="locationfield">Location :</label>
-  <input class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
-  </span>
-  <span id="dateblock">
-  <label for="datefield">Date :</label>
-  <input data-role="datebox" class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="date" name="datefield" id="datefield"  data-options='{"noButtonFocusMode":true,  "beforeToday":true, "headerFormat": "dd.mm.YYYY", "dateFormat": "dd.mm.YYYY"}'>
-  </span>
+  <div class="ui-block-a" id="dateblock">
+    <label class="ui-input-text" for="datefield">Date :</label>
+    <input data-role="datebox" class="ui-input-datebox ui-shadow-inset ui-corner-all ui-body-a" type="date" name="veresedaki_datefield" id="veresedaki_datefield"  data-options='{"noButtonFocusMode":true, "calTodayButton": true,  "beforeToday":true, "headerFormat": "dd.mm.YYYY", "dateFormat": "dd.mm.YYYY"}'>
+  </div>
+
+  <div class="ui-block-b" id="locationblock" >
+    <label class="ui-input-text" for="locationfield">Location :</label>
+    <input type="text" name="locationfield" id="locationfield" value="Fetching Location..."  />
+  </div>
+
   </fieldset>
 
 	<fieldset class="ui-grid-a" style="font-size: 1.7em">
