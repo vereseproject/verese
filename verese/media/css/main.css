@@ -155,5 +155,12 @@ div.ui-slider {
 }
 
 .ui-input-datebox {
-   padding: 0.2em;
+   padding: 0.5em;
+   min-height: 0px;
+   width: 90%;
+
+}
+
+#veresedaki_datefield {
+   padding: 0.7em;
 }
