@@ -1,7 +1,7 @@
 /* Foundation v2.1.3 http://foundation.zurb.com */
 /* Artfully masterminded by ZURB  */
 
-/* -------------------------------------------------- 
+/* --------------------------------------------------
    Table of Contents
 -----------------------------------------------------
 :: Shared Styles
@@ -11,20 +11,53 @@
 
 
 /* -----------------------------------------
-   Shared Styles
+  H5BP editing
 ----------------------------------------- */
 
+::-moz-selection { background: #ccc; color: #fff; text-shadow: none; }
+::selection { background: #ccc; color: #fff; text-shadow: none; }
 
+
+a { color: #fff; }
+a:visited { color: #fff; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
+a:hover, a:active { outline: 0; }
 
 /* -----------------------------------------
-   Page Name 1
+   Add
 ----------------------------------------- */
 
 
+.row {
+   max-width: 1200px;
+}
 
+#header {
+   background: none repeat scroll 0 0 #222222;
+   border-bottom: 4px solid #00A5FF;
+   padding: 15px 20px 13px;
+}
 
-/* -----------------------------------------
-   Page Name 2
------------------------------------------ */
+#header h1 {
+   color: #fff;
+   font-size: 1.6rem;
+}
 
+#header strong {
+ line-height: 14px;
+ bottom: 4px;
+ height: 14px;
+}
 
+#header strong a {
+ line-height: 14px;
+ padding-right: 12px;
+ font-weight: 500;
+}
+
+#header strong a.button {
+   padding: 4px 10px;
+}
