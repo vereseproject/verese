@@ -60,3 +60,54 @@ a:hover, a:active { outline: 0; }
 #header strong a.button {
    padding: 4px 10px;
 }
+
+#content {
+   margin-top: 40px;
+}
+
+form fieldset {
+   padding: 9px 9px 9px
+}
+
+form.nice div.form-field input, form.nice input.input-text, form.nice textarea {
+   background: none;
+   border: 0px;
+   border-bottom: 1px solid #ddd;
+}
+
+input.foo {
+   font-size: 7rem !important;
+   text-align: right;
+}
+
+
+.participant {
+   border: 1px solid #ddd;
+   width: 100%;
+   margin-top: 7px;
+   border-radius: 3px 3px 3px 3px;
+}
+
+.participant img {
+   vertical-align: middle;
+}
+
+.participant {
+   font-size: 1.5rem;
+}
+
+
+form fieldset {
+   border: none;
+   border-left: 3px solid #ddd;
+}
+
+
+form.nice fieldset {
+   border-radius: 0px;
+}
+
+.button.bottomleftcorner {
+   border-radius: 0 0 0 3px;
+   height: 100%;
+}
