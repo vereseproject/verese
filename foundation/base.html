@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Verese</title>
+
+        <!-- h5bp -->
+        <!-- Mobile viewport optimization http://goo.gl/b9SaQ -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Home screen icon  Mathias Bynens http://goo.gl/6nVq0 -->
+  <!-- For iPhone 4 with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="h5bp/img/h/apple-touch-icon.png">
+  <!-- For first-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="h5bp/img/m/apple-touch-icon.png">
+  <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="h5bp/img/l/apple-touch-icon-precomposed.png">
+  <!-- For nokia devices: -->
+  <link rel="shortcut icon" href="h5bp/img/l/apple-touch-icon.png">
+
+  <!--iOS web app, deletable if not needed -->
+  <!--the script prevents links from opening in mobile safari. https://gist.github.com/1042026
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <script>(function(a,b,c){if(c in b&&b[c]){var d,e=a.location,f=/^(a|html)$/i;a.addEventListener("click",function(a){d=a.target;while(!f.test(d.nodeName))d=d.parentNode;"href"in d&&(d.href.indexOf("http")||~d.href.indexOf(e.host))&&(a.preventDefault(),e.href=d.href)},!1)}})(document,window.navigator,"standalone")</script>
+  <link rel="apple-touch-startup-image" href="h5bp/img/l/splash.png">-->
+
+  <!-- Mobile IE allows us to activate ClearType technology for smoothing fonts for easy reading -->
+  <meta http-equiv="cleartype" content="on">
+
+  <!-- more tags for your 'head' to consider https://gist.github.com/849231 -->
+
+  <!-- Main Stylesheet -->
+<link rel="stylesheet" href="h5bp/css/style.css?v=1">
+        <!-- h5bp end -->
+
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]-->
+
+        <!-- h5bp -->
+        <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
+        <script src="h5bp/js/libs/modernizr-custom.js"></script>
+        <!-- Media Queries Polyfill https://github.com/shichuan/mobile-html5-boilerplate/wiki/Media-Queries-Polyfill -->
+        <script>Modernizr.mq('(min-width:0)') || document.write('<script src="h5bp/js/libs/respond.min.js">\x3C/script>')</script>
+        <!-- h5bp end -->
+</head>
+<body>
+
+<!-- container -->
+<div class="container" id="headercontainer">
+
+  <div class="row">
+    <div class="four columns">
+      <h1>Verese</h1>
+    </div>
+
+    <div class="eight columns hide-on-phones">
+      <strong class="right">
+      <a href="#">About</a>
+      <a href="#">Features</a>
+      <a href="#">API</a>
+      <a href="#" class="small white nice button">Sign Up</a>
+      <a href="#" class="small white nice button">Login</a>
+      </strong>
+    </div>
+  </div>
+
+</div>
+
+<!-- container -->
+
+
+<div class="container" >
+  <div class="row">
+    <div class="two columns">
+      <dl class="nice tabs vertical hide-on-phones">
+	<dd><a href="index.php">Dashboard</a></dd>
+	<dd><a class="active" href="grid.php">Add</a></dd>
+	<dd><a href="buttons.php">Activity</a></dd>
+	<dd><a href="forms.php">Connections</a></dd>
+      </dl>
+    </div>
+
+    <div class="six columns" id="content">
+      <!-- content -->
+
+      <!-- title-->
+      <div class="row">
+        <div class="eight phone-three columns">
+	  <h3>Title</h3>
+	</div>
+	<div class="four phone-one columns">
+	  <strong class="right">
+	  <a href="#" class="small white radius nice button">[×] Clear</a>
+	  </strong>
+	</div>
+       </div>
+
+
+    </div>
+  </div>
+</div>
+
+
+<!-- menu for phones -->
+<div class="container">
+  <div class="row">
+    <div class="twelve columns">
+      <dl class="nice tabs mobile show-on-phones">
+	<dd><a href="#" class="active">Dashboard</a></dd>
+	<dd><a href="#">Add</a></dd>
+	<dd><a href="#">Activity</a></dd>
+	<dd><a href="#">Connections</a></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+
+
+	<!-- Included JS Files -->
+	<script src="javascripts/foundation.js"></script>
+	<script src="javascripts/app.js"></script>
+
+	<!-- h5bp -->
+	<!-- scripts concatenated and minified via ant build script -->
+	<script src="h5bp/js/mylibs/helper.js"></script>
+	<!-- end concatenated and minified scripts-->
+
+	<script>
+	// iPhone Scale Bug Fix, read this when using http://www.blog.highub.com/mobile-2/a-fix-for-iphone-viewport-scale-bug/
+	MBP.scaleFix();
+	</script>
+	<!-- h5bp end -->
+</body>
+</html>

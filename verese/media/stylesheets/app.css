@@ -1,0 +1,135 @@
+/* Foundation v2.1.3 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+
+/* --------------------------------------------------
+   Table of Contents
+-----------------------------------------------------
+:: Shared Styles
+:: Page Name 1
+:: Page Name 2
+*/
+
+
+/* -----------------------------------------
+  H5BP editing
+----------------------------------------- */
+
+
+::-moz-selection { background: #ccc; color: #fff; text-shadow: none; }
+::selection { background: #ccc; color: #fff; text-shadow: none; }
+
+
+a { color: #fff; }
+a:visited { color: #fff; }
+a:hover { color: #06e; }
+a:focus { outline: thin dotted; }
+
+/* Improve readability when focused and hovered in all browsers: h5bp.com/h */
+a:hover, a:active { outline: 0; }
+
+/* -----------------------------------------
+   Add
+----------------------------------------- */
+
+
+.row {
+   max-width: 1200px;
+}
+
+#headercontainer {
+   background: none repeat scroll 0 0 #222222;
+   border-bottom: 4px solid #00A5FF;
+   padding: 15px 20px 13px;
+}
+
+#headercontainer h1 {
+   color: #fff;
+   font-size: 1.6rem;
+   margin-bottom: 0px;
+}
+
+#headercontainer strong {
+ bottom: 4px;
+}
+
+#headercontainer strong a {
+ padding-right: 12px;
+ font-weight: 500;
+}
+
+#headercontainer strong a.button {
+   padding: 4px 10px;
+}
+
+#content {
+   margin-top: 40px;
+}
+
+form fieldset {
+   padding: 9px 9px 9px
+}
+
+form.nice div.form-field input, form.nice input.input-text, form.nice textarea {
+   background: none;
+   border: 0px;
+   border-bottom: 1px solid #ddd;
+}
+
+input.foo {
+   font-size: 7rem !important;
+   text-align: right;
+}
+
+
+.participant {
+   border: 1px solid #ddd;
+   width: 100%;
+   margin-top: 7px;
+   border-radius: 3px 3px 3px 3px;
+}
+
+.participant img {
+   vertical-align: middle;
+}
+
+.participant {
+   font-size: 1.5rem;
+}
+
+
+form.nice fieldset {
+   border-radius: 0px;
+}
+
+.button.bottomleftcorner {
+   border-radius: 0 0 0 3px;
+   height: 100%;
+}
+
+.borderleft {
+   border: none;
+   border-left: 3px solid #ddd;
+   padding: 9px;
+}
+
+.righttext {
+   line-height: 4rem;
+   padding-right: 10px;
+   font-size: 2rem;
+}
+
+.textcenter {
+   text-align: center;
+}
+
+.inline ul, li{
+   display: inline;
+}
+
+.margin-top-2 {
+   margin-top: 2%;
+}
+
+.margin-top-5 {
+   margin-top: 2%;
+}
