@@ -36,28 +36,28 @@ a:hover, a:active { outline: 0; }
    max-width: 1200px;
 }
 
-#header {
+#headercontainer {
    background: none repeat scroll 0 0 #222222;
    border-bottom: 4px solid #00A5FF;
    padding: 15px 20px 13px;
 }
 
-#header h1 {
+#headercontainer h1 {
    color: #fff;
    font-size: 1.6rem;
    margin-bottom: 0px;
 }
 
-#header strong {
+#headercontainer strong {
  bottom: 4px;
 }
 
-#header strong a {
+#headercontainer strong a {
  padding-right: 12px;
  font-weight: 500;
 }
 
-#header strong a.button {
+#headercontainer strong a.button {
    padding: 4px 10px;
 }
 
@@ -110,4 +110,24 @@ form.nice fieldset {
 .button.bottomleftcorner {
    border-radius: 0 0 0 3px;
    height: 100%;
+}
+
+.borderleft {
+   border: none;
+   border-left: 3px solid #ddd;
+   padding: 9px;
+}
+
+.righttext {
+   line-height: 4rem;
+   padding-right: 10px;
+   font-size: 2rem;
+}
+
+.textcenter {
+   text-align: center;
+}
+
+.inline ul, li{
+   display: inline;
 }

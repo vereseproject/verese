@@ -18,17 +18,48 @@ def request_token_ready(request, token):
     )
 
 def main(request):
-    try:
-        site_edition = settings.SITE_EDITION
-
-    except:
-        site_edition = 'unset'
-
     ctx = RequestContext(request,
                          {
-                             'site_edition': site_edition,
                              'currencies':Currency.objects.all()
                              }
                          )
 
     return render_to_response('verese.html', ctx)
+
+
+def add(request):
+    ctx = RequestContext(request,
+                         {
+                             'active': 'add'
+                             }
+                         )
+
+    return render_to_response('add.html', ctx)
+
+def activity(request):
+    ctx = RequestContext(request,
+                         {
+                             'active': 'activity'
+                             }
+                         )
+
+    return render_to_response('activity.html', ctx)
+
+def connections(request):
+    ctx = RequestContext(request,
+                         {
+                             'active': 'connections'
+                             }
+                         )
+
+    return render_to_response('connections.html', ctx)
+
+def dashboard(request):
+    ctx = RequestContext(request,
+                         {
+                             'active': 'dashboard'
+                             }
+                         )
+
+    return render_to_response('dashboard.html', ctx)
+
